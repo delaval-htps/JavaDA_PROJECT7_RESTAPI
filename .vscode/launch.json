@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Application<spring-boot-skeleton>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.nnk.springboot.Application",
+            "projectName": "spring-boot-skeleton",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
