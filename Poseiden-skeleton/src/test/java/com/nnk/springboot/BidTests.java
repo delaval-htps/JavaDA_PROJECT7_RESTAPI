@@ -24,9 +24,6 @@ public class BidTests {
 	@Autowired
 	private BidListRepository bidListRepository;
 
-	@Autowired
-	private MessageSource messageSource;
-	
 	private BidListService cut;
 
 	@Test
