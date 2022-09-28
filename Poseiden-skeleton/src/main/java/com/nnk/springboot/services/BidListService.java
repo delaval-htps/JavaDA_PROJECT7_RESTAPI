@@ -36,7 +36,7 @@ public class BidListService {
             return bidListRepository.save(bid);
         } else {
             throw new BidListNotFoundException(
-                    messageSource.getMessage("global.exception.not-found", new Object[] { "bid" }, Locale.FRANCE));
+                    messageSource.getMessage("global.exception.not-found", new Object[] { "bid" }, new Locale("fr")));
         }
 
     }
