@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.services.BidListService;
 
-
 @Controller
 public class BidListController {
 
@@ -22,8 +21,7 @@ public class BidListController {
     private BidListService bidListService;
 
     @RequestMapping("/bidList/list")
-    public String home(Model model)
-    {
+    public String home(Model model) {
         model.addAttribute("listOfBidList", bidListService.findBidLists());
         return "bidList/list";
     }
@@ -35,7 +33,11 @@ public class BidListController {
 
     @PostMapping("/bidList/validate")
     public String validate(@Valid BidList bid, BindingResult result, Model model) {
-        // TODO: check data valid and save to db, after saving return bid list
+        
+        if (!result.hasErrors()) {
+            bidListService.saveBidList(bid);
+            return "redirect:/bidList/list";
+        }
         return "bidList/add";
     }
 
@@ -47,8 +49,9 @@ public class BidListController {
 
     @PostMapping("/bidList/update/{id}")
     public String updateBid(@PathVariable("id") Integer id, @Valid BidList bidList,
-                             BindingResult result, Model model) {
-        // TODO: check required fields, if valid call service to update Bid and return list Bid
+            BindingResult result, Model model) {
+        // TODO: check required fields, if valid call service to update Bid and return
+        // list Bid
         return "redirect:/bidList/list";
     }
 
