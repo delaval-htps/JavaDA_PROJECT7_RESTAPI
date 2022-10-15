@@ -1,8 +1,11 @@
 package com.nnk.springboot.controllers;
 
+import java.util.Locale;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nnk.springboot.domain.BidList;
+import com.nnk.springboot.exceptions.BidListNotFoundException;
+import com.nnk.springboot.exceptions.GlobalPoseidonException;
 import com.nnk.springboot.services.BidListService;
 
 @Controller
@@ -19,6 +24,9 @@ public class BidListController {
 
     @Autowired
     private BidListService bidListService;
+
+    @Autowired
+    private MessageSource messageSource;
 
     @RequestMapping("/bidList/list")
     public String home(Model model) {
@@ -33,7 +41,7 @@ public class BidListController {
 
     @PostMapping("/bidList/validate")
     public String validate(@Valid BidList bid, BindingResult result, Model model) {
-        
+
         if (!result.hasErrors()) {
             bidListService.saveBidList(bid);
             return "redirect:/bidList/list";
@@ -44,20 +52,54 @@ public class BidListController {
     @GetMapping("/bidList/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         // TODO: get Bid by Id and to model then show to the form
-        return "bidList/update";
+
+        if (id != 0) {
+            BidList existedBidList = bidListService.findById(id);
+            model.addAttribute("bidList", existedBidList);
+
+            return "bidList/update";
+
+        } else {
+            throw new GlobalPoseidonException(messageSource.getMessage("global.exception.incorrect-id", new Object[] { new Object() {
+            }.getClass().getEnclosingMethod().getName() }, new Locale("fr")));
+        }
+
     }
 
     @PostMapping("/bidList/update/{id}")
-    public String updateBid(@PathVariable("id") Integer id, @Valid BidList bidList,
-            BindingResult result, Model model) {
-        // TODO: check required fields, if valid call service to update Bid and return
+    public String updateBid(@PathVariable("id") Integer id, @Valid BidList bidList, BindingResult result, Model model) {
+        // TODO: check required fields, if valid call service to update Bid and
+        // return
         // list Bid
-        return "redirect:/bidList/list";
+
+        if (id != 0) {
+
+            if (!result.hasErrors()) {
+                bidListService.updateBidList(bidList);
+                return "redirect:/bidList/list";
+
+            } else {
+                return ("bidList/update");
+            }
+
+        } else {
+            throw new GlobalPoseidonException(messageSource.getMessage("global.exception.incorrect-id", new Object[] { new Object() {
+            }.getClass().getEnclosingMethod().getName() }, new Locale("fr")));
+        }
     }
 
     @GetMapping("/bidList/delete/{id}")
     public String deleteBid(@PathVariable("id") Integer id, Model model) {
         // TODO: Find Bid by Id and delete the bid, return to Bid list
-        return "redirect:/bidList/list";
+        if (id != 0) {
+
+            BidList existedBidList = bidListService.findById(id);
+            bidListService.deleteBidList(existedBidList);
+            return "redirect:/bidList/list";
+
+        } else {
+            throw new GlobalPoseidonException(messageSource.getMessage("global.exception.incorrect-id", new Object[] { new Object() {
+            }.getClass().getEnclosingMethod().getName() }, new Locale("fr")));
+        }
     }
 }

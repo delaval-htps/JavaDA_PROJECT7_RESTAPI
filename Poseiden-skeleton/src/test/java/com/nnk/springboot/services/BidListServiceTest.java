@@ -63,7 +63,7 @@ public class BidListServiceTest {
 
     // when
     BidList saveBidList = cut.saveBidList(mockBidList);
-    
+
     // then
     assertEquals(mockSavedBidList, saveBidList);
   }
@@ -173,10 +173,10 @@ public class BidListServiceTest {
 
   @Test
   public void deleteBidListTest_whenBidIdZero_thenThrowException() {
-  
+
     BidList bid = new BidList("Account Test", "Type Test", 10d);
     bid.setBidListId(0);
-  
+
     Assertions.assertThatThrownBy(() -> {
       cut.deleteBidList(bid);
     }).isInstanceOf(BidListNotFoundException.class);
@@ -191,9 +191,9 @@ public class BidListServiceTest {
 
     BidList bid = new BidList("Account Test", "Type Test", 10d);
     bid.setBidListId(1);
-    
+
     when(bidListRepository.findById(anyInt())).thenReturn(Optional.empty());
-    
+
     Assertions.assertThatThrownBy(() -> {
       cut.deleteBidList(bid);
     }).isInstanceOf(BidListNotFoundException.class);
@@ -209,11 +209,11 @@ public class BidListServiceTest {
     BidList bid = new BidList("Account Test", "Type Test", 10d);
     bid.setBidListId(1);
     when(bidListRepository.findById(anyInt())).thenReturn(Optional.of(bid));
-    
+
     cut.deleteBidList(bid);
-      
-    verify(bidListRepository,times(1)).delete(any(BidList.class));
+
+    verify(bidListRepository, times(1)).delete(any(BidList.class));
 
   }
-  // TODO test not null and existing bid
+  // TODO test for findById
 }

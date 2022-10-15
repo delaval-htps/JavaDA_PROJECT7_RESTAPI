@@ -30,20 +30,18 @@ public class BidListService {
      * @param bid the bidlist to save
      * @return the bidlist saved if it was correctly save
      * @throws BidListNotFoundException if bidList is null
-     * 
      */
     public BidList saveBidList(BidList bid) {
 
         if (bid != null) {
 
             BidList savedBidList = bidListRepository.save(bid);
-            log.info(messageSource.getMessage("global.creation", new Object[] { savedBidList }, new Locale("fr")));
+            log.info(messageSource.getMessage("global.bidlist.creation", new Object[] { savedBidList }, new Locale("fr")));
             return savedBidList;
 
         } else {
 
-            throw new BidListNotFoundException(
-                    messageSource.getMessage("global.exception.not-found", new Object[] { "bid" }, new Locale("fr")));
+            throw new BidListNotFoundException(messageSource.getMessage("global.exception.not-found", new Object[] { "bid" }, new Locale("fr")));
         }
     }
 
@@ -63,19 +61,16 @@ public class BidListService {
             if (existedBidList.isPresent() && existedBidList.get().getBidListId() == bid.getBidListId()) {
 
                 BidList savedUpdatedBidList = bidListRepository.save(bid);
-                log.info(messageSource.getMessage("globale.update", new Object[] { savedUpdatedBidList },
-                        new Locale("fr")));
+                log.info(messageSource.getMessage("globale.bidlist.update", new Object[] { savedUpdatedBidList }, new Locale("fr")));
                 return savedUpdatedBidList;
 
             } else {
 
-                throw new BidListNotFoundException(
-                        messageSource.getMessage("global.exception.not-found", new Object[] { "bid" }, Locale.FRANCE));
+                throw new BidListNotFoundException(messageSource.getMessage("global.exception.not-found", new Object[] { "bid" }, Locale.FRANCE));
             }
         } else {
 
-            throw new BidListNotFoundException(
-                    messageSource.getMessage("global.exception.not-null", new Object[] { "bid" }, Locale.FRANCE));
+            throw new BidListNotFoundException(messageSource.getMessage("global.exception.not-null", new Object[] { "bid" }, Locale.FRANCE));
         }
     }
 
@@ -101,19 +96,38 @@ public class BidListService {
 
             if (existedBisList.isPresent()) {
 
-                log.info(
-                        messageSource.getMessage("global.delete", new Object[] { existedBisList }, new Locale("fr")));
+                log.info(messageSource.getMessage("global.bidlist.delete", new Object[] { existedBisList }, new Locale("fr")));
                 bidListRepository.delete(existedBisList.get());
 
             } else {
 
-                throw new BidListNotFoundException(
-                        messageSource.getMessage("global.exception.not-found", new Object[] { "bid" }, Locale.FRANCE));
+                throw new BidListNotFoundException(messageSource.getMessage("global.exception.not-found", new Object[] { "bid" }, Locale.FRANCE));
             }
         } else {
 
-            throw new BidListNotFoundException(
-                    messageSource.getMessage("global.exception.not-null", new Object[] { "bid" }, Locale.FRANCE));
+            throw new BidListNotFoundException(messageSource.getMessage("global.exception.not-null", new Object[] { "bid" }, Locale.FRANCE));
         }
+    }
+
+    /**
+     * return the BidList with the id given in parameter.
+     * 
+     * @param bidListId the id of research bidlist
+     * @return
+     */
+    public BidList findById(int bidListId) {
+
+        Optional<BidList> existedBidList = bidListRepository.findById(bidListId);
+
+        if (existedBidList.isPresent()) {
+
+            log.info(messageSource.getMessage("global.bidlist.find-by-id", new Object[] { bidListId, existedBidList }, new Locale("fr")));
+            return existedBidList.get();
+
+        } else {
+
+            throw new BidListNotFoundException(messageSource.getMessage("global.exception.not-found", new Object[] { "bid" }, Locale.FRANCE));
+        }
+
     }
 }
