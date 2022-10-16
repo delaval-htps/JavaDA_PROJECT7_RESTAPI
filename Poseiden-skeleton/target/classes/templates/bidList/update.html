@@ -17,6 +17,39 @@
 			<!--
 			TODO: Create a form to edit the values of Bid, there are 2 buttons: Update data and Cancel to the list Bid
 			 -->
+			 <input type="hidden" th:field="*{bidListId}" th:value="${bidList.bidListId}"/>
+			 
+			 <div class="form-group col-4 ml-1">
+				<label for="account">[[#{bidlist.label.account}]]</label>
+				<input type="text" class="form-control form-control-sm" 
+					th:value="*{account}" th:field="*{account}"
+					th:classappend="${#fields.hasErrors('account')? 'is-invalid': ''}"/>
+				<div class="invalid-feedback">
+					<p th:each="error:${#fields.errors('account')}" th:text="${error}"></p>
+				</div>
+			</div>
+			<div class="form-group col-4 ml-1">
+				<label for="type">[[#{bidlist.label.type}]]</label>
+				<input type="text" class="form-control form-control-sm" 
+					th:value="*{type}" th:field="*{type}"
+					th:classappend="${#fields.hasErrors('type')? 'is-invalid': ''}"/>
+				<div class="invalid-feedback">
+					<p th:each="error:${#fields.errors('type')}" th:text="${error}"></p>
+				</div>
+			</div>
+			<div class="form-group col-4 ml-1">
+				<label for="bidQuantity">[[#{bidlist.label.quantity}]]</label>
+				<input type="number" min="0" step="0.1" class="form-control form-control-sm" 
+					th:value="*{bidQuantity}" th:field="*{bidQuantity}"
+					th:classappend="${#fields.hasErrors('bidQuantity')? 'is-invalid': ''}"/>
+				<div class="invalid-feedback">
+					<p th:each="error:${#fields.errors('bidQuantity')}" th:text="${error}"></p>
+				</div>
+			</div>
+			<div class="col-4 ml-1">
+				<a href="/bidList/list" class="btn-danger btn" >Cancel</a>
+				<button type="submit" id="submit" class="btn-primary btn">Update BidList</button>
+			</div>
 		</form>
 	</div>
 

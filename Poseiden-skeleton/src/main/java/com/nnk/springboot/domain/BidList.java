@@ -75,4 +75,11 @@ public class BidList {
         this.type = type;
         this.bidQuantity = bidQuantity;
     }
+
+    @Override
+    public String toString() {
+        return "BidList [ id=" + this.getBidListId() + " , account=" + this.getAccount() + " , type=" + this.getType() + " , bidQuantity=" + this.getBidQuantity() + " ]";
+    }
+
+    
 }

@@ -61,7 +61,7 @@ public class BidListService {
             if (existedBidList.isPresent() && existedBidList.get().getBidListId() == bid.getBidListId()) {
 
                 BidList savedUpdatedBidList = bidListRepository.save(bid);
-                log.info(messageSource.getMessage("globale.bidlist.update", new Object[] { savedUpdatedBidList }, new Locale("fr")));
+                log.info(messageSource.getMessage("global.bidlist.update", new Object[] { savedUpdatedBidList }, new Locale("fr")));
                 return savedUpdatedBidList;
 
             } else {
