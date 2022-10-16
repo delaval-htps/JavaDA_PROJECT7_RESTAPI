@@ -1,19 +1,22 @@
 package com.nnk.springboot;
 
-import com.nnk.springboot.domain.BidList;
-import com.nnk.springboot.repositories.BidListRepository;
+import java.util.List;
+import java.util.Optional;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.List;
-import java.util.Optional;
+import com.nnk.springboot.domain.BidList;
+import com.nnk.springboot.repositories.BidListRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@ActiveProfiles(value = "test")
 public class BidTests {
 
 	@Autowired
@@ -26,12 +29,12 @@ public class BidTests {
 		// Save
 		bid = bidListRepository.save(bid);
 		Assert.assertNotNull(bid.getBidListId());
-		Assert.assertEquals(bid.getBidQuantity(), 10d, 10d);
+		Assert.assertEquals(10d, bid.getBidQuantity(), 10d);
 
 		// Update
 		bid.setBidQuantity(20d);
 		bid = bidListRepository.save(bid);
-		Assert.assertEquals(bid.getBidQuantity(), 20d, 20d);
+		Assert.assertEquals(20d, bid.getBidQuantity(), 20d);
 
 		// Find
 		List<BidList> listResult = bidListRepository.findAll();
