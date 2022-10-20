@@ -8,7 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.nnk.springboot.domain.CurvePoint;
-import com.nnk.springboot.exceptions.CurvePointNotfoundException;
+import com.nnk.springboot.exceptions.CurvePointNotFoundException;
 import com.nnk.springboot.repositories.CurvePointRepository;
 import java.util.Locale;
 import java.util.Optional;
@@ -44,7 +44,7 @@ public class CurvePointServiceTest {
         // then
         Assertions.assertThatThrownBy(() -> {
             cut.findById(1);
-        }).isInstanceOf(CurvePointNotfoundException.class);
+        }).isInstanceOf(CurvePointNotFoundException.class);
 
         ArgumentCaptor<String> spyCaptor = ArgumentCaptor.forClass(String.class);
         verify(messageSource).getMessage(spyCaptor.capture(), any(Object[].class), any(Locale.class));
@@ -68,7 +68,7 @@ public class CurvePointServiceTest {
     public void saveCurvePointTest_whenCurvePointNull_thenThrowException() {
         Assertions.assertThatThrownBy(() -> {
             cut.saveCurvePoint(null);
-        }).isInstanceOf(CurvePointNotfoundException.class);
+        }).isInstanceOf(CurvePointNotFoundException.class);
 
         ArgumentCaptor<String> spyCaptor = ArgumentCaptor.forClass(String.class);
         verify(messageSource).getMessage(spyCaptor.capture(), any(Object[].class), any(Locale.class));
@@ -95,7 +95,7 @@ public class CurvePointServiceTest {
     public void updateCurvePointTest_whenCurvePointNull_thenThrowCurvePointException() {
         Assertions.assertThatThrownBy(() -> {
             cut.updateCurvePoint(null);
-        }).isInstanceOf(CurvePointNotfoundException.class);
+        }).isInstanceOf(CurvePointNotFoundException.class);
 
         ArgumentCaptor<String> spyCaptor = ArgumentCaptor.forClass(String.class);
         verify(messageSource).getMessage(spyCaptor.capture(), any(Object[].class), any(Locale.class));
@@ -115,7 +115,7 @@ public class CurvePointServiceTest {
 
         Assertions.assertThatThrownBy(() -> {
             cut.updateCurvePoint(mockUpdatedCurvePoint);
-        }).isInstanceOf(CurvePointNotfoundException.class);
+        }).isInstanceOf(CurvePointNotFoundException.class);
 
         ArgumentCaptor<String> spyCaptor = ArgumentCaptor.forClass(String.class);
         verify(messageSource).getMessage(spyCaptor.capture(), any(Object[].class), any(Locale.class));
@@ -160,7 +160,7 @@ public class CurvePointServiceTest {
         // then
         Assertions.assertThatThrownBy(() -> {
             cut.updateCurvePoint(mockUpdatedCurvePoint);
-        }).isInstanceOf(CurvePointNotfoundException.class);
+        }).isInstanceOf(CurvePointNotFoundException.class);
 
         ArgumentCaptor<String> spyCaptor = ArgumentCaptor.forClass(String.class);
         verify(messageSource).getMessage(spyCaptor.capture(), any(Object[].class), any(Locale.class));
@@ -171,7 +171,7 @@ public class CurvePointServiceTest {
     public void deleteCurvePointTest_whenCurvePointNull_thenThrowCurvePointException() {
         Assertions.assertThatThrownBy(() -> {
             cut.deleteCurvePoint(null);
-        }).isInstanceOf(CurvePointNotfoundException.class);
+        }).isInstanceOf(CurvePointNotFoundException.class);
 
         ArgumentCaptor<String> spyCaptor = ArgumentCaptor.forClass(String.class);
         verify(messageSource).getMessage(spyCaptor.capture(), any(Object[].class), any(Locale.class));
@@ -188,7 +188,7 @@ public class CurvePointServiceTest {
         // then
         Assertions.assertThatThrownBy(() -> {
             cut.deleteCurvePoint(mockNotExistedCurvePoint);
-        }).isInstanceOf(CurvePointNotfoundException.class);
+        }).isInstanceOf(CurvePointNotFoundException.class);
 
         ArgumentCaptor<String> spyCaptor = ArgumentCaptor.forClass(String.class);
         verify(messageSource).getMessage(spyCaptor.capture(), any(Object[].class), any(Locale.class));
@@ -219,7 +219,7 @@ public class CurvePointServiceTest {
         // then
         Assertions.assertThatThrownBy(() -> {
             cut.deleteCurvePoint(mockNotExistedCurvePoint);
-        }).isInstanceOf(CurvePointNotfoundException.class);
+        }).isInstanceOf(CurvePointNotFoundException.class);
 
         ArgumentCaptor<String> spyCaptor = ArgumentCaptor.forClass(String.class);
         verify(messageSource).getMessage(spyCaptor.capture(), any(Object[].class), any(Locale.class));

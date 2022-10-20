@@ -10,7 +10,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import com.nnk.springboot.domain.CurvePoint;
-import com.nnk.springboot.exceptions.CurvePointNotfoundException;
+import com.nnk.springboot.exceptions.CurvePointNotFoundException;
 import com.nnk.springboot.repositories.CurvePointRepository;
 
 import lombok.extern.log4j.Log4j2;
@@ -37,7 +37,7 @@ public class CurvePointService {
 
         } else {
 
-            throw new CurvePointNotfoundException(messageSource.getMessage("global.curve-point.not-found", new Object[] { id }, new Locale("fr")));
+            throw new CurvePointNotFoundException(messageSource.getMessage("global.curve-point.not-found", new Object[] { id }, new Locale("fr")));
         }
     }
 
@@ -49,7 +49,7 @@ public class CurvePointService {
             return curvePointRepository.save(curvePoint);
 
         } else {
-            throw new CurvePointNotfoundException(messageSource.getMessage("global.exception.not-null", new Object[] { "curvePoint" }, new Locale("fr")));
+            throw new CurvePointNotFoundException(messageSource.getMessage("global.exception.not-null", new Object[] { "curvePoint" }, new Locale("fr")));
         }
     }
 
@@ -65,11 +65,11 @@ public class CurvePointService {
                 return savedCurvePoint;
 
             } else {
-                throw new CurvePointNotfoundException(messageSource.getMessage("global.curve-point.not-found", new Object[] { curvePoint.getId() }, new Locale("fr")));
+                throw new CurvePointNotFoundException(messageSource.getMessage("global.curve-point.not-found", new Object[] { curvePoint.getId() }, new Locale("fr")));
             }
 
         } else {
-            throw new CurvePointNotfoundException(messageSource.getMessage("global.exception.not-null", new Object[] { "curvePoint" }, new Locale("fr")));
+            throw new CurvePointNotFoundException(messageSource.getMessage("global.exception.not-null", new Object[] { "curvePoint" }, new Locale("fr")));
         }
 
     }
@@ -85,11 +85,11 @@ public class CurvePointService {
                 curvePointRepository.delete(existedCurvePoint.get());
                 
             } else {
-                throw new CurvePointNotfoundException(messageSource.getMessage("global.curve-point.not-found", new Object[] { curvePoint.getId() }, new Locale("fr")));
+                throw new CurvePointNotFoundException(messageSource.getMessage("global.curve-point.not-found", new Object[] { curvePoint.getId() }, new Locale("fr")));
             }
 
         } else {
-            throw new CurvePointNotfoundException(messageSource.getMessage("global.exception.not-null", new Object[] { "CurvePoint" }, new Locale("fr")));
+            throw new CurvePointNotFoundException(messageSource.getMessage("global.exception.not-null", new Object[] { "CurvePoint" }, new Locale("fr")));
         }
     }
 }

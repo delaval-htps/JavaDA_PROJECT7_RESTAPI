@@ -124,13 +124,6 @@ public class BidListControllerTest {
 
     }
 
-    // @Test
-    // public void showUpdateForm_whenIdIsNull_thenThrowGlobalPoseidonException() throws Exception{
-
-    //     mockMvc.perform(get("/bidList/update/{id}",null)).andExpect(status().is4xxClientError()).andExpect(result-> assertTrue(result.getResolvedException() instanceof GlobalPoseidonException)).andDo(print()).andReturn();
-
-    // }
-
     @Test
     public void updateBid_whenIdIsZero_thenTrhowGlobalPoseidonException() throws Exception {
 
