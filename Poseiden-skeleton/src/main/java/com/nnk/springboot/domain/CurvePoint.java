@@ -47,4 +47,13 @@ public class CurvePoint {
         this.value = value;
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    
+    @Override
+    public String toString() {
+        return "CurvePoint [id=" + id + ", curveId=" + curveId + ", term=" + term + ", value=" + value + ", creationDate=" + creationDate + "]";
+    }
+
 }
