@@ -52,7 +52,7 @@ public class CurvePointServiceTest {
     }
 
     @Test
-    public void findByIdCurvePoint_whenCurvePointExisted_thenThrowCurvePointException() {
+    public void findByIdCurvePoint_whenCurvePointExisted_thenReturnCurvePoint() {
         // when
         CurvePoint mockExistedCurvePoint = new CurvePoint(1, 14.0d, 10.0d);
         mockExistedCurvePoint.setId(1);
@@ -107,14 +107,14 @@ public class CurvePointServiceTest {
 
         // when
         CurvePoint mockExistedCurvePoint = new CurvePoint(1, 14.0d, 10.0d);
-        CurvePoint mockUpdatedCurvePoint = new CurvePoint(1, 13.0d, 1.0d);
+        CurvePoint mockCurvePointToUpdate = new CurvePoint(1, 13.0d, 1.0d);
         mockExistedCurvePoint.setId(1);
-        mockUpdatedCurvePoint.setId(2);
+        mockCurvePointToUpdate.setId(2);
 
         when(curvePointRepository.findById(Mockito.anyInt())).thenReturn(Optional.of(mockExistedCurvePoint));
 
         Assertions.assertThatThrownBy(() -> {
-            cut.updateCurvePoint(mockUpdatedCurvePoint);
+            cut.updateCurvePoint(mockCurvePointToUpdate);
         }).isInstanceOf(CurvePointNotFoundException.class);
 
         ArgumentCaptor<String> spyCaptor = ArgumentCaptor.forClass(String.class);
