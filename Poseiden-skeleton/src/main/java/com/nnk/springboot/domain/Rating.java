@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,9 +25,16 @@ public class Rating {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @NotBlank
     String moodysRating;
+   
+    @NotBlank
     String sandPRating;
+    
+    @NotBlank
     String fitchRating;
+    
+    @NotNull
     Integer orderNumber;
 
     public Rating(String moodysRating, String sandPRating, String fitchRating, int orderNumber) {

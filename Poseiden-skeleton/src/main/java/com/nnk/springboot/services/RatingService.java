@@ -31,7 +31,7 @@ public class RatingService {
      *
      * @return List of all registred Rating(empty if there were not)
      */
-    public List<Rating> findRatings() {
+    public List<Rating> findAll() {
         return ratingRepository.findAll();
     }
 

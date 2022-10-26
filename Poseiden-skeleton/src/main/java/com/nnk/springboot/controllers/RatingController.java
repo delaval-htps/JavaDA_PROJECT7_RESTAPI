@@ -1,6 +1,12 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.domain.Rating;
+import java.util.List;
+import java.util.Locale;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,16 +15,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.validation.Valid;
+import com.nnk.springboot.domain.Rating;
+import com.nnk.springboot.exceptions.GlobalPoseidonException;
+import com.nnk.springboot.repositories.RatingRepository;
+import com.nnk.springboot.services.RatingService;
 
 @Controller
 public class RatingController {
-    // TODO: Inject Rating service
+
+    @Autowired
+    private RatingService ratingService;
+
+    @Autowired
+    private MessageSource messageSource;
 
     @RequestMapping("/rating/list")
-    public String home(Model model)
-    {
-        // TODO: find all Rating, add to model
+    public String home(Model model) {
+        List<Rating> ratings = ratingService.findAll();
+        model.addAttribute("listOfRating", ratings);
         return "rating/list";
     }
 
@@ -29,26 +43,67 @@ public class RatingController {
 
     @PostMapping("/rating/validate")
     public String validate(@Valid Rating rating, BindingResult result, Model model) {
-        // TODO: check data valid and save to db, after saving return Rating list
-        return "rating/add";
+        if (!result.hasErrors()) {
+
+            ratingService.saveRating(rating);
+            return "redirect:/rating/list";
+
+        } else {
+
+            return "rating/add";
+        }
+
     }
 
     @GetMapping("/rating/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        // TODO: get Rating by Id and to model then show to the form
-        return "rating/update";
+        
+        if (id != 0) {
+
+            Rating existingRating = ratingService.findById(id);
+            model.addAttribute("rating", existingRating);
+            return "rating/update";
+
+        } else {
+            throw new GlobalPoseidonException(messageSource.getMessage("global.exception.incorrect-id", new Object[] { new Object() {
+            }.getClass().getEnclosingMethod().getName() }, new Locale("fr")));
+        }
+       
     }
 
     @PostMapping("/rating/update/{id}")
-    public String updateRating(@PathVariable("id") Integer id, @Valid Rating rating,
-                             BindingResult result, Model model) {
-        // TODO: check required fields, if valid call service to update Rating and return Rating list
-        return "redirect:/rating/list";
+    public String updateRating(@PathVariable("id") Integer id, @Valid Rating rating, BindingResult result, Model model) {
+
+        if (id != 0) {
+
+            if (!result.hasErrors()) {
+
+                ratingService.updateRating(rating);
+                return "redirect:/rating/list";
+
+            } else {
+
+                return ("rating/update");
+            }
+
+        } else {
+            throw new GlobalPoseidonException(messageSource.getMessage("global.exception.incorrect-id", new Object[] { new Object() {
+            }.getClass().getEnclosingMethod().getName() }, new Locale("fr")));
+        }
     }
 
     @GetMapping("/rating/delete/{id}")
     public String deleteRating(@PathVariable("id") Integer id, Model model) {
         // TODO: Find Rating by Id and delete the Rating, return to Rating list
-        return "redirect:/rating/list";
+        if (id != 0) {
+
+            Rating existingRating = ratingService.findById(id);
+            ratingService.deleteRating(existingRating);
+            return "redirect:/rating/list";
+
+        } else {
+            throw new GlobalPoseidonException(messageSource.getMessage("global.exception.incorrect-id", new Object[] { new Object() {
+            }.getClass().getEnclosingMethod().getName() }, new Locale("fr")));
+        }
     }
 }
