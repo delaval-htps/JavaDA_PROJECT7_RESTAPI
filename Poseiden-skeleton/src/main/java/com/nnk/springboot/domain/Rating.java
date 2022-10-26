@@ -43,4 +43,14 @@ public class Rating {
         this.sandPRating = sandPRating;
         this.fitchRating = fitchRating;
     }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    
+    @Override
+    public String toString() {
+        return "Rating [id=" + id + ", moodysRating=" + moodysRating + ", sandPRating=" + sandPRating + ", fitchRating=" + fitchRating + ", orderNumber=" + orderNumber + "]";
+    }
+    
 }
