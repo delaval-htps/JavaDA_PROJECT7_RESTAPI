@@ -18,7 +18,64 @@
 			<!--
 			TODO: Create a form to edit the values of RuleName, there are 2 buttons: Update data and Cancel to the RuleName
 			 -->
-
+			 <input type="hidden" th:field="*{id}" th:value="${ruleName.id}"/>
+			 
+			 <div class="form-group col-4 ml-1">
+				<label for="name">[[#{rule-name.label.name}]]</label>
+				<input type="text" class="form-control form-control-sm" 
+					th:placeholder="#{rule-name.label.name}" th:field="*{name}"
+					th:classappend="${#fields.hasErrors('name')? 'is-invalid': ''}"/>
+				<div class="invalid-feedback">
+					<p th:each="error:${#fields.errors('name')}" th:text="${error}"></p>
+				</div>
+			</div>
+			<div class="form-group col-4 ml-1">
+				<label for="description">[[#{rule-name.label.description}]]</label>
+				<input type="text" class="form-control form-control-sm" 
+					th:placeholder="#{rule-name.label.description}" th:field="*{description}"
+					th:classappend="${#fields.hasErrors('description')? 'is-invalid': ''}"/>
+				<div class="invalid-feedback">
+					<p th:each="error:${#fields.errors('description')}" th:text="${error}"></p>
+				</div>
+			</div>
+			<div class="form-group col-4 ml-1">
+				<label for="json">[[#{rule-name.label.json}]]</label>
+				<input type="text" class="form-control form-control-sm" 
+					th:placeholder="#{rule-name.label.json}" th:field="*{json}"
+					th:classappend="${#fields.hasErrors('json')? 'is-invalid': ''}"/>
+				<div class="invalid-feedback">
+					<p th:each="error:${#fields.errors('json')}" th:text="${error}"></p>
+				</div>
+			</div>
+			<div class="form-group col-4 ml-1">
+				<label for="template">[[#{rule-name.label.template}]]</label>
+				<input type="text" class="form-control form-control-sm" 
+					th:placeholder="#{rule-name.label.template}" th:field="*{template}"
+					th:classappend="${#fields.hasErrors('template')? 'is-invalid': ''}"/>
+				<div class="invalid-feedback">
+					<p th:each="error:${#fields.errors('template')}" th:text="${error}"></p>
+				</div>
+			</div><div class="form-group col-4 ml-1">
+				<label for="sqlStr">[[#{rule-name.label.sqlStr}]]</label>
+				<input type="text" class="form-control form-control-sm" 
+					th:placeholder="#{rule-name.label.sqlStr}" th:field="*{sqlStr}"
+					th:classappend="${#fields.hasErrors('sqlStr')? 'is-invalid': ''}"/>
+				<div class="invalid-feedback">
+					<p th:each="error:${#fields.errors('sqlStr')}" th:text="${error}"></p>
+				</div>
+			</div><div class="form-group col-4 ml-1">
+				<label for="sqlPart">[[#{rule-name.label.json}]]</label>
+				<input type="text" class="form-control form-control-sm" 
+					th:placeholder="#{rule-name.label.sqlPart}" th:field="*{sqlPart}"
+					th:classappend="${#fields.hasErrors('sqlPart')? 'is-invalid': ''}"/>
+				<div class="invalid-feedback">
+					<p th:each="error:${#fields.errors('sqlPart')}" th:text="${error}"></p>
+				</div>
+			</div>
+			<div class="col-4 ml-1">
+				<a href="/ruleName/list" class="btn-danger btn" >Cancel</a>
+				<button type="submit" id="submit" class="btn-primary btn">Update ruleName</button>
+			</div>
 		</form>
 	</div>
 
