@@ -6,11 +6,12 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,7 +100,7 @@ public class RatingControllerTest {
     public void validateTest_whenRatingNotValid_ThenReturnRatingAdd() throws Exception {
 
         // when & then
-        mockMvc.perform(post("/rating/validate").param("moddysRating", "moddysRating").param("sandPRating", "sandPRating").param("fitchRating", "fitchRating").param("orderNumber", "1").with(csrf()))
+        mockMvc.perform(post("/rating/validate").param("moddysRating", "").param("sandPRating", "").param("fitchRating", "").param("orderNumber", "").with(csrf()))
                 .andExpect(view().name("rating/add")).andExpect(model().attributeExists("rating"));
 
         verify(ratingService, never()).saveRating(Mockito.any(Rating.class));
@@ -146,7 +147,7 @@ public class RatingControllerTest {
 
     }
     @Test
-    public void updateRating_whenRatingValide_thenReturnToShowUpdate() throws Exception {
+    public void updateRating_whenRatingValid_thenReturnToShowUpdate() throws Exception {
 
         // given
 
