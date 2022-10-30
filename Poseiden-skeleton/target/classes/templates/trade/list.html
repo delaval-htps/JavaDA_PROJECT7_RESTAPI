@@ -12,7 +12,7 @@
 		<div class="col-6">
 			<a href="/bidList/list">Bid List</a>&nbsp;|&nbsp;
 			<a href="/curvePoint/list">Curve Points</a>&nbsp;|&nbsp;
-			<a href="/rating/list">Ratings</a>&nbsp;|&nbsp;
+			<a href="/trade/list">Ratings</a>&nbsp;|&nbsp;
 			<a href="/trade/list">Trade</a>&nbsp;|&nbsp;
 			<a href="/ruleName/list">Rule</a>
 		</div>
@@ -38,6 +38,17 @@
 			</thead>
 			<tbody>
 			<!-- TODO: Show all Trade to the table, the Action column will have Edit & Delete buttons -->
+			<tr th:each="trade :${listOfTrade}">
+					<td th:text="${trade.tradeId}"></td>
+					<td th:text="${trade.account}"></td>
+					<td th:text="${trade.type}"></td>
+					<td th:text="${trade.buyQuantity}"></td>
+					<td>
+						<a th:href="'/trade/update/'+${trade.tradeId}">Edit</a>
+						<span> | </span>
+						<a th:href="'/trade/delete/'+${trade.tradeId}">Delete</a>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 	</div>
