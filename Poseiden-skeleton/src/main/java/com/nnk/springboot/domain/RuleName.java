@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,12 +23,23 @@ public class RuleName {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Integer id;
-
+    
+    @NotBlank
     String name;
+    
+    @NotBlank
     String description;
+   
+    @NotBlank
     String json;
+    
+    @NotBlank
     String template;
+    
+    @NotBlank
     String sqlStr;
+
+    @NotBlank
     String sqlPart;
 
     public RuleName(String ruleName, String description, String json, String template, String sqlString,
@@ -41,13 +53,14 @@ public class RuleName {
         this.sqlPart = sqlPart;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    
+
     @Override
     public String toString() {
         return "RuleName [id=" + id + ", name=" + name + ", description=" + description + ", json=" + json + ", template=" + template + ", sqlStr=" + sqlStr + ", sqlPart=" + sqlPart + "]";
     }
-    
+
 }

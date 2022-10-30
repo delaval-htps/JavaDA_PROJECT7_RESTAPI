@@ -1,7 +1,6 @@
 package com.nnk.springboot.controllers;
 
 import java.util.List;
-import java.util.Locale;
 
 import javax.validation.Valid;
 
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.exceptions.GlobalPoseidonException;
-import com.nnk.springboot.repositories.RatingRepository;
 import com.nnk.springboot.services.RatingService;
 
 @Controller
