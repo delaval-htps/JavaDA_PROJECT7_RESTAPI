@@ -25,7 +25,7 @@ public class RuleNameService {
     private MessageSource messageSource;
     
      /**
-     * Retrieve all rating in db.
+     * Retrieve all rulename in db.
      *
      * @return List of all registred RuleName(empty if there were not)
      */
