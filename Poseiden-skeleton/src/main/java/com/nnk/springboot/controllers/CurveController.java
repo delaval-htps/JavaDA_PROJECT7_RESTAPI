@@ -1,12 +1,12 @@
 package com.nnk.springboot.controllers;
 
 import java.util.List;
-import java.util.Locale;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -66,7 +66,7 @@ public class CurveController {
 
         } else {
             throw new GlobalPoseidonException(messageSource.getMessage("global.exception.incorrect-id", new Object[] { new Object() {
-            }.getClass().getEnclosingMethod().getName() }, new Locale("fr")));
+            }.getClass().getEnclosingMethod().getName() }, LocaleContextHolder.getLocale()));
         }
 
     }
@@ -89,7 +89,7 @@ public class CurveController {
 
         } else {
             throw new GlobalPoseidonException(messageSource.getMessage("global.exception.incorrect-id", new Object[] { new Object() {
-            }.getClass().getEnclosingMethod().getName() }, new Locale("fr")));
+            }.getClass().getEnclosingMethod().getName() }, LocaleContextHolder.getLocale()));
         }
     }
 
@@ -104,7 +104,7 @@ public class CurveController {
 
         } else {
             throw new GlobalPoseidonException(messageSource.getMessage("global.exception.incorrect-id", new Object[] { new Object() {
-            }.getClass().getEnclosingMethod().getName() }, new Locale("fr")));
+            }.getClass().getEnclosingMethod().getName() }, LocaleContextHolder.getLocale()));
         }
     }
 }

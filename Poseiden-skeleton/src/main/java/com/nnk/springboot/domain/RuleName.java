@@ -40,4 +40,14 @@ public class RuleName {
         this.sqlStr = sqlString;
         this.sqlPart = sqlPart;
     }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    
+    @Override
+    public String toString() {
+        return "RuleName [id=" + id + ", name=" + name + ", description=" + description + ", json=" + json + ", template=" + template + ", sqlStr=" + sqlStr + ", sqlPart=" + sqlPart + "]";
+    }
+    
 }

@@ -1,16 +1,20 @@
 package com.nnk.springboot.services;
 
-import com.nnk.springboot.domain.BidList;
-import com.nnk.springboot.exceptions.BidListNotFoundException;
-import com.nnk.springboot.repositories.BidListRepository;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
-import lombok.extern.log4j.Log4j2;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
+
+import com.nnk.springboot.domain.BidList;
+import com.nnk.springboot.exceptions.BidListNotFoundException;
+import com.nnk.springboot.repositories.BidListRepository;
+
+import lombok.extern.log4j.Log4j2;
 
 /**
  * Service class for {@link BidList}
@@ -37,12 +41,12 @@ public class BidListService {
         if (bid != null) {
 
             BidList savedBidList = bidListRepository.save(bid);
-            log.info(messageSource.getMessage("global.bidlist.creation", new Object[] { savedBidList }, new Locale("fr")));
+            log.info(messageSource.getMessage("global.bidlist.creation", new Object[] { savedBidList }, LocaleContextHolder.getLocale()));
             return savedBidList;
 
         } else {
 
-            throw new BidListNotFoundException(messageSource.getMessage("global.exception.not-found", new Object[] { "bid" }, new Locale("fr")));
+            throw new BidListNotFoundException(messageSource.getMessage("global.exception.not-found", new Object[] { "bid" }, LocaleContextHolder.getLocale()));
         }
     }
 
@@ -62,7 +66,7 @@ public class BidListService {
             if (existedBidList.isPresent() && Objects.equals(existedBidList.get().getBidListId(), bid.getBidListId())) {
 
                 BidList savedUpdatedBidList = bidListRepository.save(bid);
-                log.info(messageSource.getMessage("global.bidlist.update", new Object[] { savedUpdatedBidList }, new Locale("fr")));
+                log.info(messageSource.getMessage("global.bidlist.update", new Object[] { savedUpdatedBidList }, LocaleContextHolder.getLocale()));
                 return savedUpdatedBidList;
 
             } else {
@@ -97,7 +101,7 @@ public class BidListService {
 
             if (existedBisList.isPresent()) {
 
-                log.info(messageSource.getMessage("global.bidlist.delete", new Object[] { existedBisList }, new Locale("fr")));
+                log.info(messageSource.getMessage("global.bidlist.delete", new Object[] { existedBisList }, LocaleContextHolder.getLocale()));
                 bidListRepository.delete(existedBisList.get());
 
             } else {
@@ -122,7 +126,7 @@ public class BidListService {
 
         if (existedBidList.isPresent()) {
 
-            log.info(messageSource.getMessage("global.bidlist.find-by-id", new Object[] { bidListId, existedBidList }, new Locale("fr")));
+            log.info(messageSource.getMessage("global.bidlist.find-by-id", new Object[] { bidListId, existedBidList }, LocaleContextHolder.getLocale()));
             return existedBidList.get();
 
         } else {
