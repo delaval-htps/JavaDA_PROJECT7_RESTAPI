@@ -5,6 +5,7 @@ import com.nnk.springboot.exceptions.BidListNotFoundException;
 import com.nnk.springboot.repositories.BidListRepository;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +59,7 @@ public class BidListService {
 
             Optional<BidList> existedBidList = bidListRepository.findById(bid.getBidListId());
 
-            if (existedBidList.isPresent() && existedBidList.get().getBidListId() == bid.getBidListId()) {
+            if (existedBidList.isPresent() && Objects.equals(existedBidList.get().getBidListId(), bid.getBidListId())) {
 
                 BidList savedUpdatedBidList = bidListRepository.save(bid);
                 log.info(messageSource.getMessage("global.bidlist.update", new Object[] { savedUpdatedBidList }, new Locale("fr")));

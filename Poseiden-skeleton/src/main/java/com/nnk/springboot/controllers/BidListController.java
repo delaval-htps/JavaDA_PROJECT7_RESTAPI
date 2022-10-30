@@ -53,8 +53,8 @@ public class BidListController {
         // TODO: get Bid by Id and to model then show to the form
 
         if (id != 0) {
-            BidList existedBidList = bidListService.findById(id);
-            model.addAttribute("bidList", existedBidList);
+            BidList existingBidList = bidListService.findById(id);
+            model.addAttribute("bidList", existingBidList);
 
             return "bidList/update";
 

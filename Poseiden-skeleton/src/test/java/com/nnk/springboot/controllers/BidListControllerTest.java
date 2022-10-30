@@ -1,7 +1,6 @@
 package com.nnk.springboot.controllers;
 
 import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.nullable;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -9,7 +8,6 @@ import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -125,13 +123,6 @@ public class BidListControllerTest {
         mockMvc.perform(get("/bidList/update/{id}", 0)).andExpect(status().is4xxClientError()).andExpect(result -> assertTrue(result.getResolvedException() instanceof GlobalPoseidonException));
 
     }
-
-    // @Test
-    // public void showUpdateForm_whenIdIsNull_thenThrowGlobalPoseidonException() throws Exception{
-
-    //     mockMvc.perform(get("/bidList/update/{id}",null)).andExpect(status().is4xxClientError()).andExpect(result-> assertTrue(result.getResolvedException() instanceof GlobalPoseidonException)).andDo(print()).andReturn();
-
-    // }
 
     @Test
     public void updateBid_whenIdIsZero_thenTrhowGlobalPoseidonException() throws Exception {

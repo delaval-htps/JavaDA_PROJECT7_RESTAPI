@@ -41,10 +41,19 @@ public class CurvePoint {
     
     private Timestamp creationDate;
 
-    public CurvePoint(Integer id, Double term, Double value) {
-        this.curveId = id;
+    public CurvePoint(Integer curveId, Double term, Double value) {
+        this.curveId = curveId;
         this.term = term;
         this.value = value;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    
+    @Override
+    public String toString() {
+        return "CurvePoint [id=" + id + ", curveId=" + curveId + ", term=" + term + ", value=" + value + ", creationDate=" + creationDate + "]";
     }
 
 }
