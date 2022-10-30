@@ -57,4 +57,24 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
+
+    public User() {
+    }
+    
+    /**
+     * @param id
+     * @param username
+     * @param password
+     * @param fullname
+     * @param role
+     */
+    public User(Integer id, @NotBlank(message = "Username is mandatory") String username, @NotBlank(message = "Password is mandatory") String password,
+            @NotBlank(message = "FullName is mandatory") String fullname, @NotBlank(message = "Role is mandatory") String role) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.fullname = fullname;
+        this.role = role;
+    }
+    
 }
