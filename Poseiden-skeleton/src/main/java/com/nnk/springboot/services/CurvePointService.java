@@ -32,7 +32,7 @@ public class CurvePointService {
         Optional<CurvePoint> existedCurvePoint = curvePointRepository.findById(id);
 
         if (existedCurvePoint.isPresent()) {
-            log.info(messageSource.getMessage("global.curve-point.find-by-id", new Object[] { id, existedCurvePoint }, new Locale("fr")));
+            log.info(messageSource.getMessage("global.curve-point.find-by-id", new Object[] { id, existedCurvePoint.get() }, new Locale("fr")));
             return existedCurvePoint.get();
 
         } else {
