@@ -90,7 +90,7 @@ public class RuleNameControllerTest {
         when(ruleNameService.saveRuleName(Mockito.any(RuleName.class))).thenReturn(registredmockRuleName1);
 
         // when & then
-        mockMvc.perform(post("/ruleName/validate").param("name", "ruleName1").param("description", "description").param("json", "jsonString").param("sqlStr", "sqlString").param("sqlPart", "sqlPart")
+        mockMvc.perform(post("/ruleName/validate").param("name", "ruleName1").param("description", "description").param("json", "jsonString").param("template","template").param("sqlStr", "sqlString").param("sqlPart", "sqlPart")
                 .with(csrf()))
 
                 .andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/ruleName/list"));
