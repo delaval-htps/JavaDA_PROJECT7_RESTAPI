@@ -73,8 +73,6 @@ public class CurveController {
 
     @PostMapping("/curvePoint/update/{id}")
     public String updateCurvePoint(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint, BindingResult result, Model model) {
-        // TODO: check required fields, if valid call service to update Curve
-        // and return Curve list
         if (id != 0) {
 
             if (!result.hasErrors()) {
@@ -95,7 +93,6 @@ public class CurveController {
 
     @GetMapping("/curvePoint/delete/{id}")
     public String deleteCurvePoint(@PathVariable("id") Integer id, Model model) {
-        // TODO: Find Curve by Id and delete the Curve, return to Curve list
         if (id != 0) {
 
             CurvePoint existingCurvePoint = curvePointService.findById(id);

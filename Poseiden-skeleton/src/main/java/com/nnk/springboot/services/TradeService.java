@@ -10,7 +10,6 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.nnk.springboot.domain.Trade;
-import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.exceptions.TradeNotFoundException;
 import com.nnk.springboot.repositories.TradeRepository;
 

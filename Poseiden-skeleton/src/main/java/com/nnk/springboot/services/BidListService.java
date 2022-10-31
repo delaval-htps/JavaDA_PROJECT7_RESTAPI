@@ -30,6 +30,37 @@ public class BidListService {
     private MessageSource messageSource;
 
     /**
+     * return the BidList with the id given in parameter.
+     * 
+     * @param bidListId the id of research bidlist
+     * @return
+     */
+    public BidList findById(int bidListId) {
+
+        Optional<BidList> existedBidList = bidListRepository.findById(bidListId);
+
+        if (existedBidList.isPresent()) {
+
+            log.info(messageSource.getMessage("global.bidlist.find-by-id", new Object[] { bidListId, existedBidList }, LocaleContextHolder.getLocale()));
+            return existedBidList.get();
+
+        } else {
+
+            throw new BidListNotFoundException(messageSource.getMessage("global.exception.not-found", new Object[] { "bid" }, Locale.FRANCE));
+        }
+
+    }
+
+     /**
+     * Retrieve all bidlist in db.
+     *
+     * @return List of all registred BidList(empty if there were not)
+     */
+     public List<BidList> findBidLists() {
+         return bidListRepository.findAll();
+     }
+    
+    /**
      * save a {@link BidList} in db.
      *
      * @param bid the bidlist to save
@@ -79,14 +110,7 @@ public class BidListService {
         }
     }
 
-    /**
-     * Retrieve all bidlist in db.
-     *
-     * @return List of all registred BidList(empty if there were not)
-     */
-    public List<BidList> findBidLists() {
-        return bidListRepository.findAll();
-    }
+   
 
     /**
      * Delete a BidList given in parameter.
@@ -114,25 +138,4 @@ public class BidListService {
         }
     }
 
-    /**
-     * return the BidList with the id given in parameter.
-     * 
-     * @param bidListId the id of research bidlist
-     * @return
-     */
-    public BidList findById(int bidListId) {
-
-        Optional<BidList> existedBidList = bidListRepository.findById(bidListId);
-
-        if (existedBidList.isPresent()) {
-
-            log.info(messageSource.getMessage("global.bidlist.find-by-id", new Object[] { bidListId, existedBidList }, LocaleContextHolder.getLocale()));
-            return existedBidList.get();
-
-        } else {
-
-            throw new BidListNotFoundException(messageSource.getMessage("global.exception.not-found", new Object[] { "bid" }, Locale.FRANCE));
-        }
-
-    }
 }
