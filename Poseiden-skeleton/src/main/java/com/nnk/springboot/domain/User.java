@@ -68,13 +68,21 @@ public class User {
      * @param fullname
      * @param role
      */
-    public User(Integer id, @NotBlank(message = "Username is mandatory") String username, @NotBlank(message = "Password is mandatory") String password,
-            @NotBlank(message = "FullName is mandatory") String fullname, @NotBlank(message = "Role is mandatory") String role) {
+    public User(Integer id, String username,String password,String fullname,  String role) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.fullname = fullname;
         this.role = role;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", username=" + username + ", password=" + password + ", fullname=" + fullname + ", role=" + role + "]";
     }
     
 }

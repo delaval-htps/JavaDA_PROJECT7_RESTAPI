@@ -49,7 +49,6 @@ public class BidListController {
 
     @GetMapping("/bidList/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        // TODO: get Bid by Id and to model then show to the form
 
         if (id != 0) {
             BidList existingBidList = bidListService.findById(id);
@@ -66,9 +65,6 @@ public class BidListController {
 
     @PostMapping("/bidList/update/{id}")
     public String updateBid(@PathVariable("id") Integer id, @Valid BidList bidList, BindingResult result, Model model) {
-        // TODO: check required fields, if valid call service to update Bid and
-        // return
-        // list Bid
 
         if (id != 0) {
 
@@ -89,7 +85,6 @@ public class BidListController {
 
     @GetMapping("/bidList/delete/{id}")
     public String deleteBid(@PathVariable("id") Integer id, Model model) {
-        // TODO: Find Bid by Id and delete the bid, return to Bid list
         if (id != 0) {
 
             BidList existedBidList = bidListService.findById(id);

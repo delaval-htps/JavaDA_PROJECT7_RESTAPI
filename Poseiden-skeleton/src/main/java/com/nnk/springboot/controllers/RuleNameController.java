@@ -21,7 +21,6 @@ import com.nnk.springboot.services.RuleNameService;
 
 @Controller
 public class RuleNameController {
-    // TODO: Inject RuleName service
     @Autowired
     private RuleNameService ruleNameService;
 
@@ -42,8 +41,6 @@ public class RuleNameController {
 
     @PostMapping("/ruleName/validate")
     public String validate(@Valid RuleName ruleName, BindingResult result, Model model) {
-        // TODO: check data valid and save to db, after saving return RuleName
-        // list
         if (!result.hasErrors()) {
             ruleNameService.saveRuleName(ruleName);
             return "redirect:/ruleName/list";
@@ -54,7 +51,6 @@ public class RuleNameController {
 
     @GetMapping("/ruleName/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        // TODO: get RuleName by Id and to model then show to the form
         if (id != 0) {
 
             RuleName existingRuleName = ruleNameService.findById(id);
@@ -69,8 +65,6 @@ public class RuleNameController {
 
     @PostMapping("/ruleName/update/{id}")
     public String updateRuleName(@PathVariable("id") Integer id, @Valid RuleName ruleName, BindingResult result, Model model) {
-        // TODO: check required fields, if valid call service to update RuleName
-        // and return RuleName list
         if (id != 0) {
 
             if (!result.hasErrors()) {
@@ -89,8 +83,6 @@ public class RuleNameController {
 
     @GetMapping("/ruleName/delete/{id}")
     public String deleteRuleName(@PathVariable("id") Integer id, Model model) {
-        // TODO: Find RuleName by Id and delete the RuleName, return to Rule
-        // list
         if (id != 0) {
 
             RuleName existingRuleName = ruleNameService.findById(id);

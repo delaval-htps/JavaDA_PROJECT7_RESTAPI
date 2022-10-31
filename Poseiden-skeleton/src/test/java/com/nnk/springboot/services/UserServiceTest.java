@@ -136,7 +136,6 @@ public class UserServiceTest {
     @Test
     public void updateUserTest_whenUserNoExisted_thenUpdateUser() {
         // when
-        User mockNotExistedUser = new User(1, "username1", "password1", "fullName1", "userRole1");
         User mockUserToUpdate = new User(1, "username2", "password2", "fullName2", "userRole2");
 
         when(userRepository.findById(anyInt())).thenReturn(Optional.empty());
