@@ -25,7 +25,7 @@ import lombok.extern.log4j.Log4j2;
     private MessageSource messageSource;
 
     public List&lt;Trade&gt; findAll() {
-<span class="nc" id="L28">        return tradeRepository.findAll();</span>
+<span class="fc" id="L28">        return tradeRepository.findAll();</span>
     }
 
     public Trade findById(Integer id) {
@@ -52,7 +52,7 @@ import lombok.extern.log4j.Log4j2;
 
     public Trade updateTrade(Trade trade) {
 
-<span class="pc bpc" id="L55" title="2 of 4 branches missed.">        if (trade != null &amp;&amp; trade.getTradeId() != 0) {</span>
+<span class="fc bfc" id="L55" title="All 4 branches covered.">        if (trade != null &amp;&amp; trade.getTradeId() != 0) {</span>
 
 <span class="fc" id="L57">            Optional&lt;Trade&gt; existingTrade = tradeRepository.findById(trade.getTradeId());</span>
 
@@ -69,7 +69,7 @@ import lombok.extern.log4j.Log4j2;
             }
 
         } else {
-<span class="nc" id="L72">            throw new TradeNotFoundException(messageSource.getMessage(&quot;global.exception.not-null&quot;, new Object[] { &quot;trade&quot; }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L72">            throw new TradeNotFoundException(messageSource.getMessage(&quot;global.exception.not-null&quot;, new Object[] { &quot;trade&quot; }, LocaleContextHolder.getLocale()));</span>
         }
 
     }

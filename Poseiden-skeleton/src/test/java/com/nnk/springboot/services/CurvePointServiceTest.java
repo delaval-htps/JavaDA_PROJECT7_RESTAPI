@@ -7,12 +7,13 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.nnk.springboot.domain.CurvePoint;
-import com.nnk.springboot.exceptions.CurvePointNotFoundException;
-import com.nnk.springboot.repositories.CurvePointRepository;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+
 import org.assertj.core.api.Assertions;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -22,6 +23,10 @@ import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.context.MessageSource;
+
+import com.nnk.springboot.domain.CurvePoint;
+import com.nnk.springboot.exceptions.CurvePointNotFoundException;
+import com.nnk.springboot.repositories.CurvePointRepository;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CurvePointServiceTest {
@@ -34,6 +39,25 @@ public class CurvePointServiceTest {
 
     @InjectMocks
     private CurvePointService cut;
+
+    private List<CurvePoint> curvepoints;
+    private CurvePoint mockCurvePoint1, mockCurvePoint2;
+
+    @Before
+    public void intialize() {
+        curvepoints = new ArrayList<>();
+        mockCurvePoint1 = new CurvePoint(1, 14.0d, 10.0d);
+        mockCurvePoint2 = new CurvePoint(2, 14.0d, 10.0d);
+        curvepoints.add(mockCurvePoint1);
+        curvepoints.add(mockCurvePoint2);
+    }
+
+    @Test
+      public void findAll() {
+          when(curvePointRepository.findAll()).thenReturn(curvepoints);
+          List<CurvePoint> findAll = cut.findAll();
+          assertEquals(findAll, curvepoints);
+      }
 
     @Test
     public void findByIdCurvePoint_whenCurvePointNotExisted_thenThrowCurvePointException() {

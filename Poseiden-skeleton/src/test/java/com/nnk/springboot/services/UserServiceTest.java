@@ -7,10 +7,13 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -35,6 +38,25 @@ public class UserServiceTest {
 
     @InjectMocks
     private UserService cut;
+
+    private List<User> users;
+    private User mockUser1, mockUser2;
+
+    @Before
+    public void intialize() {
+        users = new ArrayList<>();
+        mockUser1 = new User(1, "username", "password", "fullName", "userRole");
+        mockUser2 = new User(2, "username", "password", "fullName", "userRole");
+        users.add(mockUser1);
+        users.add(mockUser2);
+    }
+
+    @Test
+    public void findAll() {
+        when(userRepository.findAll()).thenReturn(users);
+        List<User> findAll = cut.findAll();
+        assertEquals(findAll, users);
+    }
 
     @Test
     public void findByIdUser_whenUserNotExisted_thenThrowUserException() {
@@ -148,6 +170,29 @@ public class UserServiceTest {
         ArgumentCaptor<String> spyCaptor = ArgumentCaptor.forClass(String.class);
         verify(messageSource).getMessage(spyCaptor.capture(), any(Object[].class), any(Locale.class));
         assertEquals("global.user.not-found", spyCaptor.getValue());
+    }
+
+    @Test
+    public void updateUserTest_whenUserNull_thenThrowUserException() {
+        Assertions.assertThatThrownBy(() -> {
+            cut.updateUser(null);
+        }).isInstanceOf(UserNotFoundException.class);
+
+        ArgumentCaptor<String> spyCaptor = ArgumentCaptor.forClass(String.class);
+        verify(messageSource).getMessage(spyCaptor.capture(), any(Object[].class), any(Locale.class));
+        assertEquals("global.exception.not-null", spyCaptor.getValue());
+    }
+
+    @Test
+    public void updateUserTest_whenUserIdZero_thenThrowUserException() {
+        mockUser1.setId(0);
+        Assertions.assertThatThrownBy(() -> {
+            cut.updateUser(mockUser1);
+        }).isInstanceOf(UserNotFoundException.class);
+
+        ArgumentCaptor<String> spyCaptor = ArgumentCaptor.forClass(String.class);
+        verify(messageSource).getMessage(spyCaptor.capture(), any(Object[].class), any(Locale.class));
+        assertEquals("global.exception.not-null", spyCaptor.getValue());
     }
 
     @Test

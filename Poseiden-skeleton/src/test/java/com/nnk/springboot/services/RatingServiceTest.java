@@ -7,10 +7,13 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -27,7 +30,7 @@ import com.nnk.springboot.repositories.RatingRepository;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RatingServiceTest {
-    
+
     @Mock
     private RatingRepository ratingRepository;
 
@@ -36,6 +39,25 @@ public class RatingServiceTest {
 
     @InjectMocks
     private RatingService cut;
+
+    private List<Rating> ratings;
+    private Rating mockRating1, mockRating2;
+
+    @Before
+    public void intialize() {
+        ratings = new ArrayList<>();
+        mockRating1 = new Rating("moodysRating", "sandPrating", "fitchRating", 1);
+        mockRating2 = new Rating("moodysRating", "sandPrating", "fitchRating", 2);
+        ratings.add(mockRating1);
+        ratings.add(mockRating2);
+    }
+
+    @Test
+      public void findAll() {
+          when(ratingRepository.findAll()).thenReturn(ratings);
+          List<Rating> findAll = cut.findAll();
+          assertEquals(findAll, ratings);
+      }
 
     @Test
     public void findByIdRating_whenRatingNotExisted_thenThrowRatingNotFoundException() {
@@ -66,7 +88,7 @@ public class RatingServiceTest {
 
         assertEquals(findExistingRating, mockRating);
     }
-    
+
     @Test
     public void saveRatingTest_whenRatingNull_thenThrowException() {
         Assertions.assertThatThrownBy(() -> {
@@ -154,7 +176,7 @@ public class RatingServiceTest {
     public void updateRatingTest_whenRatingNoExisted_thenUpdateRating() {
         // when
         Rating mockNotExistedRating = new Rating("moodysRating", "sandPrating", "fitchRating", 1);
-        Rating mockRatingToUpdate =new Rating("moodysRating2", "sandPrating2", "fitchRating2", 2);
+        Rating mockRatingToUpdate = new Rating("moodysRating2", "sandPrating2", "fitchRating2", 2);
         mockNotExistedRating.setId(1);
         mockRatingToUpdate.setId(1);
 

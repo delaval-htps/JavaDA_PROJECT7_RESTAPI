@@ -30,7 +30,7 @@ import lombok.extern.log4j.Log4j2;
      * @return List of all registred RuleName(empty if there were not)
      */
      public List&lt;RuleName&gt; findAll() {
-<span class="nc" id="L33">         return ruleNameRepository.findAll();</span>
+<span class="fc" id="L33">         return ruleNameRepository.findAll();</span>
      }
     
      public RuleName findById(Integer id) {
@@ -56,7 +56,7 @@ import lombok.extern.log4j.Log4j2;
     
      public RuleName updateRuleName(RuleName ruleName) {
 
-<span class="pc bpc" id="L59" title="2 of 4 branches missed.">         if (ruleName != null &amp;&amp; ruleName.getId() != 0) {</span>
+<span class="fc bfc" id="L59" title="All 4 branches covered.">         if (ruleName != null &amp;&amp; ruleName.getId() != 0) {</span>
 
 <span class="fc" id="L61">             Optional&lt;RuleName&gt; existingRuleName = ruleNameRepository.findById(ruleName.getId());</span>
 
@@ -73,7 +73,7 @@ import lombok.extern.log4j.Log4j2;
              }
 
          } else {
-<span class="nc" id="L76">             throw new RuleNameNotFoundException(messageSource.getMessage(&quot;global.exception.not-null&quot;, new Object[] { &quot;ruleName&quot; }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L76">             throw new RuleNameNotFoundException(messageSource.getMessage(&quot;global.exception.not-null&quot;, new Object[] { &quot;ruleName&quot; }, LocaleContextHolder.getLocale()));</span>
          }
 
      }

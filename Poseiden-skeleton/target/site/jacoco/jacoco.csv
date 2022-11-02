@@ -9,29 +9,29 @@ spring-boot-skeleton,com.nnk.springboot.controllers,RatingController.new Object(
 spring-boot-skeleton,com.nnk.springboot.controllers,RatingController.new Object() {...},0,6,0,0,0,1,0,1,0,1
 spring-boot-skeleton,com.nnk.springboot.controllers,RatingController.new Object() {...},0,6,0,0,0,1,0,1,0,1
 spring-boot-skeleton,com.nnk.springboot.controllers,TradeController.new Object() {...},0,6,0,0,0,1,0,1,0,1
-spring-boot-skeleton,com.nnk.springboot.controllers,TradeController.new Object() {...},6,0,0,0,1,0,1,0,1,0
+spring-boot-skeleton,com.nnk.springboot.controllers,TradeController.new Object() {...},0,6,0,0,0,1,0,1,0,1
 spring-boot-skeleton,com.nnk.springboot.controllers,TradeController.new Object() {...},0,6,0,0,0,1,0,1,0,1
 spring-boot-skeleton,com.nnk.springboot.controllers,BidListController.new Object() {...},0,6,0,0,0,1,0,1,0,1
 spring-boot-skeleton,com.nnk.springboot.controllers,BidListController.new Object() {...},0,6,0,0,0,1,0,1,0,1
 spring-boot-skeleton,com.nnk.springboot.controllers,BidListController.new Object() {...},0,6,0,0,0,1,0,1,0,1
 spring-boot-skeleton,com.nnk.springboot.controllers,RuleNameController.new Object() {...},0,6,0,0,0,1,0,1,0,1
 spring-boot-skeleton,com.nnk.springboot.controllers,CurveController.new Object() {...},0,6,0,0,0,1,0,1,0,1
-spring-boot-skeleton,com.nnk.springboot.controllers,TradeController,21,114,1,9,2,26,1,11,0,7
-spring-boot-skeleton,com.nnk.springboot.controllers,RuleNameController.new Object() {...},6,0,0,0,1,0,1,0,1,0
+spring-boot-skeleton,com.nnk.springboot.controllers,TradeController,0,135,0,10,0,28,0,12,0,7
+spring-boot-skeleton,com.nnk.springboot.controllers,RuleNameController.new Object() {...},0,6,0,0,0,1,0,1,0,1
 spring-boot-skeleton,com.nnk.springboot.controllers,CurveController.new Object() {...},0,6,0,0,0,1,0,1,0,1
 spring-boot-skeleton,com.nnk.springboot.controllers,CurveController.new Object() {...},0,6,0,0,0,1,0,1,0,1
 spring-boot-skeleton,com.nnk.springboot.controllers,RuleNameController.new Object() {...},0,6,0,0,0,1,0,1,0,1
-spring-boot-skeleton,com.nnk.springboot.controllers,RuleNameController,21,114,1,9,2,26,1,11,0,7
-spring-boot-skeleton,com.nnk.springboot.services,UserService,19,214,2,16,2,28,3,13,1,6
-spring-boot-skeleton,com.nnk.springboot.services,CurvePointService,4,240,1,17,1,29,2,14,1,6
-spring-boot-skeleton,com.nnk.springboot.services,TradeService,19,218,2,16,2,28,3,13,1,6
-spring-boot-skeleton,com.nnk.springboot.services,RuleNameService,19,218,2,16,2,28,3,13,1,6
-spring-boot-skeleton,com.nnk.springboot.services,BidListService,4,232,1,17,1,29,2,14,1,6
-spring-boot-skeleton,com.nnk.springboot.services,RatingService,4,233,1,17,1,29,2,14,1,6
+spring-boot-skeleton,com.nnk.springboot.controllers,RuleNameController,0,135,0,10,0,28,0,12,0,7
+spring-boot-skeleton,com.nnk.springboot.services,UserService,0,233,0,18,0,30,0,16,0,7
+spring-boot-skeleton,com.nnk.springboot.services,CurvePointService,0,244,1,17,0,30,1,15,0,7
+spring-boot-skeleton,com.nnk.springboot.services,TradeService,0,237,0,18,0,30,0,16,0,7
+spring-boot-skeleton,com.nnk.springboot.services,RuleNameService,0,237,0,18,0,30,0,16,0,7
+spring-boot-skeleton,com.nnk.springboot.services,BidListService,0,236,1,17,0,30,1,15,0,7
+spring-boot-skeleton,com.nnk.springboot.services,RatingService,0,237,1,17,0,30,1,15,0,7
 spring-boot-skeleton,com.nnk.springboot.configuration,ConfigApplication,0,15,0,0,0,5,0,2,0,2
 spring-boot-skeleton,com.nnk.springboot,Application,5,3,0,0,2,1,1,1,1,1
 spring-boot-skeleton,com.nnk.springboot.domain,RuleName,66,73,0,0,2,17,2,16,2,16
-spring-boot-skeleton,com.nnk.springboot.domain,User,64,24,0,0,15,10,10,3,10,3
+spring-boot-skeleton,com.nnk.springboot.domain,User,60,28,0,0,13,12,9,4,9,4
 spring-boot-skeleton,com.nnk.springboot.domain,CurvePoint,67,43,0,0,4,11,6,10,6,10
 spring-boot-skeleton,com.nnk.springboot.domain,Rating,50,54,0,0,2,13,2,12,2,12
 spring-boot-skeleton,com.nnk.springboot.domain,Trade,189,36,0,0,18,10,36,9,36,9

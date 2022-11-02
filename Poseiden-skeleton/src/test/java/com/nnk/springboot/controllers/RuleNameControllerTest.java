@@ -156,6 +156,22 @@ public class RuleNameControllerTest {
 
     }
     @Test
+    public void updateRuleName_whenRuleNameIdZero_thenThrowGlobalPoseidonException() throws Exception {
+
+        // given
+        mockRuleName2.setId(0);
+        when(ruleNameService.updateRuleName(Mockito.any(RuleName.class))).thenReturn(mockRuleName2);
+
+        mockMvc.perform(post("/ruleName/update/{id}", mockRuleName2.getId()).param("name", mockRuleName2.getName()).param("description", mockRuleName2.getDescription())
+                .param("template", mockRuleName2.getTemplate()).param("json", mockRuleName2.getJson()).param("sqlStr", mockRuleName2.getSqlStr()).param("sqlPart", mockRuleName2.getSqlPart())
+                .with(csrf())).andExpect(status().is4xxClientError()).andExpect(result -> assertTrue(result.getResolvedException() instanceof GlobalPoseidonException));
+
+        verify(ruleNameService, never()).updateRuleName(Mockito.any(RuleName.class));
+
+    }
+
+   
+    @Test
     public void deleteRuleName_whenIdIsZero_thenThrowGlobalPoseidonException() throws Exception {
 
         mockMvc.perform(get("/ruleName/delete/{id}", 0)).andExpect(status().is4xxClientError()).andExpect(result -> assertTrue(result.getResolvedException() instanceof GlobalPoseidonException));

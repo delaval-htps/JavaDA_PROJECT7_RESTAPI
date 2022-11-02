@@ -88,8 +88,7 @@ public class TradeControllerTest {
         when(tradeService.saveTrade(Mockito.any(Trade.class))).thenReturn(registredmockTrade1);
 
         // when & then
-        mockMvc.perform(post("/trade/validate").param("account", "account").param("type", "type")
-                .with(csrf()))
+        mockMvc.perform(post("/trade/validate").param("account", "account").param("type", "type").with(csrf()))
 
                 .andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/trade/list"));
 
@@ -101,8 +100,8 @@ public class TradeControllerTest {
     public void validateTest_whenTradeNotValid_ThenReturnTradeAdd() throws Exception {
 
         // when & then
-        mockMvc.perform(post("/trade/validate").param("name", "").param("description", "").param("json", "").param("sqlStr", "").param("sqlPart", "").with(csrf()))
-                .andExpect(view().name("trade/add")).andExpect(model().attributeExists("trade"));
+        mockMvc.perform(post("/trade/validate").param("name", "").param("description", "").param("json", "").param("sqlStr", "").param("sqlPart", "").with(csrf())).andExpect(view().name("trade/add"))
+                .andExpect(model().attributeExists("trade"));
 
         verify(tradeService, never()).saveTrade(Mockito.any(Trade.class));
 
@@ -132,8 +131,7 @@ public class TradeControllerTest {
     @Test
     public void updateTrade_whenTradeNotValid_thenReturnToShowUpdate() throws Exception {
 
-        mockMvc.perform(post("/trade/update/{id}", 1).param("account", "").param("type", "").with(csrf()))
-                .andExpect(view().name("trade/update")).andExpect(model().attributeExists("trade"));
+        mockMvc.perform(post("/trade/update/{id}", 1).param("account", "").param("type", "").with(csrf())).andExpect(view().name("trade/update")).andExpect(model().attributeExists("trade"));
 
         verify(tradeService, never()).updateTrade(Mockito.any(Trade.class));
 
@@ -146,18 +144,33 @@ public class TradeControllerTest {
         mockTrade2.setTradeId(1);
         when(tradeService.updateTrade(Mockito.any(Trade.class))).thenReturn(mockTrade2);
 
-        mockMvc.perform(post("/trade/update/{id}", mockTrade2.getTradeId()).param("account", mockTrade2.getAccount()).param("type", mockTrade2.getType())
-                .with(csrf())).andExpect(redirectedUrl("/trade/list"));
+        mockMvc.perform(post("/trade/update/{id}", mockTrade2.getTradeId()).param("account", mockTrade2.getAccount()).param("type", mockTrade2.getType()).with(csrf()))
+                .andExpect(redirectedUrl("/trade/list"));
 
         verify(tradeService, times(1)).updateTrade(Mockito.any(Trade.class));
 
     }
+
+    @Test
+    public void updateTrade_whenTradeIdZero_thenThrowGlobalPoseidonException() throws Exception {
+
+        // given
+        mockTrade2.setTradeId(0);
+        when(tradeService.updateTrade(Mockito.any(Trade.class))).thenReturn(mockTrade2);
+
+        mockMvc.perform(post("/trade/update/{id}", mockTrade2.getTradeId()).param("account", mockTrade2.getAccount()).param("type", mockTrade2.getType()).with(csrf()))
+                .andExpect(status().is4xxClientError()).andExpect(result -> assertTrue(result.getResolvedException() instanceof GlobalPoseidonException));
+        verify(tradeService, never()).updateTrade(Mockito.any(Trade.class));
+
+    }
+
     @Test
     public void deleteTrade_whenIdIsZero_thenThrowGlobalPoseidonException() throws Exception {
 
         mockMvc.perform(get("/trade/delete/{id}", 0)).andExpect(status().is4xxClientError()).andExpect(result -> assertTrue(result.getResolvedException() instanceof GlobalPoseidonException));
 
     }
+
     @Test
     public void deleteTrade_whenTradeExists_thenReturnToTradeList() throws Exception {
 

@@ -65,7 +65,7 @@ import com.nnk.springboot.services.TradeService;
 
     @PostMapping(&quot;/trade/update/{id}&quot;)
     public String updateTrade(@PathVariable(&quot;id&quot;) Integer id, @Valid Trade trade, BindingResult result, Model model) {
-<span class="pc bpc" id="L68" title="1 of 2 branches missed.">        if (id != 0) {</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        if (id != 0) {</span>
 
 <span class="fc bfc" id="L70" title="All 2 branches covered.">            if (!result.hasErrors()) {</span>
 <span class="fc" id="L71">                tradeService.updateTrade(trade);</span>
@@ -76,8 +76,8 @@ import com.nnk.springboot.services.TradeService;
             }
 
         } else {
-<span class="nc" id="L79">            throw new GlobalPoseidonException(messageSource.getMessage(&quot;global.exception.incorrect-id&quot;, new Object[] { new Object() {</span>
-<span class="nc" id="L80">            }.getClass().getEnclosingMethod().getName() }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L79">            throw new GlobalPoseidonException(messageSource.getMessage(&quot;global.exception.incorrect-id&quot;, new Object[] { new Object() {</span>
+<span class="fc" id="L80">            }.getClass().getEnclosingMethod().getName() }, LocaleContextHolder.getLocale()));</span>
         }
     }
 

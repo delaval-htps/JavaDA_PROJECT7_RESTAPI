@@ -26,7 +26,7 @@ import lombok.extern.log4j.Log4j2;
     private MessageSource messageSource;
 
     public List&lt;User&gt; findAll() {
-<span class="nc" id="L29">        return userRepository.findAll();</span>
+<span class="fc" id="L29">        return userRepository.findAll();</span>
     }
 
     public User findById(Integer id) {
@@ -53,7 +53,7 @@ import lombok.extern.log4j.Log4j2;
     
     public User updateUser(User user) {
 
-<span class="pc bpc" id="L56" title="2 of 4 branches missed.">        if (user != null &amp;&amp; user.getId() != 0) {</span>
+<span class="fc bfc" id="L56" title="All 4 branches covered.">        if (user != null &amp;&amp; user.getId() != 0) {</span>
 
 <span class="fc" id="L58">            Optional&lt;User&gt; existingUser = userRepository.findById(user.getId());</span>
 
@@ -70,7 +70,7 @@ import lombok.extern.log4j.Log4j2;
             }
 
         } else {
-<span class="nc" id="L73">            throw new UserNotFoundException(messageSource.getMessage(&quot;global.exception.not-null&quot;, new Object[] { &quot;user&quot; }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L73">            throw new UserNotFoundException(messageSource.getMessage(&quot;global.exception.not-null&quot;, new Object[] { &quot;user&quot; }, LocaleContextHolder.getLocale()));</span>
         }
 
     }
