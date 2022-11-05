@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,8 +25,10 @@ public class Trade {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Integer tradeId;
 
+    @NotBlank
     String account;
 
+    @NotBlank
     String type;
 
     Double buyQuantity;

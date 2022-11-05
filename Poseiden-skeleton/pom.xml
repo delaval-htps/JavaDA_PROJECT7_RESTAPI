@@ -10,11 +10,16 @@
 	</parent>
 	<groupId>net.guides.springboothelloword</groupId>
 	<artifactId>spring-boot-skeleton</artifactId>
-	<version>0.1.0-SNAPSHOT</version>
+	<version>0.2.0-SNAPSHOT</version>
 	<name>spring-boot-skeleton</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>8</java.version>
+		<log4j2.version>2.17.1</log4j2.version>
+		<!-- properties failsafe to skip IT -->
+		<skip.it>false</skip.it>
+		<!-- properties jacoco -->
+		<jacoco.execution.data.file>${project.build.directory}/jacoco.exec</jacoco.execution.data.file>
 	</properties>
 
 	<profiles>
@@ -115,6 +120,63 @@
 						</exclude>
 					</excludes>
 				</configuration>
+				<!--  to execute pre-post integration goal for failsafe -->
+				<executions>
+					<execution>
+						<id>pre-integration-test</id>
+						<goals>
+							<goal>start</goal>
+						</goals>
+						<configuration>
+							<skip>${skip.it}</skip>
+						</configuration>
+					</execution>
+					<execution>
+						<id>post-integration-test</id>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- override of failsafe plugin to add classpath directory and option to skip IT(example: -Dskip.it=true) -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<configuration>
+					<classesDirectory>${project.build.outputDirectory}</classesDirectory>
+					<skip>${skip.it}</skip>
+				</configuration>
+			</plugin>
+
+			<!-- === Jacoco === -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+	            <artifactId>jacoco-maven-plugin</artifactId>
+	            <version>0.8.7</version>
+				<executions>
+					<execution>
+						<id>pre-test</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+						<configuration>
+							<destFile>${jacoco.execution.data.file}</destFile>
+						</configuration>
+					</execution>
+					<execution>
+						<id>post-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+						<configuration>
+							<dataFile>${jacoco.execution.data.file}</dataFile>
+							<outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

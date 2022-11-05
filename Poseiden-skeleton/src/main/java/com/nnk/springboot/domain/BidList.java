@@ -21,7 +21,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "bid_list")
 public class BidList {
-    // TODO: Map columns in data table BIDLIST with corresponding java fields
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer bidListId;
@@ -76,9 +75,13 @@ public class BidList {
         this.bidQuantity = bidQuantity;
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    
     @Override
     public String toString() {
-        return "BidList [ id=" + this.getBidListId() + " , account=" + this.getAccount() + " , type=" + this.getType() + " , bidQuantity=" + this.getBidQuantity() + " ]";
+        return "BidList [bidListId=" + bidListId + ", account=" + account + ", type=" + type + ", creationDate=" + creationDate + "]";
     }
 
     

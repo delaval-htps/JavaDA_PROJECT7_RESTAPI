@@ -18,7 +18,65 @@
 			<!--
 			TODO: Create a form to input the values of RuleName, there are 2 buttons: Save data and Cancel to the list RuleName
 			 -->
-
+			 <div class="form-group col-4 ml-1">
+				<label for="name">[[#{rule-name.label.name}]]</label>
+				<input type="text" class="form-control form-control-sm" 
+					th:placeholder="#{rule-name.label.name}" th:field="*{name}"
+					th:classappend="${#fields.hasErrors('name')? 'is-invalid': ''}"/>
+				<div class="invalid-feedback">
+					<p th:each="error:${#fields.errors('name')}" th:text="${error}"></p>
+				</div>
+			</div>
+			<div class="form-group col-4 ml-1">
+				<label for="description">[[#{rule-name.label.description}]]</label>
+				<input type="text" class="form-control form-control-sm" 
+					th:placeholder="#{rule-name.label.description}" th:field="*{description}"
+					th:classappend="${#fields.hasErrors('description')? 'is-invalid': ''}"/>
+				<div class="invalid-feedback">
+					<p th:each="error:${#fields.errors('description')}" th:text="${error}"></p>
+				</div>
+			</div>
+			<div class="form-group col-4 ml-1">
+				<label for="json">[[#{rule-name.label.json}]]</label>
+				<input type="text" class="form-control form-control-sm" 
+					th:placeholder="#{rule-name.label.json}" th:field="*{json}"
+					th:classappend="${#fields.hasErrors('json')? 'is-invalid': ''}"/>
+				<div class="invalid-feedback">
+					<p th:each="error:${#fields.errors('json')}" th:text="${error}"></p>
+				</div>
+			</div>
+			<div class="form-group col-4 ml-1">
+				<label for="template">[[#{rule-name.label.template}]]</label>
+				<input type="text" class="form-control form-control-sm" 
+					th:placeholder="#{rule-name.label.template}" th:field="*{template}"
+					th:classappend="${#fields.hasErrors('template')? 'is-invalid': ''}"/>
+				<div class="invalid-feedback">
+					<p th:each="error:${#fields.errors('template')}" th:text="${error}"></p>
+				</div>
+			</div>
+			<div class="form-group col-4 ml-1">
+				<label for="sqlStr">[[#{rule-name.label.sql-str}]]</label>
+				<input type="text" class="form-control form-control-sm" 
+					th:placeholder="#{rule-name.label.sql-str}" th:field="*{sqlStr}"
+					th:classappend="${#fields.hasErrors('sqlStr')? 'is-invalid': ''}"/>
+				<div class="invalid-feedback">
+					<p th:each="error:${#fields.errors('sqlStr')}" th:text="${error}"></p>
+				</div>
+			</div>
+			<div class="form-group col-4 ml-1">
+				<label for="sqlPart">[[#{rule-name.label.sql-part}]]</label>
+				<input type="text" class="form-control form-control-sm" 
+					th:placeholder="#{rule-name.label.sql-part}" th:field="*{sqlPart}"
+					th:classappend="${#fields.hasErrors('sqlPart')? 'is-invalid': ''}"/>
+				<div class="invalid-feedback">
+					<p th:each="error:${#fields.errors('sqlPart')}" th:text="${error}"></p>
+				</div>
+			</div>
+			
+			<div class="col-4 ml-1">
+				<a href="/ruleName/list" class="btn-danger btn" >Cancel</a>
+				<button type="submit" id="submit" class="btn-primary btn">Add ruleName</button>
+			</div>
 		</form>
 	</div>
 
