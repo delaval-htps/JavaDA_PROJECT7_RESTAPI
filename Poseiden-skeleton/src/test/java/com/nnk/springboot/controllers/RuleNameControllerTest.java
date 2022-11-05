@@ -90,7 +90,7 @@ public class RuleNameControllerTest {
         when(ruleNameService.saveRuleName(Mockito.any(RuleName.class))).thenReturn(registredmockRuleName1);
 
         // when & then
-        mockMvc.perform(post("/ruleName/validate").param("name", "ruleName1").param("description", "description").param("json", "jsonString").param("sqlStr", "sqlString").param("sqlPart", "sqlPart")
+        mockMvc.perform(post("/ruleName/validate").param("name", "ruleName1").param("description", "description").param("json", "jsonString").param("template","template").param("sqlStr", "sqlString").param("sqlPart", "sqlPart")
                 .with(csrf()))
 
                 .andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/ruleName/list"));
@@ -155,6 +155,22 @@ public class RuleNameControllerTest {
         verify(ruleNameService, times(1)).updateRuleName(Mockito.any(RuleName.class));
 
     }
+    @Test
+    public void updateRuleName_whenRuleNameIdZero_thenThrowGlobalPoseidonException() throws Exception {
+
+        // given
+        mockRuleName2.setId(0);
+        when(ruleNameService.updateRuleName(Mockito.any(RuleName.class))).thenReturn(mockRuleName2);
+
+        mockMvc.perform(post("/ruleName/update/{id}", mockRuleName2.getId()).param("name", mockRuleName2.getName()).param("description", mockRuleName2.getDescription())
+                .param("template", mockRuleName2.getTemplate()).param("json", mockRuleName2.getJson()).param("sqlStr", mockRuleName2.getSqlStr()).param("sqlPart", mockRuleName2.getSqlPart())
+                .with(csrf())).andExpect(status().is4xxClientError()).andExpect(result -> assertTrue(result.getResolvedException() instanceof GlobalPoseidonException));
+
+        verify(ruleNameService, never()).updateRuleName(Mockito.any(RuleName.class));
+
+    }
+
+   
     @Test
     public void deleteRuleName_whenIdIsZero_thenThrowGlobalPoseidonException() throws Exception {
 

@@ -8,10 +8,13 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -38,6 +41,25 @@ public class BidListServiceTest {
   @InjectMocks
   private BidListService cut;
 
+  private List<BidList> bidList;
+  private BidList mockBidList1, mockBidList2;
+
+  @Before
+  public void intialize() {
+    bidList = new ArrayList<>();
+    mockBidList1 = new BidList("account1", "type", 10d);
+    mockBidList2 = new BidList("account2", "type", 10d);
+    bidList.add(mockBidList1);
+    bidList.add(mockBidList2);
+  }
+
+  @Test
+    public void findAll() {
+        when(bidListRepository.findAll()).thenReturn(bidList);
+        List<BidList> findAll = cut.findBidLists();
+        assertEquals(findAll, bidList);
+    }
+
   @Test
   public void findByIdBidList_whenBidListNotExisted_thenThrowBidListNotFoundException() {
       //Given
@@ -57,20 +79,19 @@ public class BidListServiceTest {
 
   @Test
   public void findByIdBidList_whenBidListExisted_thenReturnBidList() {
-      // when
-      BidList mockBidList = new BidList("account", "type", 0.1);
-      mockBidList.setBidListId(1);
-      when(bidListRepository.findById(Mockito.anyInt())).thenReturn(Optional.of(mockBidList));
+    // when
+    BidList mockBidList = new BidList("account", "type", 0.1);
+    mockBidList.setBidListId(1);
+    when(bidListRepository.findById(Mockito.anyInt())).thenReturn(Optional.of(mockBidList));
 
-      // then
-      BidList findExistingBidList = cut.findById(1);
+    // then
+    BidList findExistingBidList = cut.findById(1);
 
-      assertEquals(findExistingBidList, mockBidList);
-      ArgumentCaptor<String> spyCaptor = ArgumentCaptor.forClass(String.class);
-      verify(messageSource).getMessage(spyCaptor.capture(), any(Object[].class), any(Locale.class));
-      assertEquals("global.bidlist.find-by-id", spyCaptor.getValue());
+    assertEquals(findExistingBidList, mockBidList);
+    ArgumentCaptor<String> spyCaptor = ArgumentCaptor.forClass(String.class);
+    verify(messageSource).getMessage(spyCaptor.capture(), any(Object[].class), any(Locale.class));
+    assertEquals("global.bidlist.find-by-id", spyCaptor.getValue());
   }
-  
 
   @Test
   public void saveBidListTest_whenBidNull_thenThrowException() {

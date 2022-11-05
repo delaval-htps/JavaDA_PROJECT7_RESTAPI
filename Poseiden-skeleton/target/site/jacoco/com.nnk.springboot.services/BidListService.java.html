@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BidListService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spring-boot-skeleton</a> &gt; <a href="index.source.html" class="el_package">com.nnk.springboot.services</a> &gt; <span class="el_source">BidListService.java</span></div><h1>BidListService.java</h1><pre class="source lang-java linenums">package com.nnk.springboot.services;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.stereotype.Service;
+
+import com.nnk.springboot.domain.BidList;
+import com.nnk.springboot.exceptions.BidListNotFoundException;
+import com.nnk.springboot.repositories.BidListRepository;
+
+import lombok.extern.log4j.Log4j2;
+
+/**
+ * Service class for {@link BidList}
+ */
+@Service
+<span class="fc" id="L23">@Log4j2</span>
+<span class="fc" id="L24">public class BidListService {</span>
+
+    @Autowired
+    private BidListRepository bidListRepository;
+
+    @Autowired
+    private MessageSource messageSource;
+
+    /**
+     * return the BidList with the id given in parameter.
+     * 
+     * @param bidListId the id of research bidlist
+     * @return
+     */
+    public BidList findById(int bidListId) {
+
+<span class="fc" id="L40">        Optional&lt;BidList&gt; existedBidList = bidListRepository.findById(bidListId);</span>
+
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        if (existedBidList.isPresent()) {</span>
+
+<span class="fc" id="L44">            log.info(messageSource.getMessage(&quot;global.bidlist.find-by-id&quot;, new Object[] { bidListId, existedBidList }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L45">            return existedBidList.get();</span>
+
+        } else {
+
+<span class="fc" id="L49">            throw new BidListNotFoundException(messageSource.getMessage(&quot;global.exception.not-found&quot;, new Object[] { &quot;bid&quot; }, Locale.FRANCE));</span>
+        }
+
+    }
+
+     /**
+     * Retrieve all bidlist in db.
+     *
+     * @return List of all registred BidList(empty if there were not)
+     */
+     public List&lt;BidList&gt; findBidLists() {
+<span class="fc" id="L60">         return bidListRepository.findAll();</span>
+     }
+    
+    /**
+     * save a {@link BidList} in db.
+     *
+     * @param bid the bidlist to save
+     * @return the bidlist saved if it was correctly save
+     * @throws BidListNotFoundException if bidList is null
+     */
+    public BidList saveBidList(BidList bid) {
+
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        if (bid != null) {</span>
+
+<span class="fc" id="L74">            BidList savedBidList = bidListRepository.save(bid);</span>
+<span class="fc" id="L75">            log.info(messageSource.getMessage(&quot;global.bidlist.creation&quot;, new Object[] { savedBidList }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L76">            return savedBidList;</span>
+
+        } else {
+
+<span class="fc" id="L80">            throw new BidListNotFoundException(messageSource.getMessage(&quot;global.exception.not-found&quot;, new Object[] { &quot;bid&quot; }, LocaleContextHolder.getLocale()));</span>
+        }
+    }
+
+    /**
+     * update a Bidlist given in parameter.
+     *
+     * @param bid the bidlist updated
+     * @return the updated existed bidlist according to bid given in parameter
+     * @throws BidListNotFoundException if bidlist is null or not existant
+     */
+    public BidList updateBidList(BidList bid) {
+
+<span class="fc bfc" id="L93" title="All 4 branches covered.">        if (bid != null &amp;&amp; bid.getBidListId() != 0) {</span>
+
+<span class="fc" id="L95">            Optional&lt;BidList&gt; existedBidList = bidListRepository.findById(bid.getBidListId());</span>
+
+<span class="pc bpc" id="L97" title="1 of 4 branches missed.">            if (existedBidList.isPresent() &amp;&amp; Objects.equals(existedBidList.get().getBidListId(), bid.getBidListId())) {</span>
+
+<span class="fc" id="L99">                BidList savedUpdatedBidList = bidListRepository.save(bid);</span>
+<span class="fc" id="L100">                log.info(messageSource.getMessage(&quot;global.bidlist.update&quot;, new Object[] { savedUpdatedBidList }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L101">                return savedUpdatedBidList;</span>
+
+            } else {
+
+<span class="fc" id="L105">                throw new BidListNotFoundException(messageSource.getMessage(&quot;global.exception.not-found&quot;, new Object[] { &quot;bid&quot; }, Locale.FRANCE));</span>
+            }
+        } else {
+
+<span class="fc" id="L109">            throw new BidListNotFoundException(messageSource.getMessage(&quot;global.exception.not-null&quot;, new Object[] { &quot;bid&quot; }, Locale.FRANCE));</span>
+        }
+    }
+
+   
+
+    /**
+     * Delete a BidList given in parameter.
+     *
+     * @param bid the bid to delete.
+     * @throws BidListNotFoundException if bid does not exist or if it is null
+     */
+    public void deleteBidList(BidList bid) {
+<span class="fc bfc" id="L122" title="All 4 branches covered.">        if (bid != null &amp;&amp; bid.getBidListId() != 0) {</span>
+
+<span class="fc" id="L124">            Optional&lt;BidList&gt; existedBisList = bidListRepository.findById(bid.getBidListId());</span>
+
+<span class="fc bfc" id="L126" title="All 2 branches covered.">            if (existedBisList.isPresent()) {</span>
+
+<span class="fc" id="L128">                log.info(messageSource.getMessage(&quot;global.bidlist.delete&quot;, new Object[] { existedBisList }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L129">                bidListRepository.delete(existedBisList.get());</span>
+
+            } else {
+
+<span class="fc" id="L133">                throw new BidListNotFoundException(messageSource.getMessage(&quot;global.exception.not-found&quot;, new Object[] { &quot;bid&quot; }, Locale.FRANCE));</span>
+            }
+<span class="fc" id="L135">        } else {</span>
+
+<span class="fc" id="L137">            throw new BidListNotFoundException(messageSource.getMessage(&quot;global.exception.not-null&quot;, new Object[] { &quot;bid&quot; }, Locale.FRANCE));</span>
+        }
+<span class="fc" id="L139">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

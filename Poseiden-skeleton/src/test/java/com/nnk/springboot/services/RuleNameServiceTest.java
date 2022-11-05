@@ -1,16 +1,19 @@
 package com.nnk.springboot.services;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -37,6 +40,24 @@ public class RuleNameServiceTest {
     @InjectMocks
     private RuleNameService cut;
 
+    private List<RuleName> ruleNames;
+    private RuleName mockRuleName1, mockRuleName2;
+
+    @Before
+    public void intialize() {
+        ruleNames = new ArrayList<>();
+        mockRuleName1 = new RuleName("ruleName1", "description", "jsonString","template","sqlString","sqlPart");
+        mockRuleName2 = new RuleName("ruleName2", "description", "jsonString","template","sqlString","sqlPart");
+        ruleNames.add(mockRuleName1);
+        ruleNames.add(mockRuleName2);
+    }
+
+    @Test
+      public void findAll() {
+          when(ruleNameRepository.findAll()).thenReturn(ruleNames);
+          List<RuleName> findAll = cut.findAll();
+          assertEquals(findAll, ruleNames);
+      }
     @Test
     public void findByIdRuleName_whenRuleNameNotExisted_thenThrowRuleNameException() {
         // when
@@ -92,6 +113,29 @@ public class RuleNameServiceTest {
         assertEquals("global.rule-name.creation", spyCaptor.getValue());
     }
     
+    @Test
+    public void updateRuleNameTest_whenUserNull_thenThrowUserException() {
+        Assertions.assertThatThrownBy(() -> {
+            cut.updateRuleName(null);
+        }).isInstanceOf(RuleNameNotFoundException.class);
+
+        ArgumentCaptor<String> spyCaptor = ArgumentCaptor.forClass(String.class);
+        verify(messageSource).getMessage(spyCaptor.capture(), any(Object[].class), any(Locale.class));
+        assertEquals("global.exception.not-null", spyCaptor.getValue());
+    }
+
+    @Test
+    public void updateRuleNameTest_whenUserIdZero_thenThrowUserException() {
+        mockRuleName1.setId(0);
+        Assertions.assertThatThrownBy(() -> {
+            cut.updateRuleName(mockRuleName1);
+        }).isInstanceOf(RuleNameNotFoundException.class);
+
+        ArgumentCaptor<String> spyCaptor = ArgumentCaptor.forClass(String.class);
+        verify(messageSource).getMessage(spyCaptor.capture(), any(Object[].class), any(Locale.class));
+        assertEquals("global.exception.not-null", spyCaptor.getValue());
+    }
+
     @Test
     public void updateRuleNameTest_whenRuleNameIdNotSame_thenThrowRuleNameException() {
 

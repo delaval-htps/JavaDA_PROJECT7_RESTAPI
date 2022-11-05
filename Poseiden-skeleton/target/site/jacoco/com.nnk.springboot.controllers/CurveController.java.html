@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CurveController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spring-boot-skeleton</a> &gt; <a href="index.source.html" class="el_package">com.nnk.springboot.controllers</a> &gt; <span class="el_source">CurveController.java</span></div><h1>CurveController.java</h1><pre class="source lang-java linenums">package com.nnk.springboot.controllers;
+
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.nnk.springboot.domain.CurvePoint;
+import com.nnk.springboot.exceptions.GlobalPoseidonException;
+import com.nnk.springboot.services.CurvePointService;
+
+@Controller
+<span class="fc" id="L23">public class CurveController {</span>
+
+    @Autowired
+    private CurvePointService curvePointService;
+
+    @Autowired
+    private MessageSource messageSource;
+
+    @RequestMapping(&quot;/curvePoint/list&quot;)
+    public String home(Model model) {
+<span class="fc" id="L33">        List&lt;CurvePoint&gt; curvePoints = curvePointService.findAll();</span>
+<span class="fc" id="L34">        model.addAttribute(&quot;listOfCurvePoint&quot;, curvePoints);</span>
+<span class="fc" id="L35">        return &quot;curvePoint/list&quot;;</span>
+    }
+
+    @GetMapping(&quot;/curvePoint/add&quot;)
+    public String addCurveForm(CurvePoint curve) {
+<span class="fc" id="L40">        return &quot;curvePoint/add&quot;;</span>
+    }
+
+    @PostMapping(&quot;/curvePoint/validate&quot;)
+    public String validate(@Valid CurvePoint curvePoint, BindingResult result, Model model) {
+
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        if (!result.hasErrors()) {</span>
+
+<span class="fc" id="L48">            curvePointService.saveCurvePoint(curvePoint);</span>
+<span class="fc" id="L49">            return &quot;redirect:/curvePoint/list&quot;;</span>
+
+        } else {
+
+<span class="fc" id="L53">            return &quot;curvePoint/add&quot;;</span>
+        }
+
+    }
+
+    @GetMapping(&quot;/curvePoint/update/{id}&quot;)
+    public String showUpdateForm(@PathVariable(&quot;id&quot;) Integer id, Model model) {
+
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        if (id != 0) {</span>
+
+<span class="fc" id="L63">            CurvePoint existingCurvePoint = curvePointService.findById(id);</span>
+<span class="fc" id="L64">            model.addAttribute(&quot;curvePoint&quot;, existingCurvePoint);</span>
+<span class="fc" id="L65">            return &quot;curvePoint/update&quot;;</span>
+
+        } else {
+<span class="fc" id="L68">            throw new GlobalPoseidonException(messageSource.getMessage(&quot;global.exception.incorrect-id&quot;, new Object[] { new Object() {</span>
+<span class="fc" id="L69">            }.getClass().getEnclosingMethod().getName() }, LocaleContextHolder.getLocale()));</span>
+        }
+
+    }
+
+    @PostMapping(&quot;/curvePoint/update/{id}&quot;)
+    public String updateCurvePoint(@PathVariable(&quot;id&quot;) Integer id, @Valid CurvePoint curvePoint, BindingResult result, Model model) {
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        if (id != 0) {</span>
+
+<span class="fc bfc" id="L78" title="All 2 branches covered.">            if (!result.hasErrors()) {</span>
+
+<span class="fc" id="L80">                curvePointService.updateCurvePoint(curvePoint);</span>
+<span class="fc" id="L81">                return &quot;redirect:/curvePoint/list&quot;;</span>
+
+            } else {
+
+<span class="fc" id="L85">                return (&quot;curvePoint/update&quot;);</span>
+            }
+
+        } else {
+<span class="fc" id="L89">            throw new GlobalPoseidonException(messageSource.getMessage(&quot;global.exception.incorrect-id&quot;, new Object[] { new Object() {</span>
+<span class="fc" id="L90">            }.getClass().getEnclosingMethod().getName() }, LocaleContextHolder.getLocale()));</span>
+        }
+    }
+
+    @GetMapping(&quot;/curvePoint/delete/{id}&quot;)
+    public String deleteCurvePoint(@PathVariable(&quot;id&quot;) Integer id, Model model) {
+<span class="fc bfc" id="L96" title="All 2 branches covered.">        if (id != 0) {</span>
+
+<span class="fc" id="L98">            CurvePoint existingCurvePoint = curvePointService.findById(id);</span>
+<span class="fc" id="L99">            curvePointService.deleteCurvePoint(existingCurvePoint);</span>
+<span class="fc" id="L100">            return &quot;redirect:/curvePoint/list&quot;;</span>
+
+        } else {
+<span class="fc" id="L103">            throw new GlobalPoseidonException(messageSource.getMessage(&quot;global.exception.incorrect-id&quot;, new Object[] { new Object() {</span>
+<span class="fc" id="L104">            }.getClass().getEnclosingMethod().getName() }, LocaleContextHolder.getLocale()));</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

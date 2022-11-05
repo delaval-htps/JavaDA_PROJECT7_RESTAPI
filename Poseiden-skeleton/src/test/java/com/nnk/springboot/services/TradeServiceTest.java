@@ -7,10 +7,13 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -26,7 +29,7 @@ import com.nnk.springboot.repositories.TradeRepository;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TradeServiceTest {
-   
+
     @Mock
     private TradeRepository tradeRepository;
 
@@ -35,6 +38,25 @@ public class TradeServiceTest {
 
     @InjectMocks
     private TradeService cut;
+
+    private List<Trade> trades;
+    private Trade mockTrade1, mockTrade2;
+
+    @Before
+    public void intialize() {
+        trades = new ArrayList<>();
+        mockTrade1 = new Trade("account", "type");
+        mockTrade2 = new Trade("account2", "type2");
+        trades.add(mockTrade1);
+        trades.add(mockTrade2);
+    }
+
+    @Test
+    public void findAll() {
+        when(tradeRepository.findAll()).thenReturn(trades);
+        List<Trade> findAll = cut.findAll();
+        assertEquals(findAll, trades);
+    }
 
     @Test
     public void findByIdTrade_whenTradeNotExisted_thenThrowTradeException() {
@@ -59,12 +81,12 @@ public class TradeServiceTest {
         mockExistedTrade.setTradeId(1);
         when(tradeRepository.findById(anyInt())).thenReturn(Optional.of(mockExistedTrade));
 
-        //when &  then
+        // when & then
         Trade findExistedTrade = cut.findById(1);
 
         assertEquals(findExistedTrade, mockExistedTrade);
     }
-    
+
     @Test
     public void saveTradeTest_whenTradeNull_thenThrowException() {
         Assertions.assertThatThrownBy(() -> {
@@ -91,7 +113,30 @@ public class TradeServiceTest {
         verify(messageSource).getMessage(spyCaptor.capture(), any(Object[].class), any(Locale.class));
         assertEquals("global.trade.creation", spyCaptor.getValue());
     }
-    
+
+    @Test
+    public void updateTradeTest_whenUserNull_thenThrowUserException() {
+        Assertions.assertThatThrownBy(() -> {
+            cut.updateTrade(null);
+        }).isInstanceOf(TradeNotFoundException.class);
+
+        ArgumentCaptor<String> spyCaptor = ArgumentCaptor.forClass(String.class);
+        verify(messageSource).getMessage(spyCaptor.capture(), any(Object[].class), any(Locale.class));
+        assertEquals("global.exception.not-null", spyCaptor.getValue());
+    }
+
+    @Test
+    public void updateTradeTest_whenUserIdZero_thenThrowUserException() {
+        mockTrade1.setTradeId(0);
+        Assertions.assertThatThrownBy(() -> {
+            cut.updateTrade(mockTrade1);
+        }).isInstanceOf(TradeNotFoundException.class);
+
+        ArgumentCaptor<String> spyCaptor = ArgumentCaptor.forClass(String.class);
+        verify(messageSource).getMessage(spyCaptor.capture(), any(Object[].class), any(Locale.class));
+        assertEquals("global.exception.not-null", spyCaptor.getValue());
+    }
+
     @Test
     public void updateTradeTest_whenTradeIdNotSame_thenThrowTradeException() {
 
@@ -111,6 +156,7 @@ public class TradeServiceTest {
         verify(messageSource).getMessage(spyCaptor.capture(), any(Object[].class), any(Locale.class));
         assertEquals("global.trade.not-found", spyCaptor.getValue());
     }
+
     @Test
     public void updateTradeTest_whenTradeExisted_thenUpdateTrade() {
         // when
@@ -140,7 +186,7 @@ public class TradeServiceTest {
     public void updateTradeTest_whenTradeNoExisted_thenUpdateTrade() {
         // when
         Trade mockNotExistedTrade = new Trade("acount1", "type");
-        Trade mockTradeToUpdate =  new Trade("acount2", "type");
+        Trade mockTradeToUpdate = new Trade("acount2", "type");
         mockNotExistedTrade.setTradeId(1);
         mockTradeToUpdate.setTradeId(1);
 
@@ -171,7 +217,7 @@ public class TradeServiceTest {
     public void deleteTradeTest_whenTradeIdZero_thenThrowTradeException() {
 
         // when
-        Trade mockNotExistedTrade =  new Trade("acount1", "type");
+        Trade mockNotExistedTrade = new Trade("acount1", "type");
         mockNotExistedTrade.setTradeId(0);
 
         // then
@@ -187,7 +233,7 @@ public class TradeServiceTest {
     @Test
     public void deleteTradeTest_whenTradeExisted_thenDeleteTrade() {
         // when
-        Trade mockExistedTrade =  new Trade("acount1", "type");
+        Trade mockExistedTrade = new Trade("acount1", "type");
         mockExistedTrade.setTradeId(1);
 
         when(tradeRepository.findById(anyInt())).thenReturn(Optional.of(mockExistedTrade));
@@ -200,7 +246,7 @@ public class TradeServiceTest {
     @Test
     public void deleteTradeTest_whenTradeNotExisted_thenDeleteTrade() {
         // when
-        Trade mockNotExistedTrade =  new Trade("acount1", "type");
+        Trade mockNotExistedTrade = new Trade("acount1", "type");
         mockNotExistedTrade.setTradeId(1);
 
         when(tradeRepository.findById(anyInt())).thenReturn(Optional.empty());

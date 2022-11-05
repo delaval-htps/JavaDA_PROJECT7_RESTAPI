@@ -88,7 +88,7 @@ public class RatingControllerTest {
         when(ratingService.saveRating(Mockito.any(Rating.class))).thenReturn(registredmockRating1);
 
         // when & then
-        mockMvc.perform(post("/rating/validate").param("moddysRating", "moddysRating").param("sandPRating", "sandPRating").param("fitchRating", "fitchRating").param("orderNumber", "1").with(csrf()))
+        mockMvc.perform(post("/rating/validate").param("moodysRating", "moodysRating").param("sandPRating", "sandPRating").param("fitchRating", "fitchRating").param("orderNumber", "1").with(csrf()))
 
                 .andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/rating/list"));
 
@@ -100,7 +100,7 @@ public class RatingControllerTest {
     public void validateTest_whenRatingNotValid_ThenReturnRatingAdd() throws Exception {
 
         // when & then
-        mockMvc.perform(post("/rating/validate").param("moddysRating", "").param("sandPRating", "").param("fitchRating", "").param("orderNumber", "").with(csrf()))
+        mockMvc.perform(post("/rating/validate").param("moodysRating", "").param("sandPRating", "").param("fitchRating", "").param("orderNumber", "").with(csrf()))
                 .andExpect(view().name("rating/add")).andExpect(model().attributeExists("rating"));
 
         verify(ratingService, never()).saveRating(Mockito.any(Rating.class));
