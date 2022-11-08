@@ -43,7 +43,7 @@ public class SecurityConfig {
 
         http.formLogin()
             .loginPage("/app/login")
-            .loginProcessingUrl("/app/login")
+            .loginProcessingUrl("/process-login")
             .defaultSuccessUrl("/", true)
             .permitAll();
         
