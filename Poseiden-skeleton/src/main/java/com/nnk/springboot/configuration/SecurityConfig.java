@@ -32,26 +32,34 @@ public class SecurityConfig {
         http.authenticationProvider(authenticationProvider());
 
         http.authorizeRequests()
-            
-            .antMatchers("/user/**")
-                .hasRole("ADMIN")
-            
-            .antMatchers("/**")
+                .antMatchers("/css/**")
                 .permitAll()
-               
-            .anyRequest().authenticated();
+
+                .antMatchers("/")
+                .permitAll()
+
+            /*
+             * don't use hasRole("ADMIN") cause Role in user is "ADMIN" and
+             * not "ROLE_ADMIN" , use hasAuthority("ADMIN").In spring
+             * security, hasRole() is the same as hasAuthority(), but
+             * hasRole() function map with Authority without ROLE_ prefix.
+            */
+                .antMatchers("/user/**", "/admin/**")
+                .hasAuthority("ADMIN")
+
+                .anyRequest().authenticated();
 
         http.formLogin()
-            .loginPage("/app/login")
-            .loginProcessingUrl("/process-login")
-            .defaultSuccessUrl("/", true)
-            .permitAll();
+                .loginPage("/app/login")
+                .loginProcessingUrl("/process-login")
+                .defaultSuccessUrl("/", true)
+                .permitAll();
         
-        // configuration for logout OK!
         http.logout()
-        .logoutUrl("/app-logout")
-        .logoutSuccessUrl("/")
-        .permitAll();
+                .logoutUrl("/app-logout")
+                .logoutSuccessUrl("/")
+                .permitAll();
+
         return http.build();
     }
 

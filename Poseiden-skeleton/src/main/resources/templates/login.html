@@ -11,10 +11,14 @@
 	<div class="container" style="height:100vh">
 
 		<div class="d-flex flex-column justify-content-center h-75">
+			
 
 			<h2 class="mb-3">Login with Username and Password</h2>
-
-			<!-- TODO create PostMapping with url /app/login to validate URL for loginProcessingUrl -->
+			
+			<div class="error-message">
+				<p th:if="${param.error != null}" class="error">Wrong user or password</p>
+				<p th:if="${param.logout != null}" class="logout">You have been correctly logged out!</p>
+			</div>
 
 			<form action="#" th:action="@{/process-login}" method="post">
 				<div class="form-group row">

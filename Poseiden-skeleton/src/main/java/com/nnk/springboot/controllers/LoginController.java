@@ -21,7 +21,6 @@ public class LoginController {
         return mav;
     }
 
-    //TODO PostMapping "login" to match with URL of loginProcessingUrl "/app/loogin" to validate log of user (admin or user role)
     @GetMapping("secure/article-details")
     public ModelAndView getAllUserArticles() {
         ModelAndView mav = new ModelAndView();
