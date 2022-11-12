@@ -47,12 +47,18 @@ public class SecurityConfig {
                 .antMatchers("/user/**", "/admin/**")
                 .hasAuthority("ADMIN")
 
-                .anyRequest().authenticated();
+                .antMatchers("/bidList/**", "/curvePoint/**", "/rating/**")
+                .hasAuthority("USER")
+
+                .anyRequest().authenticated()
+
+                .and()
+                .exceptionHandling().accessDeniedPage("/app/error");
+
 
         http.formLogin()
                 .loginPage("/app/login")
                 .loginProcessingUrl("/process-login")
-                .defaultSuccessUrl("/", true)
                 .permitAll();
         
         http.logout()
