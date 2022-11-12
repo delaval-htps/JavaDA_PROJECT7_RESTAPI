@@ -44,15 +44,16 @@ public class SecurityConfig {
              * security, hasRole() is the same as hasAuthority(), but
              * hasRole() function map with Authority without ROLE_ prefix.
             */
+                .antMatchers("/bidList/**", "/curvePoint/**", "/rating/**", "ruleName/**","/trade/**","/user/home")
+                .hasAnyAuthority("USER", "ADMIN")
+                
                 .antMatchers("/user/**", "/admin/**")
                 .hasAuthority("ADMIN")
-
-                .antMatchers("/bidList/**", "/curvePoint/**", "/rating/**")
-                .hasAuthority("USER")
 
                 .anyRequest().authenticated()
 
                 .and()
+                //using AccesDeniedPage make easy to redirect to error 403 page 
                 .exceptionHandling().accessDeniedPage("/app/error");
 
 
