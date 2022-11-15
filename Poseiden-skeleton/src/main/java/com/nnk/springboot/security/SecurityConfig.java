@@ -1,4 +1,4 @@
-package com.nnk.springboot.configuration;
+package com.nnk.springboot.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +18,12 @@ public class SecurityConfig {
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
+    @Autowired
+    private CustomOauth2UserService oauth2UserService;
+
+    @Autowired
+    private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -27,51 +33,45 @@ public class SecurityConfig {
     }
 
     @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.authenticationProvider(authenticationProvider());
+        http.authorizeRequests().antMatchers("/css/**").permitAll()
 
-        http.authorizeRequests()
-                .antMatchers("/css/**")
-                .permitAll()
+                .antMatchers("/").permitAll()
 
-                .antMatchers("/")
-                .permitAll()
+                /*
+                 * don't use hasRole("ADMIN") cause Role in user is "ADMIN" and
+                 * not "ROLE_ADMIN" , use hasAuthority("ADMIN").In spring
+                 * security, hasRole() is the same as hasAuthority(), but
+                 * hasRole() function map with Authority without ROLE_ prefix.
+                 */
+                .antMatchers("/bidList/**", "/curvePoint/**", "/rating/**", "ruleName/**", "/trade/**", "/user/home").hasAnyAuthority("USER", "ADMIN")
 
-            /*
-             * don't use hasRole("ADMIN") cause Role in user is "ADMIN" and
-             * not "ROLE_ADMIN" , use hasAuthority("ADMIN").In spring
-             * security, hasRole() is the same as hasAuthority(), but
-             * hasRole() function map with Authority without ROLE_ prefix.
-            */
-                .antMatchers("/bidList/**", "/curvePoint/**", "/rating/**", "ruleName/**","/trade/**","/user/home")
-                .hasAnyAuthority("USER", "ADMIN")
-                
-                .antMatchers("/user/**", "/admin/**")
-                .hasAuthority("ADMIN")
+                .antMatchers("/user/**", "/admin/**").hasAuthority("ADMIN")
 
                 .anyRequest().authenticated()
 
                 .and()
-                //using AccesDeniedPage make easy to redirect to error 403 page 
+                // using AccesDeniedPage make easy to redirect to error 403 page
                 .exceptionHandling().accessDeniedPage("/app/error");
 
+        http.formLogin().loginPage("/app/login").loginProcessingUrl("/process-login").permitAll();
 
-        http.formLogin()
+        http.oauth2Login()
                 .loginPage("/app/login")
-                .loginProcessingUrl("/process-login")
-                .permitAll();
-        
-        http.logout()
-                .logoutUrl("/app-logout")
-                .logoutSuccessUrl("/")
-                .permitAll();
+                .defaultSuccessUrl("/")
+                .userInfoEndpoint()
+                .userService(oauth2UserService)
+                    .and().successHandler(oAuth2LoginSuccessHandler);
+
+        http.logout().logoutUrl("/app-logout").logoutSuccessUrl("/").permitAll();
 
         return http.build();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 }

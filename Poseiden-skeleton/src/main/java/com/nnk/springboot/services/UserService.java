@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.exceptions.UserNotFoundException;
@@ -50,7 +51,7 @@ public class UserService {
             throw new UserNotFoundException(messageSource.getMessage("global.exception.not-null", new Object[] { "user" }, LocaleContextHolder.getLocale()));
         }
     }
-    
+
     public User updateUser(User user) {
 
         if (user != null && user.getId() != 0) {
@@ -77,21 +78,29 @@ public class UserService {
 
     public void deleteUser(User user) {
         if (user != null && user.getId() != 0) {
- 
+
             Optional<User> existedUser = userRepository.findById(user.getId());
- 
+
             if (existedUser.isPresent()) {
- 
+
                 log.info(messageSource.getMessage("global.user.delete", new Object[] { existedUser }, LocaleContextHolder.getLocale()));
- 
+
                 userRepository.delete(existedUser.get());
- 
+
             } else {
                 throw new UserNotFoundException(messageSource.getMessage("global.user.not-found", new Object[] { user.getId() }, LocaleContextHolder.getLocale()));
             }
- 
+
         } else {
             throw new UserNotFoundException(messageSource.getMessage("global.exception.not-null", new Object[] { "User" }, LocaleContextHolder.getLocale()));
         }
+    }
+
+    public User findByUsername(String username) {
+        
+        if (!StringUtils.hasText(username)) {
+            throw new UserNotFoundException(messageSource.getMessage("global.user.not-found", new Object[] { username }, LocaleContextHolder.getLocale()));
+        }
+        return userRepository.findByUsername(username);
     }
 }
