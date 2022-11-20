@@ -10,8 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.nnk.springboot.services.CustomUserDetailsService;
-
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfig {
@@ -40,9 +38,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests().antMatchers("/css/**").permitAll()
+        http.authorizeRequests()
+        
+                .antMatchers("/css/**")
+                .permitAll()
 
-                .antMatchers("/").permitAll()
+                .antMatchers("/")
+                .permitAll()
 
                 /*
                  * don't use hasRole("ADMIN") cause Role in user is "ADMIN" and
@@ -50,9 +52,11 @@ public class SecurityConfig {
                  * security, hasRole() is the same as hasAuthority(), but
                  * hasRole() function map with Authority without ROLE_ prefix.
                  */
-                .antMatchers("/bidList/**", "/curvePoint/**", "/rating/**", "ruleName/**", "/trade/**", "/user/home").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers("/bidList/**", "/curvePoint/**", "/rating/**", "ruleName/**", "/trade/**", "/user/home")
+                .hasAnyAuthority("USER", "ADMIN")
 
-                .antMatchers("/user/**", "/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/user/**", "/admin/**")
+                .hasAuthority("ADMIN")
 
                 .anyRequest().authenticated()
 
@@ -60,16 +64,23 @@ public class SecurityConfig {
                 // using AccesDeniedPage make easy to redirect to error 403 page
                 .exceptionHandling().accessDeniedPage("/app/error");
 
-        http.formLogin().loginPage("/app/login").loginProcessingUrl("/process-login").permitAll();
+        http.formLogin()
+                .loginPage("/app/login")
+                .loginProcessingUrl("/process-login")
+            .permitAll();
 
         http.oauth2Login()
                 .loginPage("/app/login")
-                .defaultSuccessUrl("/")
                 .userInfoEndpoint()
                 .userService(oauth2UserService)
-                    .and().successHandler(oAuth2LoginSuccessHandler);
+                .and()
+                .successHandler(oAuth2LoginSuccessHandler)
+            ;
 
-        http.logout().logoutUrl("/app-logout").logoutSuccessUrl("/").permitAll();
+        http.logout()
+                .logoutUrl("/app-logout")
+                .logoutSuccessUrl("/")
+            .permitAll();
 
         return http.build();
     }

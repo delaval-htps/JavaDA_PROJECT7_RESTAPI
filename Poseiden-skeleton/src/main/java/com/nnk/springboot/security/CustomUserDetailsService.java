@@ -1,4 +1,4 @@
-package com.nnk.springboot.services;
+package com.nnk.springboot.security;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +30,11 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (user != null) {
             List<SimpleGrantedAuthority> userRoles = new ArrayList<>();
             userRoles.add(new SimpleGrantedAuthority(user.getRole()));
-            return new User(user.getUsername(), user.getPassword(),userRoles);
-        }  else{
-            throw new UsernameNotFoundException(messageSource.getMessage("global.user.not-found",new Object[]{username},LocaleContextHolder.getLocale()));
+            return new User(user.getUsername(), user.getPassword(), userRoles);
+        } else {
+            throw new UsernameNotFoundException(messageSource.getMessage("global.user.not-found",
+                    new Object[] { username }, LocaleContextHolder.getLocale()));
         }
     }
-    
+
 }
