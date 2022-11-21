@@ -10,13 +10,13 @@ public class HomeController {
 
 	@RequestMapping("/")
 	public String home(Model model, org.springframework.security.core.Authentication authentication) {
-
-		if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
-			return "redirect:/admin/home";
-		} else if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("USER"))) {
-			return "redirect:/user/home";
+		if (authentication != null) {
+			if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
+				return "redirect:/admin/home";
+			} else if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("USER"))) {
+				return "redirect:/user/home";
+			}
 		}
-
 		return "home";
 	}
 
