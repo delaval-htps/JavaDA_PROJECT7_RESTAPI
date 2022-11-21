@@ -1,0 +1,73 @@
+package com.nnk.springboot.security;
+
+import java.io.IOException;
+import java.util.Objects;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
+
+import com.nnk.springboot.domain.User;
+import com.nnk.springboot.services.UserService;
+
+import lombok.extern.log4j.Log4j2;
+
+@Component
+@Log4j2
+/**
+ * Use of SavedRequestAwareAuthenticationSuccessHandler and not SimpleUrlAuthenticationSuccessHandler
+ * with this implementation springboot save the first url just before login and redirect to it 
+ */
+public class OAuth2LoginSuccessHandler extends  SavedRequestAwareAuthenticationSuccessHandler {
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private MessageSource messageSource;
+
+    @Override
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+            Authentication authentication) throws IOException, ServletException {
+
+        CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
+
+        User existingUser = userService.findByUsername(oAuth2User.getEmail());
+
+        if (existingUser != null) {
+
+            // update of user with providerId and authenticationProvider if not already done
+            log.info(messageSource.getMessage("global.existing-user.oauth2-authenticated",
+                    new Object[] { existingUser }, LocaleContextHolder.getLocale()));
+
+            if (existingUser.getAuthenticationProvider() == AuthProvider.LOCAL) {
+
+                userService.updateUserFromOAuth2Authentication(oAuth2User, existingUser);
+
+            } else if ((!Objects.equals(existingUser.getIdProvider(), oAuth2User.getproviderId())
+                    || existingUser.getAuthenticationProvider() != oAuth2User.getClientProvider())) {
+
+                throw new OAuth2AuthenticationException("a problem occured with Oauth2Authentication!");
+            }
+
+        } else {
+
+            // creation of new user
+            log.info(messageSource.getMessage("global.not-existing-user.oauth2-authenticated",
+                    new Object[] { "createdUser" }, LocaleContextHolder.getLocale()));
+            userService.saveUserFromOAuth2Authentication(oAuth2User);
+        }
+
+       
+        super.onAuthenticationSuccess(request, response, authentication);
+    }
+
+}

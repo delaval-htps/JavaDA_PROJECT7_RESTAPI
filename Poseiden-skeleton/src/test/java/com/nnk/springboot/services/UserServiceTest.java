@@ -45,8 +45,8 @@ public class UserServiceTest {
     @Before
     public void intialize() {
         users = new ArrayList<>();
-        mockUser1 = new User(1, "username", "password", "fullName", "userRole");
-        mockUser2 = new User(2, "username", "password", "fullName", "userRole");
+        mockUser1 = new User(1, "username", "email", "password", "fullName", "userRole");
+        mockUser2 = new User(2, "username", "email", "password", "fullName", "userRole");
         users.add(mockUser1);
         users.add(mockUser2);
     }
@@ -77,7 +77,7 @@ public class UserServiceTest {
     @Test
     public void findByIdUser_whenUserExisted_thenReturnUser() {
         // Given
-        User mockExistedUser = new User(1, "username", "password", "fullName", "userRole");
+        User mockExistedUser = new User(1, "username","email@email.com" ,"password", "fullName", "userRole");
 
         when(userRepository.findById(anyInt())).thenReturn(Optional.of(mockExistedUser));
 
@@ -101,7 +101,7 @@ public class UserServiceTest {
     @Test
     public void saveUserTest_whenUserNotNull_thenSaveIt() {
         // when
-        User mockUser = new User(1, "username", "password", "fullName", "userRole");
+        User mockUser = new User(1, "username", "email@email.com" ,"password", "fullName", "userRole");
         User mockSavedUser = mockUser;
         when(userRepository.save(any(User.class))).thenReturn(mockSavedUser);
 
@@ -118,8 +118,8 @@ public class UserServiceTest {
     public void updateUserTest_whenUserIdNotSame_thenThrowUserException() {
 
         // when
-        User mockExistedUser = new User(1, "username1", "password1", "fullName1", "userRole1");
-        User mockUserToUpdate = new User(2, "username2", "password2", "fullName2", "userRole2");
+        User mockExistedUser = new User(1, "username1", "email1@email.com" ,"password1", "fullName1", "userRole1");
+        User mockUserToUpdate = new User(2, "username2", "email2@email.com" ,"password2", "fullName2", "userRole2");
 
         when(userRepository.findById(anyInt())).thenReturn(Optional.of(mockExistedUser));
 
@@ -135,8 +135,8 @@ public class UserServiceTest {
     @Test
     public void updateUserTest_whenUserExisted_thenUpdateUser() {
         // when
-        User mockExistedUser = new User(1, "username1", "password1", "fullName1", "userRole1");
-        User mockUserToUpdate = new User(1, "username2", "password2", "fullName2", "userRole2");
+        User mockExistedUser = new User(1, "username1","email1@email.com" ,"password1", "fullName1", "userRole1");
+        User mockUserToUpdate = new User(1, "username2","email2@email.com" , "password2", "fullName2", "userRole2");
 
         when(userRepository.findById(anyInt())).thenReturn(Optional.of(mockExistedUser));
 
@@ -158,7 +158,7 @@ public class UserServiceTest {
     @Test
     public void updateUserTest_whenUserNoExisted_thenUpdateUser() {
         // when
-        User mockUserToUpdate = new User(1, "username2", "password2", "fullName2", "userRole2");
+        User mockUserToUpdate = new User(1, "username2", "email2@email.com","password2", "fullName2", "userRole2");
 
         when(userRepository.findById(anyInt())).thenReturn(Optional.empty());
 
@@ -210,7 +210,7 @@ public class UserServiceTest {
     public void deleteUserTest_whenUserIdZero_thenThrowUserException() {
 
         // when
-        User mockNotExistedUser = new User(0, "username1", "password1", "fullName1", "userRole1");
+        User mockNotExistedUser = new User(0, "username1", "email1@email.com","password1", "fullName1", "userRole1");
 
         // then
         Assertions.assertThatThrownBy(() -> {
@@ -225,7 +225,7 @@ public class UserServiceTest {
     @Test
     public void deleteUserTest_whenUserExisted_thenDeleteUser() {
         // when
-        User mockExistedUser = new User(1, "username1", "password1", "fullName1", "userRole1");
+        User mockExistedUser = new User(1, "username1", "email1@email.com","password1", "fullName1", "userRole1");
 
         when(userRepository.findById(anyInt())).thenReturn(Optional.of(mockExistedUser));
 
@@ -237,7 +237,7 @@ public class UserServiceTest {
     @Test
     public void deleteUserTest_whenUserNotExisted_thenDeleteUser() {
         // when
-        User mockNotExistedUser = new User(1, "username1", "password1", "fullName1", "userRole1");
+        User mockNotExistedUser = new User(1, "username1","email1@email.com", "password1", "fullName1", "userRole1");
 
         when(userRepository.findById(anyInt())).thenReturn(Optional.empty());
 

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Login</title>
+	<link rel="stylesheet" href="../../css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../css/styles.css">
+</head>
+
+<body>
+	<div class="container" style="height:100vh">
+
+		<div class="d-flex flex-column justify-content-center h-75">
+			
+
+			<h2 class="mb-3">Login with Username and Password</h2>
+			
+			<div class="error-message">
+				<p th:if="${param.error != null}" class="error">Wrong user or password</p>
+				<p th:if="${param.logout != null}" class="logout">You have been correctly logged out!</p>
+			</div>
+
+			<form action="#" th:action="@{/process-login}" method="post">
+				<div class="form-group row">
+					<label for="username" class="col-sm-1 col-form-label">User:</label>
+					<div class="col-sm-4">
+						<input class="form-control" type="text" id="username" name="username">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="password" class="col-sm-1 col-form-label">Password:</label>
+					<div class="col-sm-4">
+						<input class="form-control" type="password" name="password" id="password">
+					</div>
+				</div>
+
+				<input class="btn btn-primary" type="submit" value="Login">
+
+			</form>
+
+			<!-- Connection with Oauth2 /github-->
+			<div sec:authorize="!isAuthenticated()">
+				<div>
+					<a th:href="@{/oauth2/authorization/github}">Log In with github</a>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+
+</html>
