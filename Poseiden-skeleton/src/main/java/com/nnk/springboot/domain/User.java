@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import com.nnk.springboot.security.AuthProvider;
 
@@ -34,6 +36,8 @@ public class User {
     private String email;
 
     @NotBlank(message = "Password is mandatory")
+    @Size(min = 8)
+    @Pattern(regexp = "^(?=.*[A-Z])(?=.*\\d)(?=.*[^\\w])(?=.*[^\\s])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,}$")
     private String password;
 
     @NotBlank(message = "FullName is mandatory")

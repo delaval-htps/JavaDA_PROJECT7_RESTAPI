@@ -39,7 +39,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-        
+
                 .antMatchers("/css/**")
                 .permitAll()
 
@@ -67,20 +67,19 @@ public class SecurityConfig {
         http.formLogin()
                 .loginPage("/app/login")
                 .loginProcessingUrl("/process-login")
-            .permitAll();
+                .permitAll();
 
         http.oauth2Login()
                 .loginPage("/app/login")
                 .userInfoEndpoint()
                 .userService(oauth2UserService)
                 .and()
-                .successHandler(oAuth2LoginSuccessHandler)
-            ;
+                .successHandler(oAuth2LoginSuccessHandler);
 
         http.logout()
                 .logoutUrl("/app-logout")
                 .logoutSuccessUrl("/")
-            .permitAll();
+                .permitAll();
 
         return http.build();
     }
