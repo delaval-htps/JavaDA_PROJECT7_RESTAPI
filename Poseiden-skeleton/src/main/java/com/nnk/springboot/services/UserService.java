@@ -13,7 +13,6 @@ import org.springframework.util.StringUtils;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.exceptions.UserNotFoundException;
 import com.nnk.springboot.repositories.UserRepository;
-import com.nnk.springboot.security.AuthProvider;
 import com.nnk.springboot.security.CustomOAuth2User;
 
 import lombok.extern.log4j.Log4j2;
@@ -60,7 +59,7 @@ public class UserService {
     public User saveUser(User user) {
 
         if (user != null) {
-            user.setAuthenticationProvider(AuthProvider.LOCAL);
+
             User savedUser = userRepository.save(user);
             log.info(messageSource.getMessage("global.user.creation", new Object[] { savedUser },
                     LocaleContextHolder.getLocale()));
