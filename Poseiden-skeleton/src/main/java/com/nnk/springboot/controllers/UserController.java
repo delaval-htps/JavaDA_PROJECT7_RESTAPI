@@ -22,8 +22,7 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping("/user/list")
-    public String home(Model model)
-    {
+    public String home(Model model) {
         model.addAttribute("users", userService.findAll());
         return "user/list";
     }
@@ -35,13 +34,12 @@ public class UserController {
 
     @PostMapping("/user/validate")
     public String validate(@Valid User user, BindingResult result, Model model) {
-       
+
         if (!result.hasErrors()) {
 
             User existingUser = userService.findByUsername(user.getEmail());
             if (existingUser != null) {
-                result.addError(new FieldError("user", "fullname",
-                        "This user already existed in application, please add another one!"));
+                result.addError(new FieldError("user", "fullname", "This user already existed in application, please add another one!"));
                 return "user/add";
             }
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -53,6 +51,14 @@ public class UserController {
         return "user/add";
     }
 
+    /**
+     * show form to update a user. id can't be not valid because the btn to
+     * display form is in row of table of all existing users.
+     * 
+     * @param id    id of existing user to update
+     * @param model model to send user
+     * @return view
+     */
     @GetMapping("/user/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         User user = userService.findById(id);
@@ -62,8 +68,7 @@ public class UserController {
     }
 
     @PostMapping("/user/update/{id}")
-    public String updateUser(@PathVariable("id") Integer id, @Valid User user,
-                             BindingResult result, Model model) {
+    public String updateUser(@PathVariable("id") Integer id, @Valid User user, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "user/update";
         }

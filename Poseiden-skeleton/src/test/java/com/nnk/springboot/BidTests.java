@@ -22,7 +22,9 @@ public class BidTests {
 	@Autowired
 	private BidListRepository bidListRepository;
 
+
 	@Test
+	
 	public void bidListTest() {
 		BidList bid = new BidList("Account Test", "Type Test", 10d);
 
