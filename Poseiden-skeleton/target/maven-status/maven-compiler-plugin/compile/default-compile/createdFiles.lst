@@ -4,6 +4,7 @@ com/nnk/springboot/controllers/CurveController$1.class
 com/nnk/springboot/exceptions/BidListNotFoundException.class
 com/nnk/springboot/services/CurvePointService.class
 com/nnk/springboot/controllers/RuleNameController$1.class
+com/nnk/springboot/controllers/UserController$2.class
 com/nnk/springboot/security/AuthProvider.class
 com/nnk/springboot/exceptions/CurvePointNotFoundException.class
 com/nnk/springboot/controllers/BidListController$1.class
@@ -27,10 +28,12 @@ com/nnk/springboot/configuration/ConfigApplication.class
 com/nnk/springboot/domain/Trade.class
 com/nnk/springboot/validation/PasswordConstraint.class
 com/nnk/springboot/repositories/CurvePointRepository.class
+com/nnk/springboot/controllers/UserController$3.class
 com/nnk/springboot/repositories/RuleNameRepository.class
 com/nnk/springboot/controllers/TradeController$3.class
 com/nnk/springboot/repositories/RatingRepository.class
 com/nnk/springboot/controllers/BidListController$3.class
+com/nnk/springboot/controllers/UserController$1.class
 com/nnk/springboot/Application.class
 com/nnk/springboot/security/CustomOAuth2User.class
 com/nnk/springboot/services/RuleNameService.class

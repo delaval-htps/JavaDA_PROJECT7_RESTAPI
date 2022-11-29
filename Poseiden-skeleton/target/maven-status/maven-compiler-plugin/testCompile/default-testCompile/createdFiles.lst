@@ -8,6 +8,7 @@ com/nnk/springboot/TradeTests.class
 com/nnk/springboot/controllers/CurvePointControllerTest.class
 com/nnk/springboot/RatingTests.class
 com/nnk/springboot/services/RatingServiceTest.class
+com/nnk/springboot/controllers/UserControllerTest.class
 com/nnk/springboot/RuleTests.class
 com/nnk/springboot/services/RuleNameServiceTest.class
 com/nnk/springboot/controllers/BidListControllerTest.class

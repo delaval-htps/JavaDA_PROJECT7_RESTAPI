@@ -3,6 +3,8 @@
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,74 +16,101 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nnk.springboot.domain.User;
+import com.nnk.springboot.exceptions.GlobalPoseidonException;
 import com.nnk.springboot.services.UserService;
 
 @Controller
-<span class="fc" id="L20">public class UserController {</span>
+<span class="fc" id="L23">public class UserController {</span>
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private MessageSource messageSource;
+
     @RequestMapping(&quot;/user/list&quot;)
-    public String home(Model model)
-    {
-<span class="nc" id="L27">        model.addAttribute(&quot;users&quot;, userService.findAll());</span>
-<span class="nc" id="L28">        return &quot;user/list&quot;;</span>
+    public String home(Model model) {
+<span class="fc" id="L32">        model.addAttribute(&quot;users&quot;, userService.findAll());</span>
+<span class="fc" id="L33">        return &quot;user/list&quot;;</span>
     }
 
     @GetMapping(&quot;/user/add&quot;)
     public String addUser(User bid) {
-<span class="nc" id="L33">        return &quot;user/add&quot;;</span>
+<span class="fc" id="L38">        return &quot;user/add&quot;;</span>
     }
 
     @PostMapping(&quot;/user/validate&quot;)
     public String validate(@Valid User user, BindingResult result, Model model) {
-       
-<span class="nc bnc" id="L39" title="All 2 branches missed.">        if (!result.hasErrors()) {</span>
 
-<span class="nc" id="L41">            User existingUser = userService.findByUsername(user.getEmail());</span>
-<span class="nc bnc" id="L42" title="All 2 branches missed.">            if (existingUser != null) {</span>
-<span class="nc" id="L43">                result.addError(new FieldError(&quot;user&quot;, &quot;fullname&quot;,</span>
-                        &quot;This user already existed in application, please add another one!&quot;));
-<span class="nc" id="L45">                return &quot;user/add&quot;;</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        if (!result.hasErrors()) {</span>
+
+<span class="fc" id="L46">            User existingUser = userService.findByUsername(user.getEmail());</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">            if (existingUser != null) {</span>
+<span class="fc" id="L48">                result.addError(new FieldError(&quot;user&quot;, &quot;fullname&quot;, &quot;This user already existed in application, please add another one!&quot;));</span>
+<span class="fc" id="L49">                return &quot;user/add&quot;;</span>
             }
-<span class="nc" id="L47">            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();</span>
-<span class="nc" id="L48">            user.setPassword(encoder.encode(user.getPassword()));</span>
-<span class="nc" id="L49">            userService.saveUser(user);</span>
-<span class="nc" id="L50">            model.addAttribute(&quot;users&quot;, userService.findAll());</span>
-<span class="nc" id="L51">            return &quot;redirect:/user/list&quot;;</span>
+<span class="fc" id="L51">            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();</span>
+<span class="fc" id="L52">            user.setPassword(encoder.encode(user.getPassword()));</span>
+<span class="fc" id="L53">            userService.saveUser(user);</span>
+<span class="fc" id="L54">            model.addAttribute(&quot;users&quot;, userService.findAll());</span>
+<span class="fc" id="L55">            return &quot;redirect:/user/list&quot;;</span>
         }
-<span class="nc" id="L53">        return &quot;user/add&quot;;</span>
+<span class="fc" id="L57">        return &quot;user/add&quot;;</span>
     }
 
+    /**
+     * show form to update a user. id can't be not valid because the btn to
+     * display form is in row of table of all existing users.
+     * 
+     * @param id    id of existing user to update
+     * @param model model to send user
+     * @return view
+     * @Throw UserNotFoundException if userService don't retrieve user
+     */
     @GetMapping(&quot;/user/update/{id}&quot;)
     public String showUpdateForm(@PathVariable(&quot;id&quot;) Integer id, Model model) {
-<span class="nc" id="L58">        User user = userService.findById(id);</span>
-<span class="nc" id="L59">        user.setPassword(&quot;&quot;);</span>
-<span class="nc" id="L60">        model.addAttribute(&quot;user&quot;, user);</span>
-<span class="nc" id="L61">        return &quot;user/update&quot;;</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        if (id != 0) {</span>
+<span class="fc" id="L72">            User user = userService.findById(id);</span>
+<span class="fc" id="L73">            user.setPassword(&quot;&quot;);</span>
+<span class="fc" id="L74">            model.addAttribute(&quot;user&quot;, user);</span>
+<span class="fc" id="L75">            return &quot;user/update&quot;;</span>
+        } else {
+<span class="fc" id="L77">            throw new GlobalPoseidonException(messageSource.getMessage(&quot;global.exception.incorrect-id&quot;, new Object[] { new Object() {</span>
+<span class="fc" id="L78">            }.getClass().getEnclosingMethod().getName() }, LocaleContextHolder.getLocale()));</span>
+        }
     }
 
     @PostMapping(&quot;/user/update/{id}&quot;)
-    public String updateUser(@PathVariable(&quot;id&quot;) Integer id, @Valid User user,
-                             BindingResult result, Model model) {
-<span class="nc bnc" id="L67" title="All 2 branches missed.">        if (result.hasErrors()) {</span>
-<span class="nc" id="L68">            return &quot;user/update&quot;;</span>
+    public String updateUser(@PathVariable(&quot;id&quot;) Integer id, @Valid User user, BindingResult result, Model model) {
+
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        if (id != 0) {</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">            if (result.hasErrors()) {</span>
+<span class="fc" id="L87">                return &quot;user/update&quot;;</span>
+            }
+
+<span class="fc" id="L90">            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();</span>
+<span class="fc" id="L91">            user.setPassword(encoder.encode(user.getPassword()));</span>
+<span class="fc" id="L92">            user.setId(id);</span>
+<span class="fc" id="L93">            userService.saveUser(user);</span>
+<span class="fc" id="L94">            model.addAttribute(&quot;users&quot;, userService.findAll());</span>
+<span class="fc" id="L95">            return &quot;redirect:/user/list&quot;;</span>
+        } else {
+<span class="fc" id="L97">            throw new GlobalPoseidonException(messageSource.getMessage(&quot;global.exception.incorrect-id&quot;, new Object[] { new Object() {</span>
+<span class="fc" id="L98">            }.getClass().getEnclosingMethod().getName() }, LocaleContextHolder.getLocale()));</span>
         }
 
-<span class="nc" id="L71">        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();</span>
-<span class="nc" id="L72">        user.setPassword(encoder.encode(user.getPassword()));</span>
-<span class="nc" id="L73">        user.setId(id);</span>
-<span class="nc" id="L74">        userService.saveUser(user);</span>
-<span class="nc" id="L75">        model.addAttribute(&quot;users&quot;, userService.findAll());</span>
-<span class="nc" id="L76">        return &quot;redirect:/user/list&quot;;</span>
     }
 
     @GetMapping(&quot;/user/delete/{id}&quot;)
     public String deleteUser(@PathVariable(&quot;id&quot;) Integer id, Model model) {
-<span class="nc" id="L81">        User user = userService.findById(id);</span>
-<span class="nc" id="L82">        userService.deleteUser(user);</span>
-<span class="nc" id="L83">        model.addAttribute(&quot;users&quot;, userService.findAll());</span>
-<span class="nc" id="L84">        return &quot;redirect:/user/list&quot;;</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">        if (id != 0) {</span>
+<span class="fc" id="L106">            User user = userService.findById(id);</span>
+<span class="fc" id="L107">            userService.deleteUser(user);</span>
+<span class="fc" id="L108">            model.addAttribute(&quot;users&quot;, userService.findAll());</span>
+<span class="fc" id="L109">            return &quot;redirect:/user/list&quot;;</span>
+        } else {
+<span class="fc" id="L111">            throw new GlobalPoseidonException(messageSource.getMessage(&quot;global.exception.incorrect-id&quot;, new Object[] { new Object() {</span>
+<span class="fc" id="L112">            }.getClass().getEnclosingMethod().getName() }, LocaleContextHolder.getLocale()));</span>
+        }
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -2,6 +2,7 @@ package com.nnk.springboot.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.never;
@@ -11,6 +12,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -19,7 +21,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.List;
 
-import org.assertj.core.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,6 +37,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.nnk.springboot.domain.User;
+import com.nnk.springboot.exceptions.GlobalPoseidonException;
+import com.nnk.springboot.exceptions.UserNotFoundException;
 import com.nnk.springboot.security.AuthProvider;
 import com.nnk.springboot.services.UserService;
 
@@ -124,11 +127,11 @@ public class UserControllerTest {
     }
 
     @Test
-    public void validateTest_whenUserValidAndExisting_thenRedirectAddUser() throws Exception {
+    public void validateTest_whenUserValidAndExisting_thenAddUser() throws Exception {
         // when
             when(userService.findByUsername(anyString())).thenReturn(user1);
             user1.setPassword("Jadmin4all&lp4e");
-            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+          
         // then
         mockMvc.perform(post("/user/validate")
             .param("username", user1.getUsername())
@@ -137,16 +140,8 @@ public class UserControllerTest {
             .param("role", user1.getRole())
             .param("password", user1.getPassword())
             .with(csrf()))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/user/list"));
-
-                ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
-
-        verify(userService, times(1)).saveUser(userCaptor.capture());
-        assertEquals(userCaptor.getValue().getFullname(), user1.getFullname());
-        assertEquals(userCaptor.getValue().getEmail(), user1.getEmail());
-        assertEquals(userCaptor.getValue().getRole(), user1.getRole());
-        assertTrue(encoder.matches(user1.getPassword(),userCaptor.getValue().getPassword()));
+                .andExpect(status().isOk())
+                .andExpect(view().name("user/add"));
     }
 
     @Test
@@ -157,34 +152,82 @@ public class UserControllerTest {
         // then
         mockMvc.perform(get("/user/update/{id}", 1)).andExpect(status().isOk()).andExpect(view().name("user/update")).andExpect(model().attribute("user", user1));
     }
-    
+
+    @Test
+    public void showUpdateFormTest_whenIdIsZero_thenThrowGlobalPoseidonException() throws Exception {
+
+        mockMvc.perform(get("/user/update/{id}", 0)).andExpect(status().is4xxClientError()).andExpect(result -> assertTrue(result.getResolvedException() instanceof GlobalPoseidonException));
+
+    }
+
     @Test
     public void updateUserTest_whenUserValidAndExisting_thenRedirectUserList() throws Exception {
         // when
-            user2.setPassword("Jadmin4all&lp4e");
-            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            when(userService.findAll()).thenReturn(new ArrayList(Arrays.asList(user2)));
-        // then
-        mockMvc.perform(post("/user/update/{id}",1)
-            .param("username", user2.getUsername())
-            .param("fullname", user2.getFullname())
-            .param("email", user2.getEmail())
-            .param("role", user2.getRole())
-            .param("password", user2.getPassword())
-            .with(csrf()))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/user/list"))
-                .andExpect(model().attribute("users",Arrays.asList(user2) ));
+        user2.setPassword("Jadmin4all&lp4e");
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-                ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
+        // then
+        mockMvc.perform(post("/user/update/{id}", 1).param("username", user2.getUsername()).param("fullname", user2.getFullname()).param("email", user2.getEmail()).param("role", user2.getRole())
+                .param("password", user2.getPassword()).with(csrf())).andDo(print()).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/user/list"));
+
+        ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
 
         verify(userService, times(1)).saveUser(userCaptor.capture());
-        assertEquals(userCaptor.getValue().getFullname(), user1.getFullname());
-        assertEquals(userCaptor.getValue().getEmail(), user1.getEmail());
-        assertEquals(userCaptor.getValue().getRole(), user1.getRole());
-        assertEquals(userCaptor.getValue().getId(), 1);
-        assertTrue(encoder.matches(user1.getPassword(), userCaptor.getValue().getPassword()));
-        
+        assertEquals(userCaptor.getValue().getFullname(), user2.getFullname());
+        assertEquals(userCaptor.getValue().getEmail(), user2.getEmail());
+        assertEquals(userCaptor.getValue().getRole(), user2.getRole());
+        assertEquals(1, userCaptor.getValue().getId());
+        assertTrue(encoder.matches(user2.getPassword(), userCaptor.getValue().getPassword()));
+
+    }
+
+    @Test
+    public void updateUserTest_whenUserNotValid_thenGetUserUpdate() throws Exception {
+        // when
+        user2.setPassword("Jadmin4all&lp4e");
+        // then
+        mockMvc.perform(post("/user/update/{id}", 1).param("username", "").param("fullname", user2.getFullname()).param("email", user2.getEmail()).param("role", user2.getRole())
+                .param("password", user2.getPassword()).with(csrf())).andDo(print()).andExpect(status().isOk()).andExpect(view().name("user/update"));
+
+        verify(userService, never()).saveUser(any(User.class));
+
+    }
+
+    @Test
+    public void updateUserTest_whenIdIsZero_thenThrowGlobalPoseidonException() throws Exception {
+        // Given
+        user2.setPassword("Jadmin4all&lp4e");
+        // when &then
+        mockMvc.perform(post("/user/update/{id}", 0).param("username", user2.getUsername()).param("fullname", user2.getFullname()).param("email", user2.getEmail()).param("role", user2.getRole())
+                .param("password", user2.getPassword()).with(csrf())).andExpect(status().is4xxClientError())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof GlobalPoseidonException));
+
+    }
+
+    @Test
+    public void deleteUser_whenUserExisting() throws Exception {
+        //when
+        when(userService.findById(anyInt())).thenReturn(user1);
+        //then
+        mockMvc.perform(get("/user/delete/{id}",1)).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/user/list"));
+        verify(userService,times(1)).deleteUser(any(User.class));
+    }
+
+    @Test
+    public void deleteUser_whenUserNotExisting() throws Exception {
+        //when ( the service throws exception if user is not found with id by default )
+        when(userService.findById(anyInt())).thenThrow(new UserNotFoundException("id is not found"));
+       //then
+       mockMvc.perform(get("/user/delete/{id}",1)).andExpect(status().is4xxClientError()).andExpect(result -> assertTrue(result.getResolvedException() instanceof UserNotFoundException));
+
+       verify(userService, never()).deleteUser(Mockito.any(User.class));
+    }
+
+    @Test
+    public void deleteUser_whenIdIsZero_thenThrowGlobalPoseidonException() throws Exception {
+
+        mockMvc.perform(get("/user/delete/{id}", 0)).andExpect(status().is4xxClientError()).andExpect(result -> assertTrue(result.getResolvedException() instanceof GlobalPoseidonException));
+
     }
 
 }

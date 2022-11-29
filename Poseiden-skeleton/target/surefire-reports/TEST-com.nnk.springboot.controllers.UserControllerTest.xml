@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.nnk.springboot.services.TradeServiceTest" time="0.229" tests="14" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.nnk.springboot.controllers.UserControllerTest" time="2.382" tests="13" errors="0" skipped="0" failures="0">
   <properties>
     <property name="sun.desktop" value="gnome"/>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
@@ -57,18 +57,17 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="55.0"/>
   </properties>
-  <testcase name="deleteTradeTest_whenTradeIdZero_thenThrowTradeException" classname="com.nnk.springboot.services.TradeServiceTest" time="0.182"/>
-  <testcase name="updateTradeTest_whenTradeIdNotSame_thenThrowTradeException" classname="com.nnk.springboot.services.TradeServiceTest" time="0.002"/>
-  <testcase name="deleteTradeTest_whenTradeNull_thenThrowTradeException" classname="com.nnk.springboot.services.TradeServiceTest" time="0.002"/>
-  <testcase name="updateTradeTest_whenTradeNoExisted_thenUpdateTrade" classname="com.nnk.springboot.services.TradeServiceTest" time="0.003"/>
-  <testcase name="saveTradeTest_whenTradeNotNull_thenSaveIt" classname="com.nnk.springboot.services.TradeServiceTest" time="0.004"/>
-  <testcase name="deleteTradeTest_whenTradeNotExisted_thenDeleteTrade" classname="com.nnk.springboot.services.TradeServiceTest" time="0.003"/>
-  <testcase name="findAll" classname="com.nnk.springboot.services.TradeServiceTest" time="0.002"/>
-  <testcase name="updateTradeTest_whenTradeExisted_thenUpdateTrade" classname="com.nnk.springboot.services.TradeServiceTest" time="0.005"/>
-  <testcase name="updateTradeTest_whenUserNull_thenThrowUserException" classname="com.nnk.springboot.services.TradeServiceTest" time="0.003"/>
-  <testcase name="deleteTradeTest_whenTradeExisted_thenDeleteTrade" classname="com.nnk.springboot.services.TradeServiceTest" time="0.004"/>
-  <testcase name="findByIdTrade_whenTradeNotExisted_thenThrowTradeException" classname="com.nnk.springboot.services.TradeServiceTest" time="0.003"/>
-  <testcase name="updateTradeTest_whenUserIdZero_thenThrowUserException" classname="com.nnk.springboot.services.TradeServiceTest" time="0.003"/>
-  <testcase name="findByIdTrade_whenTradeExisted_thenReturnTrade" classname="com.nnk.springboot.services.TradeServiceTest" time="0.003"/>
-  <testcase name="saveTradeTest_whenTradeNull_thenThrowException" classname="com.nnk.springboot.services.TradeServiceTest" time="0.002"/>
+  <testcase name="validateTest_whenUserNotValide_thenRedirectAddUser" classname="com.nnk.springboot.controllers.UserControllerTest" time="0.115"/>
+  <testcase name="addUserTest" classname="com.nnk.springboot.controllers.UserControllerTest" time="0.036"/>
+  <testcase name="showUpdateFormTest" classname="com.nnk.springboot.controllers.UserControllerTest" time="0.039"/>
+  <testcase name="validateTest_whenUserValidAndNotExisting_thenSaveNewUser" classname="com.nnk.springboot.controllers.UserControllerTest" time="0.303"/>
+  <testcase name="homeTest" classname="com.nnk.springboot.controllers.UserControllerTest" time="0.028"/>
+  <testcase name="updateUserTest_whenIdIsZero_thenThrowGlobalPoseidonException" classname="com.nnk.springboot.controllers.UserControllerTest" time="0.053"/>
+  <testcase name="validateTest_whenUserValidAndExisting_thenAddUser" classname="com.nnk.springboot.controllers.UserControllerTest" time="0.033"/>
+  <testcase name="deleteUser_whenUserExisting" classname="com.nnk.springboot.controllers.UserControllerTest" time="0.019"/>
+  <testcase name="showUpdateFormTest_whenIdIsZero_thenThrowGlobalPoseidonException" classname="com.nnk.springboot.controllers.UserControllerTest" time="0.019"/>
+  <testcase name="updateUserTest_whenUserNotValid_thenGetUserUpdate" classname="com.nnk.springboot.controllers.UserControllerTest" time="0.068"/>
+  <testcase name="deleteUser_whenIdIsZero_thenThrowGlobalPoseidonException" classname="com.nnk.springboot.controllers.UserControllerTest" time="0.018"/>
+  <testcase name="updateUserTest_whenUserValidAndExisting_thenRedirectUserList" classname="com.nnk.springboot.controllers.UserControllerTest" time="0.339"/>
+  <testcase name="deleteUser_whenUserNotExisting" classname="com.nnk.springboot.controllers.UserControllerTest" time="0.017"/>
 </testsuite>

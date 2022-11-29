@@ -29,20 +29,20 @@ public class User {
 <span class="fc" id="L29">    private Integer id;</span>
 
     @NotBlank(message = &quot;Username is mandatory&quot;)
-<span class="nc" id="L32">    private String username;</span>
+<span class="fc" id="L32">    private String username;</span>
 
     @NotBlank(message = &quot;Email is mandatory&quot;)
-<span class="nc" id="L35">    private String email;</span>
+<span class="fc" id="L35">    private String email;</span>
 
     @NotBlank(message = &quot;Password is mandatory&quot;)
     @PasswordConstraint
-<span class="nc" id="L39">    private String password;</span>
+<span class="fc" id="L39">    private String password;</span>
 
     @NotBlank(message = &quot;FullName is mandatory&quot;)
-<span class="nc" id="L42">    private String fullname;</span>
+<span class="fc" id="L42">    private String fullname;</span>
 
     @NotBlank(message = &quot;Role is mandatory&quot;)
-<span class="nc" id="L45">    private String role;</span>
+<span class="fc" id="L45">    private String role;</span>
 
     @Enumerated(EnumType.STRING)
 <span class="nc" id="L48">    private AuthProvider authenticationProvider;</span>
@@ -59,18 +59,18 @@ public class User {
 <span class="fc" id="L59">    }</span>
 
     public User(String username, String email, String fullname, String role, AuthProvider provider,
-<span class="nc" id="L62">            Integer idProvider) {</span>
-<span class="nc" id="L63">        this.username = username;</span>
-<span class="nc" id="L64">        this.email = email;</span>
-<span class="nc" id="L65">        this.fullname = fullname;</span>
-<span class="nc" id="L66">        this.role = role;</span>
-<span class="nc" id="L67">        this.authenticationProvider = provider;</span>
-<span class="nc" id="L68">        this.idProvider = idProvider;</span>
-<span class="nc" id="L69">    }</span>
+<span class="fc" id="L62">            Integer idProvider) {</span>
+<span class="fc" id="L63">        this.username = username;</span>
+<span class="fc" id="L64">        this.email = email;</span>
+<span class="fc" id="L65">        this.fullname = fullname;</span>
+<span class="fc" id="L66">        this.role = role;</span>
+<span class="fc" id="L67">        this.authenticationProvider = provider;</span>
+<span class="fc" id="L68">        this.idProvider = idProvider;</span>
+<span class="fc" id="L69">    }</span>
 
     @Override
     public String toString() {
-<span class="nc" id="L73">        return &quot;User [id=&quot; + id + &quot;, username=&quot; + username + &quot;, email=&quot; + email + &quot;, password=&quot; + password</span>
+<span class="fc" id="L73">        return &quot;User [id=&quot; + id + &quot;, username=&quot; + username + &quot;, email=&quot; + email + &quot;, password=&quot; + password</span>
                 + &quot;, fullname=&quot; + fullname + &quot;, role=&quot; + role + &quot;, authenticationProvider=&quot; + authenticationProvider
                 + &quot;, idProvider=&quot; + idProvider + &quot;]&quot;;
     }

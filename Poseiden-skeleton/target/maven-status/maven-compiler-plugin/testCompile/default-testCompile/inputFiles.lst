@@ -13,5 +13,6 @@
 /home/delaval/Documents/git/JavaDA_PROJECT7_RESTAPI/Poseiden-skeleton/src/test/java/com/nnk/springboot/services/CurvePointServiceTest.java
 /home/delaval/Documents/git/JavaDA_PROJECT7_RESTAPI/Poseiden-skeleton/src/test/java/com/nnk/springboot/BidTests.java
 /home/delaval/Documents/git/JavaDA_PROJECT7_RESTAPI/Poseiden-skeleton/src/test/java/com/nnk/springboot/controllers/RuleNameControllerTest.java
+/home/delaval/Documents/git/JavaDA_PROJECT7_RESTAPI/Poseiden-skeleton/src/test/java/com/nnk/springboot/controllers/UserControllerTest.java
 /home/delaval/Documents/git/JavaDA_PROJECT7_RESTAPI/Poseiden-skeleton/src/test/java/com/nnk/springboot/services/RuleNameServiceTest.java
 /home/delaval/Documents/git/JavaDA_PROJECT7_RESTAPI/Poseiden-skeleton/src/test/java/com/nnk/springboot/controllers/TradeControllerTest.java
