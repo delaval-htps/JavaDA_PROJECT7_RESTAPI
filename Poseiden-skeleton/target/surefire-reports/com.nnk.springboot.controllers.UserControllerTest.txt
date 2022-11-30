@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.nnk.springboot.controllers.UserControllerTest
 -------------------------------------------------------------------------------
-Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.382 s - in com.nnk.springboot.controllers.UserControllerTest
+Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.766 s - in com.nnk.springboot.controllers.UserControllerTest

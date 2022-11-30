@@ -5,6 +5,7 @@
 /home/delaval/Documents/git/JavaDA_PROJECT7_RESTAPI/Poseiden-skeleton/src/test/java/com/nnk/springboot/services/BidListServiceTest.java
 /home/delaval/Documents/git/JavaDA_PROJECT7_RESTAPI/Poseiden-skeleton/src/test/java/com/nnk/springboot/RuleTests.java
 /home/delaval/Documents/git/JavaDA_PROJECT7_RESTAPI/Poseiden-skeleton/src/test/java/com/nnk/springboot/services/UserServiceTest.java
+/home/delaval/Documents/git/JavaDA_PROJECT7_RESTAPI/Poseiden-skeleton/src/test/java/com/nnk/springboot/validation/PasswordValidatorTest.java
 /home/delaval/Documents/git/JavaDA_PROJECT7_RESTAPI/Poseiden-skeleton/src/test/java/com/nnk/springboot/PasswordEncodeTest.java
 /home/delaval/Documents/git/JavaDA_PROJECT7_RESTAPI/Poseiden-skeleton/src/test/java/com/nnk/springboot/services/TradeServiceTest.java
 /home/delaval/Documents/git/JavaDA_PROJECT7_RESTAPI/Poseiden-skeleton/src/test/java/com/nnk/springboot/TradeTests.java
