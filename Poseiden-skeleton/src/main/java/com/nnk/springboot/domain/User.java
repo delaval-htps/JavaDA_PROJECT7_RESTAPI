@@ -10,6 +10,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 import com.nnk.springboot.security.AuthProvider;
+import com.nnk.springboot.validation.PasswordConstraint;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,6 +35,7 @@ public class User {
     private String email;
 
     @NotBlank(message = "Password is mandatory")
+    @PasswordConstraint
     private String password;
 
     @NotBlank(message = "FullName is mandatory")

@@ -23,10 +23,12 @@ import lombok.extern.log4j.Log4j2;
 @Component
 @Log4j2
 /**
- * Use of SavedRequestAwareAuthenticationSuccessHandler and not SimpleUrlAuthenticationSuccessHandler
- * with this implementation springboot save the first url just before login and redirect to it 
+ * Use of SavedRequestAwareAuthenticationSuccessHandler and not
+ * SimpleUrlAuthenticationSuccessHandler
+ * with this implementation springboot save the first url just before login and
+ * redirect to it
  */
-public class OAuth2LoginSuccessHandler extends  SavedRequestAwareAuthenticationSuccessHandler {
+public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
     @Autowired
     private UserService userService;
@@ -40,6 +42,7 @@ public class OAuth2LoginSuccessHandler extends  SavedRequestAwareAuthenticationS
 
         CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
 
+    
         User existingUser = userService.findByUsername(oAuth2User.getEmail());
 
         if (existingUser != null) {
@@ -66,7 +69,6 @@ public class OAuth2LoginSuccessHandler extends  SavedRequestAwareAuthenticationS
             userService.saveUserFromOAuth2Authentication(oAuth2User);
         }
 
-       
         super.onAuthenticationSuccess(request, response, authentication);
     }
 

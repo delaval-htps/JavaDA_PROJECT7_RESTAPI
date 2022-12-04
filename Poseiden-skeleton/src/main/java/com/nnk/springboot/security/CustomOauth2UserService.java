@@ -1,6 +1,7 @@
 package com.nnk.springboot.security;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,21 +35,21 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
 
         // retrieve from DB a potentiel existing registred user with same email of
         // connected OAuth2user
-        User existingUser = userRepository.findByUsername(loadUser.getAttribute("email"));
+        Optional<User> existingUser = userRepository.findByUsername(loadUser.getAttribute("email"));
 
         Set<GrantedAuthority> mappedGrantedAuthorities = new HashSet<>();
 
-        if (existingUser != null) {
+        if (existingUser.isPresent()) {
 
-            mappedGrantedAuthorities.add(new SimpleGrantedAuthority(existingUser.getRole()));
+            mappedGrantedAuthorities.add(new SimpleGrantedAuthority(existingUser.get().getRole()));
 
             return new CustomOAuth2User(loadUser, mappedGrantedAuthorities,
-                    userRequest.getClientRegistration().getClientName(),existingUser.getUsername());
+                    userRequest.getClientRegistration().getClientName(), existingUser.get().getUsername());
 
         } else {
-            
-            return new CustomOAuth2User(loadUser, (Set<GrantedAuthority>) loadUser.getAuthorities(),
-                    userRequest.getClientRegistration().getClientName(),loadUser.getAttribute("username"));
+             mappedGrantedAuthorities.add(new SimpleGrantedAuthority("USER"));
+            return new CustomOAuth2User(loadUser, mappedGrantedAuthorities,
+                    userRequest.getClientRegistration().getClientName(), loadUser.getAttribute("username"));
         }
     }
 

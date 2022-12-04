@@ -20,15 +20,16 @@ public class CustomOAuth2User implements OAuth2User {
 	private AuthProvider clientProvider;
 	private Integer providerId;
 
-	public CustomOAuth2User(OAuth2User user,Set<GrantedAuthority> authorities,String clientProvider,String username) {
-	
+	public CustomOAuth2User(OAuth2User user, Set<GrantedAuthority> authorities, String clientProvider,
+			String username) {
+
 		// login of github's oAuth2User is the username of user in github
 		this.username = user.getAttribute("login");
 		this.email = user.getAttribute("email");
 		this.fullname = user.getAttribute("name");
 		this.clientProvider = AuthProvider.valueOf(clientProvider.toUpperCase());
 		this.providerId = user.getAttribute("id");
-		
+
 		this.authorities = authorities;
 		this.attributes = user.getAttributes();
 		this.name = username;
@@ -92,18 +93,18 @@ public class CustomOAuth2User implements OAuth2User {
 		return this.providerId;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
-	
+
 	@Override
 	public String toString() {
 		return "CustomOAuth2User [ username=" + username
-				+ ", email=" + email + ", fullname=" + fullname + ", clientProvider=" + clientProvider.toString() + ", providerId="
-				+ providerId + " ,authorities=" + authorities + ", attributes=" + attributes +"]";
+				+ ", email=" + email + ", fullname=" + fullname + ", clientProvider=" + clientProvider.toString()
+				+ ", providerId="
+				+ providerId + " ,authorities=" + authorities + ", attributes=" + attributes + "]";
 	}
-
-
-	
 
 }

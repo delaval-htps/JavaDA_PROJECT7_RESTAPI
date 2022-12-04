@@ -1,89 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>User.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spring-boot-skeleton</a> &gt; <a href="index.source.html" class="el_package">com.nnk.springboot.domain</a> &gt; <span class="el_source">User.java</span></div><h1>User.java</h1><pre class="source lang-java linenums">package com.nnk.springboot.domain;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import com.nnk.springboot.security.AuthProvider;
+import com.nnk.springboot.validation.PasswordConstraint;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
+@Getter
+<span class="fc" id="L22">@Setter</span>
+<span class="fc" id="L23">@NoArgsConstructor</span>
+<span class="nc" id="L24">@AllArgsConstructor</span>
 @Table(name = &quot;users&quot;)
 public class User {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+<span class="fc" id="L29">    private Integer id;</span>
+
     @NotBlank(message = &quot;Username is mandatory&quot;)
-    private String username;
+<span class="fc" id="L32">    private String username;</span>
+
+    @NotBlank(message = &quot;Email is mandatory&quot;)
+<span class="fc" id="L35">    private String email;</span>
+
     @NotBlank(message = &quot;Password is mandatory&quot;)
-    private String password;
+    @PasswordConstraint
+<span class="fc" id="L39">    private String password;</span>
+
     @NotBlank(message = &quot;FullName is mandatory&quot;)
-    private String fullname;
+<span class="fc" id="L42">    private String fullname;</span>
+
     @NotBlank(message = &quot;Role is mandatory&quot;)
-    private String role;
+<span class="fc" id="L45">    private String role;</span>
 
-    public Integer getId() {
-<span class="fc" id="L22">        return id;</span>
-    }
+    @Enumerated(EnumType.STRING)
+<span class="fc" id="L48">    private AuthProvider authenticationProvider;</span>
 
-    public void setId(Integer id) {
-<span class="fc" id="L26">        this.id = id;</span>
-<span class="fc" id="L27">    }</span>
+<span class="fc" id="L50">    private Integer idProvider;</span>
 
-    public String getUsername() {
-<span class="nc" id="L30">        return username;</span>
-    }
+<span class="fc" id="L52">    public User(int id, String username, String email, String password, String fullname, String userRole) {</span>
+<span class="fc" id="L53">        this.id = id;</span>
+<span class="fc" id="L54">        this.username = username;</span>
+<span class="fc" id="L55">        this.email = email;</span>
+<span class="fc" id="L56">        this.password = password;</span>
+<span class="fc" id="L57">        this.fullname = fullname;</span>
+<span class="fc" id="L58">        this.role = userRole;</span>
+<span class="fc" id="L59">    }</span>
 
-    public void setUsername(String username) {
-<span class="nc" id="L34">        this.username = username;</span>
-<span class="nc" id="L35">    }</span>
+    public User(String username, String email, String fullname, String role, AuthProvider provider,
+<span class="fc" id="L62">            Integer idProvider) {</span>
+<span class="fc" id="L63">        this.username = username;</span>
+<span class="fc" id="L64">        this.email = email;</span>
+<span class="fc" id="L65">        this.fullname = fullname;</span>
+<span class="fc" id="L66">        this.role = role;</span>
+<span class="fc" id="L67">        this.authenticationProvider = provider;</span>
+<span class="fc" id="L68">        this.idProvider = idProvider;</span>
+<span class="fc" id="L69">    }</span>
 
-    public String getPassword() {
-<span class="nc" id="L38">        return password;</span>
-    }
-
-    public void setPassword(String password) {
-<span class="nc" id="L42">        this.password = password;</span>
-<span class="nc" id="L43">    }</span>
-
-    public String getFullname() {
-<span class="nc" id="L46">        return fullname;</span>
-    }
-
-    public void setFullname(String fullname) {
-<span class="nc" id="L50">        this.fullname = fullname;</span>
-<span class="nc" id="L51">    }</span>
-
-    public String getRole() {
-<span class="nc" id="L54">        return role;</span>
-    }
-
-    public void setRole(String role) {
-<span class="nc" id="L58">        this.role = role;</span>
-<span class="nc" id="L59">    }</span>
-
-<span class="fc" id="L61">    public User() {</span>
-<span class="fc" id="L62">    }</span>
-    
-    /**
-     * @param id
-     * @param username
-     * @param password
-     * @param fullname
-     * @param role
-     */
-<span class="fc" id="L71">    public User(Integer id, String username,String password,String fullname,  String role) {</span>
-<span class="fc" id="L72">        this.id = id;</span>
-<span class="fc" id="L73">        this.username = username;</span>
-<span class="fc" id="L74">        this.password = password;</span>
-<span class="fc" id="L75">        this.fullname = fullname;</span>
-<span class="fc" id="L76">        this.role = role;</span>
-<span class="fc" id="L77">    }</span>
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
-    
     @Override
     public String toString() {
-<span class="nc" id="L85">        return &quot;User [id=&quot; + id + &quot;, username=&quot; + username + &quot;, password=&quot; + password + &quot;, fullname=&quot; + fullname + &quot;, role=&quot; + role + &quot;]&quot;;</span>
+<span class="fc" id="L73">        return &quot;User [id=&quot; + id + &quot;, username=&quot; + username + &quot;, email=&quot; + email + &quot;, password=&quot; + password</span>
+                + &quot;, fullname=&quot; + fullname + &quot;, role=&quot; + role + &quot;, authenticationProvider=&quot; + authenticationProvider
+                + &quot;, idProvider=&quot; + idProvider + &quot;]&quot;;
     }
-    
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -8,16 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.exceptions.UserNotFoundException;
 import com.nnk.springboot.repositories.UserRepository;
+import com.nnk.springboot.security.CustomOAuth2User;
 
 import lombok.extern.log4j.Log4j2;
 
 @Service
-<span class="fc" id="L19">@Log4j2</span>
-<span class="fc" id="L20">public class UserService {</span>
+<span class="fc" id="L21">@Log4j2</span>
+<span class="fc" id="L22">public class UserService {</span>
 
     @Autowired
     private UserRepository userRepository;
@@ -26,73 +28,115 @@ import lombok.extern.log4j.Log4j2;
     private MessageSource messageSource;
 
     public List&lt;User&gt; findAll() {
-<span class="fc" id="L29">        return userRepository.findAll();</span>
+<span class="fc" id="L31">        return userRepository.findAll();</span>
     }
 
     public User findById(Integer id) {
 
-<span class="fc" id="L34">        Optional&lt;User&gt; existingUser = userRepository.findById(id);</span>
-<span class="fc bfc" id="L35" title="All 2 branches covered.">        if (existingUser.isPresent()) {</span>
-<span class="fc" id="L36">            log.info(messageSource.getMessage(&quot;global.user.find-by-id&quot;, new Object[] { existingUser.get() }, LocaleContextHolder.getLocale()));</span>
-<span class="fc" id="L37">            return existingUser.get();</span>
+<span class="fc" id="L36">        Optional&lt;User&gt; existingUser = userRepository.findById(id);</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">        if (existingUser.isPresent()) {</span>
+<span class="fc" id="L38">            log.info(messageSource.getMessage(&quot;global.user.find-by-id&quot;, new Object[] { existingUser.get() }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L39">            return existingUser.get();</span>
         } else {
-<span class="fc" id="L39">            throw new UserNotFoundException(messageSource.getMessage(&quot;global.user.not-found&quot;, new Object[] { id }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L41">            throw new UserNotFoundException(messageSource.getMessage(&quot;global.user.not-found&quot;, new Object[] { id }, LocaleContextHolder.getLocale()));</span>
+        }
+    }
+
+    public User findByUsername(String username) {
+
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        if (!StringUtils.hasText(username.trim())) {</span>
+<span class="fc" id="L48">            throw new UserNotFoundException(messageSource.getMessage(&quot;global.exception.not-found&quot;, new Object[] { &quot;user with username:&quot; + username }, LocaleContextHolder.getLocale()));</span>
+        }
+<span class="fc" id="L50">        Optional&lt;User&gt; existingUser = userRepository.findByUsername(username);</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        if (existingUser.isPresent()) {</span>
+<span class="fc" id="L52">            log.info(messageSource.getMessage(&quot;global.user.find-by-username&quot;, new Object[] { username, existingUser }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L53">            return existingUser.get();</span>
+        } else {
+<span class="fc" id="L55">            throw new UserNotFoundException(messageSource.getMessage(&quot;global.exception.not-found&quot;, new Object[] { &quot;user with username =&quot; + username }, LocaleContextHolder.getLocale()));</span>
         }
     }
 
     public User saveUser(User user) {
-<span class="fc bfc" id="L44" title="All 2 branches covered.">        if (user != null) {</span>
-<span class="fc" id="L45">            User savedUser = userRepository.save(user);</span>
-<span class="fc" id="L46">            log.info(messageSource.getMessage(&quot;global.user.creation&quot;, new Object[] { savedUser }, LocaleContextHolder.getLocale()));</span>
-<span class="fc" id="L47">            return savedUser;</span>
+
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        if (user != null) {</span>
+
+<span class="fc" id="L63">            User savedUser = userRepository.save(user);</span>
+<span class="fc" id="L64">            log.info(messageSource.getMessage(&quot;global.user.creation&quot;, new Object[] { savedUser }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L65">            return savedUser;</span>
 
         } else {
-<span class="fc" id="L50">            throw new UserNotFoundException(messageSource.getMessage(&quot;global.exception.not-null&quot;, new Object[] { &quot;user&quot; }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L68">            throw new UserNotFoundException(messageSource.getMessage(&quot;global.exception.not-null&quot;, new Object[] { &quot;user&quot; }, LocaleContextHolder.getLocale()));</span>
         }
     }
-    
+
+    public User saveUserFromOAuth2Authentication(CustomOAuth2User oAuth2User) {
+
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        if (oAuth2User != null) {</span>
+
+<span class="fc" id="L76">            return userRepository.save(new User(oAuth2User.getUsername(), oAuth2User.getEmail(), oAuth2User.getFullname(), &quot;USER&quot;, oAuth2User.getClientProvider(), oAuth2User.getproviderId()));</span>
+
+        } else {
+<span class="fc" id="L79">            throw new UserNotFoundException(messageSource.getMessage(&quot;global.exception.not-null&quot;, new Object[] { &quot; new user to save from Oauth2 authentication &quot; }, LocaleContextHolder.getLocale()));</span>
+        }
+    }
+
     public User updateUser(User user) {
 
-<span class="fc bfc" id="L56" title="All 4 branches covered.">        if (user != null &amp;&amp; user.getId() != 0) {</span>
+<span class="fc bfc" id="L85" title="All 4 branches covered.">        if (user != null &amp;&amp; user.getId() != 0) {</span>
 
-<span class="fc" id="L58">            Optional&lt;User&gt; existingUser = userRepository.findById(user.getId());</span>
+<span class="fc" id="L87">            Optional&lt;User&gt; existingUser = userRepository.findById(user.getId());</span>
 
-<span class="fc bfc" id="L60" title="All 4 branches covered.">            if (existingUser.isPresent() &amp;&amp; Objects.equals(user.getId(), existingUser.get().getId())) {</span>
+<span class="fc bfc" id="L89" title="All 4 branches covered.">            if (existingUser.isPresent() &amp;&amp; Objects.equals(user.getId(), existingUser.get().getId())) {</span>
 
-<span class="fc" id="L62">                User updatedUser = userRepository.save(user);</span>
+<span class="fc" id="L91">                User updatedUser = userRepository.save(user);</span>
 
-<span class="fc" id="L64">                log.info(messageSource.getMessage(&quot;global.user.update&quot;, new Object[] { updatedUser }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L93">                log.info(messageSource.getMessage(&quot;global.user.update&quot;, new Object[] { updatedUser }, LocaleContextHolder.getLocale()));</span>
 
-<span class="fc" id="L66">                return updatedUser;</span>
+<span class="fc" id="L95">                return updatedUser;</span>
 
             } else {
-<span class="fc" id="L69">                throw new UserNotFoundException(messageSource.getMessage(&quot;global.user.not-found&quot;, new Object[] { user.getId() }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L98">                throw new UserNotFoundException(messageSource.getMessage(&quot;global.user.not-found&quot;, new Object[] { user.getId() }, LocaleContextHolder.getLocale()));</span>
             }
 
         } else {
-<span class="fc" id="L73">            throw new UserNotFoundException(messageSource.getMessage(&quot;global.exception.not-null&quot;, new Object[] { &quot;user&quot; }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L102">            throw new UserNotFoundException(messageSource.getMessage(&quot;global.exception.not-null&quot;, new Object[] { &quot;user&quot; }, LocaleContextHolder.getLocale()));</span>
         }
 
+    }
+
+    public User updateUserFromOAuth2Authentication(CustomOAuth2User oAuth2User, User existingUser) {
+
+<span class="fc bfc" id="L109" title="All 4 branches covered.">        if (existingUser != null &amp;&amp; oAuth2User != null) {</span>
+
+<span class="fc" id="L111">            existingUser.setAuthenticationProvider(oAuth2User.getClientProvider());</span>
+<span class="fc" id="L112">            existingUser.setIdProvider(oAuth2User.getproviderId());</span>
+<span class="fc" id="L113">            return userRepository.save(existingUser);</span>
+
+        } else {
+<span class="fc" id="L116">            throw new UserNotFoundException(</span>
+<span class="fc" id="L117">                    messageSource.getMessage(&quot;global.exception.not-null&quot;, new Object[] { &quot; update user to save from Oauth2 authentication &quot; }, LocaleContextHolder.getLocale()));</span>
+        }
     }
 
     public void deleteUser(User user) {
-<span class="fc bfc" id="L79" title="All 4 branches covered.">        if (user != null &amp;&amp; user.getId() != 0) {</span>
- 
-<span class="fc" id="L81">            Optional&lt;User&gt; existedUser = userRepository.findById(user.getId());</span>
- 
-<span class="fc bfc" id="L83" title="All 2 branches covered.">            if (existedUser.isPresent()) {</span>
- 
-<span class="fc" id="L85">                log.info(messageSource.getMessage(&quot;global.user.delete&quot;, new Object[] { existedUser }, LocaleContextHolder.getLocale()));</span>
- 
-<span class="fc" id="L87">                userRepository.delete(existedUser.get());</span>
- 
+<span class="fc bfc" id="L122" title="All 4 branches covered.">        if (user != null &amp;&amp; user.getId() != 0) {</span>
+
+<span class="fc" id="L124">            Optional&lt;User&gt; existedUser = userRepository.findById(user.getId());</span>
+
+<span class="fc bfc" id="L126" title="All 2 branches covered.">            if (existedUser.isPresent()) {</span>
+
+<span class="fc" id="L128">                log.info(messageSource.getMessage(&quot;global.user.delete&quot;, new Object[] { existedUser }, LocaleContextHolder.getLocale()));</span>
+
+<span class="fc" id="L130">                userRepository.delete(existedUser.get());</span>
+
             } else {
-<span class="fc" id="L90">                throw new UserNotFoundException(messageSource.getMessage(&quot;global.user.not-found&quot;, new Object[] { user.getId() }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L133">                throw new UserNotFoundException(messageSource.getMessage(&quot;global.user.not-found&quot;, new Object[] { user.getId() }, LocaleContextHolder.getLocale()));</span>
             }
- 
-<span class="fc" id="L93">        } else {</span>
-<span class="fc" id="L94">            throw new UserNotFoundException(messageSource.getMessage(&quot;global.exception.not-null&quot;, new Object[] { &quot;User&quot; }, LocaleContextHolder.getLocale()));</span>
+
+<span class="fc" id="L136">        } else {</span>
+<span class="fc" id="L137">            throw new UserNotFoundException(messageSource.getMessage(&quot;global.exception.not-null&quot;, new Object[] { &quot;User&quot; }, LocaleContextHolder.getLocale()));</span>
         }
-<span class="fc" id="L96">    }</span>
+<span class="fc" id="L139">    }</span>
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
