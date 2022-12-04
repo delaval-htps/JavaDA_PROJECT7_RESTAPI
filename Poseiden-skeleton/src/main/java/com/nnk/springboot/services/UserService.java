@@ -35,25 +35,25 @@ public class UserService {
 
         Optional<User> existingUser = userRepository.findById(id);
         if (existingUser.isPresent()) {
-            log.info(messageSource.getMessage("global.user.find-by-id", new Object[] { existingUser.get() },
-                    LocaleContextHolder.getLocale()));
+            log.info(messageSource.getMessage("global.user.find-by-id", new Object[] { existingUser.get() }, LocaleContextHolder.getLocale()));
             return existingUser.get();
         } else {
-            throw new UserNotFoundException(messageSource.getMessage("global.user.not-found", new Object[] { id },
-                    LocaleContextHolder.getLocale()));
+            throw new UserNotFoundException(messageSource.getMessage("global.user.not-found", new Object[] { id }, LocaleContextHolder.getLocale()));
         }
     }
 
     public User findByUsername(String username) {
 
         if (!StringUtils.hasText(username.trim())) {
-            throw new UserNotFoundException(messageSource.getMessage("global.exception.not-found",
-                    new Object[] { "user with username:" + username }, LocaleContextHolder.getLocale()));
+            throw new UserNotFoundException(messageSource.getMessage("global.exception.not-found", new Object[] { "user with username:" + username }, LocaleContextHolder.getLocale()));
         }
-        User existingUser = userRepository.findByUsername(username);
-        log.info(messageSource.getMessage("global.user.find-by-username", new Object[] { username, existingUser },
-                LocaleContextHolder.getLocale()));
-        return existingUser;
+        Optional<User> existingUser = userRepository.findByUsername(username);
+        if (existingUser.isPresent()) {
+            log.info(messageSource.getMessage("global.user.find-by-username", new Object[] { username, existingUser }, LocaleContextHolder.getLocale()));
+            return existingUser.get();
+        } else {
+            throw new UserNotFoundException(messageSource.getMessage("global.exception.not-found", new Object[] { "user with username =" + username }, LocaleContextHolder.getLocale()));
+        }
     }
 
     public User saveUser(User user) {
@@ -61,28 +61,11 @@ public class UserService {
         if (user != null) {
 
             User savedUser = userRepository.save(user);
-            log.info(messageSource.getMessage("global.user.creation", new Object[] { savedUser },
-                    LocaleContextHolder.getLocale()));
+            log.info(messageSource.getMessage("global.user.creation", new Object[] { savedUser }, LocaleContextHolder.getLocale()));
             return savedUser;
 
         } else {
-            throw new UserNotFoundException(messageSource.getMessage("global.exception.not-null",
-                    new Object[] { "user" }, LocaleContextHolder.getLocale()));
-        }
-    }
-
-    public User updateUserFromOAuth2Authentication(CustomOAuth2User oAuth2User, User existingUser) {
-
-        if (existingUser != null && oAuth2User != null) {
-
-            existingUser.setAuthenticationProvider(oAuth2User.getClientProvider());
-            existingUser.setIdProvider(oAuth2User.getproviderId());
-            return userRepository.save(existingUser);
-
-        } else {
-            throw new UserNotFoundException(messageSource.getMessage("global.exception.not-null",
-                    new Object[] { " update user to save from Oauth2 authentication " },
-                    LocaleContextHolder.getLocale()));
+            throw new UserNotFoundException(messageSource.getMessage("global.exception.not-null", new Object[] { "user" }, LocaleContextHolder.getLocale()));
         }
     }
 
@@ -90,12 +73,10 @@ public class UserService {
 
         if (oAuth2User != null) {
 
-            return userRepository.save(new User(oAuth2User.getUsername(), oAuth2User.getEmail(),
-                    oAuth2User.getFullname(), "USER", oAuth2User.getClientProvider(), oAuth2User.getproviderId()));
+            return userRepository.save(new User(oAuth2User.getUsername(), oAuth2User.getEmail(), oAuth2User.getFullname(), "USER", oAuth2User.getClientProvider(), oAuth2User.getproviderId()));
 
         } else {
-            throw new UserNotFoundException(messageSource.getMessage("global.exception.not-null",
-                    new Object[] { " new user to save from Oauth2 authentication " }, LocaleContextHolder.getLocale()));
+            throw new UserNotFoundException(messageSource.getMessage("global.exception.not-null", new Object[] { " new user to save from Oauth2 authentication " }, LocaleContextHolder.getLocale()));
         }
     }
 
@@ -109,21 +90,32 @@ public class UserService {
 
                 User updatedUser = userRepository.save(user);
 
-                log.info(messageSource.getMessage("global.user.update", new Object[] { updatedUser },
-                        LocaleContextHolder.getLocale()));
+                log.info(messageSource.getMessage("global.user.update", new Object[] { updatedUser }, LocaleContextHolder.getLocale()));
 
                 return updatedUser;
 
             } else {
-                throw new UserNotFoundException(messageSource.getMessage("global.user.not-found",
-                        new Object[] { user.getId() }, LocaleContextHolder.getLocale()));
+                throw new UserNotFoundException(messageSource.getMessage("global.user.not-found", new Object[] { user.getId() }, LocaleContextHolder.getLocale()));
             }
 
         } else {
-            throw new UserNotFoundException(messageSource.getMessage("global.exception.not-null",
-                    new Object[] { "user" }, LocaleContextHolder.getLocale()));
+            throw new UserNotFoundException(messageSource.getMessage("global.exception.not-null", new Object[] { "user" }, LocaleContextHolder.getLocale()));
         }
 
+    }
+
+    public User updateUserFromOAuth2Authentication(CustomOAuth2User oAuth2User, User existingUser) {
+
+        if (existingUser != null && oAuth2User != null) {
+
+            existingUser.setAuthenticationProvider(oAuth2User.getClientProvider());
+            existingUser.setIdProvider(oAuth2User.getproviderId());
+            return userRepository.save(existingUser);
+
+        } else {
+            throw new UserNotFoundException(
+                    messageSource.getMessage("global.exception.not-null", new Object[] { " update user to save from Oauth2 authentication " }, LocaleContextHolder.getLocale()));
+        }
     }
 
     public void deleteUser(User user) {
@@ -133,19 +125,16 @@ public class UserService {
 
             if (existedUser.isPresent()) {
 
-                log.info(messageSource.getMessage("global.user.delete", new Object[] { existedUser },
-                        LocaleContextHolder.getLocale()));
+                log.info(messageSource.getMessage("global.user.delete", new Object[] { existedUser }, LocaleContextHolder.getLocale()));
 
                 userRepository.delete(existedUser.get());
 
             } else {
-                throw new UserNotFoundException(messageSource.getMessage("global.user.not-found",
-                        new Object[] { user.getId() }, LocaleContextHolder.getLocale()));
+                throw new UserNotFoundException(messageSource.getMessage("global.user.not-found", new Object[] { user.getId() }, LocaleContextHolder.getLocale()));
             }
 
         } else {
-            throw new UserNotFoundException(messageSource.getMessage("global.exception.not-null",
-                    new Object[] { "User" }, LocaleContextHolder.getLocale()));
+            throw new UserNotFoundException(messageSource.getMessage("global.exception.not-null", new Object[] { "User" }, LocaleContextHolder.getLocale()));
         }
     }
 

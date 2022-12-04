@@ -42,6 +42,7 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
 
         CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
 
+    
         User existingUser = userService.findByUsername(oAuth2User.getEmail());
 
         if (existingUser != null) {

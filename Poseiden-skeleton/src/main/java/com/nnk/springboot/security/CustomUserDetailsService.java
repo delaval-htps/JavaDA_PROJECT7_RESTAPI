@@ -2,6 +2,7 @@ package com.nnk.springboot.security;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -26,14 +27,15 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        com.nnk.springboot.domain.User user = userRepository.findByUsername(username);
-        if (user != null) {
+
+        Optional<com.nnk.springboot.domain.User> user = userRepository.findByUsername(username);
+
+        if (user.isPresent()) {
             List<SimpleGrantedAuthority> userRoles = new ArrayList<>();
-            userRoles.add(new SimpleGrantedAuthority(user.getRole()));
-            return new User(user.getUsername(), user.getPassword(), userRoles);
+            userRoles.add(new SimpleGrantedAuthority(user.get().getRole()));
+            return new User(user.get().getUsername(), user.get().getPassword(), userRoles);
         } else {
-            throw new UsernameNotFoundException(messageSource.getMessage("global.user.not-found",
-                    new Object[] { username }, LocaleContextHolder.getLocale()));
+            throw new UsernameNotFoundException(messageSource.getMessage("global.user.not-found", new Object[] { username }, LocaleContextHolder.getLocale()));
         }
     }
 

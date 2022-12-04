@@ -19,7 +19,7 @@ import lombok.Setter;
 
 @Entity
 @Getter
-<span class="pc" id="L22">@Setter</span>
+<span class="fc" id="L22">@Setter</span>
 <span class="fc" id="L23">@NoArgsConstructor</span>
 <span class="nc" id="L24">@AllArgsConstructor</span>
 @Table(name = &quot;users&quot;)
@@ -45,9 +45,9 @@ public class User {
 <span class="fc" id="L45">    private String role;</span>
 
     @Enumerated(EnumType.STRING)
-<span class="nc" id="L48">    private AuthProvider authenticationProvider;</span>
+<span class="fc" id="L48">    private AuthProvider authenticationProvider;</span>
 
-<span class="nc" id="L50">    private Integer idProvider;</span>
+<span class="fc" id="L50">    private Integer idProvider;</span>
 
 <span class="fc" id="L52">    public User(int id, String username, String email, String password, String fullname, String userRole) {</span>
 <span class="fc" id="L53">        this.id = id;</span>

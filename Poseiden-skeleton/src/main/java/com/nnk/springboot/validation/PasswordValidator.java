@@ -8,7 +8,7 @@ import javax.validation.ConstraintValidatorContext;
 import org.springframework.util.StringUtils;
 
 public class PasswordValidator implements ConstraintValidator<PasswordConstraint, String> {
-    private static final String PASSWORD_PATTERN = "^(?=.*[A-Z])(?=.*\\d)(?=.*[^\\w])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,}$";
+    private static final String PASSWORD_PATTERN = "^(?=.*[A-Z])(?=.*\\d)(?=.*[^\\w])(?=.*[\\-!@#&()\\[\\{\\}\\]:;',?/*~$^+=<>]).{8,}$";
 
     private static final Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
 
