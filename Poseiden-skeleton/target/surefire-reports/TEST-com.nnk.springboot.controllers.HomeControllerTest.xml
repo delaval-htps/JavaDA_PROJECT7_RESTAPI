@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.nnk.springboot.services.CurvePointServiceTest" time="0.224" tests="13" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.nnk.springboot.controllers.HomeControllerTest" time="5.447" tests="6" errors="0" skipped="0" failures="0">
   <properties>
     <property name="sun.desktop" value="gnome"/>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
@@ -57,17 +57,10 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="55.0"/>
   </properties>
-  <testcase name="deleteCurvePointTest_whenCurvePointNotExisted_thenDeleteCurvePoint" classname="com.nnk.springboot.services.CurvePointServiceTest" time="0.141"/>
-  <testcase name="deleteCurvePointTest_whenCurvePointIdZero_thenThrowCurvePointException" classname="com.nnk.springboot.services.CurvePointServiceTest" time="0.017"/>
-  <testcase name="updateCurvePointTest_whenCurvePointIdNotSame_thenThrowCurvePointException" classname="com.nnk.springboot.services.CurvePointServiceTest" time="0.026"/>
-  <testcase name="findByIdCurvePoint_whenCurvePointNotExisted_thenThrowCurvePointException" classname="com.nnk.springboot.services.CurvePointServiceTest" time="0.006"/>
-  <testcase name="deleteCurvePointTest_whenCurvePointNull_thenThrowCurvePointException" classname="com.nnk.springboot.services.CurvePointServiceTest" time="0.001"/>
-  <testcase name="updateCurvePointTest_whenCurvePointExisted_thenUpdateCurvePoint" classname="com.nnk.springboot.services.CurvePointServiceTest" time="0.01"/>
-  <testcase name="updateCurvePointTest_whenCurvePointNoExisted_thenUpdateCurvePoint" classname="com.nnk.springboot.services.CurvePointServiceTest" time="0"/>
-  <testcase name="findAll" classname="com.nnk.springboot.services.CurvePointServiceTest" time="0.002"/>
-  <testcase name="saveCurvePointTest_whenCurvePointNull_thenThrowException" classname="com.nnk.springboot.services.CurvePointServiceTest" time="0.007"/>
-  <testcase name="updateCurvePointTest_whenCurvePointNull_thenThrowCurvePointException" classname="com.nnk.springboot.services.CurvePointServiceTest" time="0"/>
-  <testcase name="deleteCurvePointTest_whenCurvePointExisted_thenDeleteCurvePoint" classname="com.nnk.springboot.services.CurvePointServiceTest" time="0.005"/>
-  <testcase name="findByIdCurvePoint_whenCurvePointExisted_thenReturnCurvePoint" classname="com.nnk.springboot.services.CurvePointServiceTest" time="0.002"/>
-  <testcase name="saveCurvePointTest_whenCurvePointNotNull_thenSaveIt" classname="com.nnk.springboot.services.CurvePointServiceTest" time="0.004"/>
+  <testcase name="userHomeTest" classname="com.nnk.springboot.controllers.HomeControllerTest" time="0.16"/>
+  <testcase name="homeTest_whenUserRoleUSer_ThenRedirectUserHome" classname="com.nnk.springboot.controllers.HomeControllerTest" time="0.017"/>
+  <testcase name="homeTest_whenNoAuthentication_ThenReturnHome" classname="com.nnk.springboot.controllers.HomeControllerTest" time="0.099"/>
+  <testcase name="homeTest_whenUserRoleAdmin_ThenRedirectUserHome" classname="com.nnk.springboot.controllers.HomeControllerTest" time="0.022"/>
+  <testcase name="adminHomeTest_whenRoleAdmin_thenRedirectAdminHome" classname="com.nnk.springboot.controllers.HomeControllerTest" time="0.068"/>
+  <testcase name="adminHomeTest_WhenRoleUser_thenForwardToErrorPage" classname="com.nnk.springboot.controllers.HomeControllerTest" time="0.063"/>
 </testsuite>

@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.nnk.springboot.exceptions.GlobalPoseidonException;
+
 @Controller
 public class HomeController {
 
@@ -13,9 +15,12 @@ public class HomeController {
 		if (authentication != null) {
 			if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
 				return "redirect:/admin/home";
-			} else if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("USER"))) {
+			}else if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("USER"))) {
 				return "redirect:/user/home";
+			} else {
+				throw new GlobalPoseidonException("please contact admin: your Roles are not correct!");
 			}
+		
 		}
 		return "home";
 	}

@@ -10,24 +10,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 	@RequestMapping(&quot;/&quot;)
 	public String home(Model model, org.springframework.security.core.Authentication authentication) {
-<span class="nc bnc" id="L13" title="All 2 branches missed.">		if (authentication != null) {</span>
-<span class="nc bnc" id="L14" title="All 2 branches missed.">			if (authentication.getAuthorities().contains(new SimpleGrantedAuthority(&quot;ADMIN&quot;))) {</span>
-<span class="nc" id="L15">				return &quot;redirect:/admin/home&quot;;</span>
-<span class="nc bnc" id="L16" title="All 2 branches missed.">			} else if (authentication.getAuthorities().contains(new SimpleGrantedAuthority(&quot;USER&quot;))) {</span>
-<span class="nc" id="L17">				return &quot;redirect:/user/home&quot;;</span>
+<span class="fc bfc" id="L13" title="All 2 branches covered.">		if (authentication != null) {</span>
+<span class="fc bfc" id="L14" title="All 2 branches covered.">			if (authentication.getAuthorities().contains(new SimpleGrantedAuthority(&quot;ADMIN&quot;))) {</span>
+<span class="fc" id="L15">				return &quot;redirect:/admin/home&quot;;</span>
 			}
+<span class="pc bpc" id="L17" title="1 of 2 branches missed.">			if (authentication.getAuthorities().contains(new SimpleGrantedAuthority(&quot;USER&quot;))) {</span>
+<span class="fc" id="L18">				return &quot;redirect:/user/home&quot;;</span>
+			}
+<span class="nc" id="L20">			return &quot;home&quot;;</span>
 		}
-<span class="nc" id="L20">		return &quot;home&quot;;</span>
+<span class="fc" id="L22">		return &quot;home&quot;;</span>
 	}
 
 	@RequestMapping(&quot;/user/home&quot;)
 	public String userHome(Model model) {
-<span class="nc" id="L25">		return &quot;redirect:/bidList/list&quot;;</span>
+<span class="fc" id="L27">		return &quot;redirect:/bidList/list&quot;;</span>
 	}
 
 	@RequestMapping(&quot;/admin/home&quot;)
 	public String adminHome(Model model) {
-<span class="nc" id="L30">		return &quot;redirect:/bidList/list&quot;;</span>
+<span class="fc" id="L32">		return &quot;redirect:/bidList/list&quot;;</span>
 	}
 
 }
