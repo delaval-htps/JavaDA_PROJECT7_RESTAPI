@@ -1,4 +1,4 @@
-package com.nnk.springboot;
+package com.nnk.springboot.integrationTests;
 
 import java.util.List;
 import java.util.Optional;

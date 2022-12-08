@@ -59,7 +59,7 @@ public class SecurityConfig {
                 .hasAuthority("ADMIN")
 
                 .anyRequest().authenticated()
-
+                
                 .and()
                 // using AccesDeniedPage make easy to redirect to error 403 page
                 .exceptionHandling().accessDeniedPage("/app/error");

@@ -17,19 +17,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 <span class="pc bpc" id="L17" title="1 of 2 branches missed.">			if (authentication.getAuthorities().contains(new SimpleGrantedAuthority(&quot;USER&quot;))) {</span>
 <span class="fc" id="L18">				return &quot;redirect:/user/home&quot;;</span>
 			}
-<span class="nc" id="L20">			return &quot;home&quot;;</span>
 		}
-<span class="fc" id="L22">		return &quot;home&quot;;</span>
+<span class="fc" id="L21">		return &quot;home&quot;;</span>
 	}
 
 	@RequestMapping(&quot;/user/home&quot;)
 	public String userHome(Model model) {
-<span class="fc" id="L27">		return &quot;redirect:/bidList/list&quot;;</span>
+<span class="fc" id="L26">		return &quot;redirect:/bidList/list&quot;;</span>
 	}
 
 	@RequestMapping(&quot;/admin/home&quot;)
 	public String adminHome(Model model) {
-<span class="fc" id="L32">		return &quot;redirect:/bidList/list&quot;;</span>
+<span class="fc" id="L31">		return &quot;redirect:/bidList/list&quot;;</span>
 	}
 
 }

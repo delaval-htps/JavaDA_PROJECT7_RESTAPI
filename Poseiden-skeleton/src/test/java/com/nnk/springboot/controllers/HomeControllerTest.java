@@ -1,10 +1,11 @@
 package com.nnk.springboot.controllers;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import org.junit.Before;
@@ -22,6 +23,7 @@ import org.springframework.web.context.WebApplicationContext;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class HomeControllerTest {
+  
 
     @Autowired
     private WebApplicationContext context;
@@ -33,11 +35,9 @@ public class HomeControllerTest {
         mockMvc = MockMvcBuilders.webAppContextSetup(context).apply(SecurityMockMvcConfigurers.springSecurity()).build();
     }
 
-
     @Test
     public void homeTest_whenNoAuthentication_ThenReturnHome() throws Exception {
-
-        mockMvc.perform(get("/")).andExpect(status().isOk()).andExpect(view().name("home"));
+        mockMvc.perform(get("/").with(authentication(null))).andExpect(status().isOk()).andExpect(view().name("home"));
     }
 
     @Test
@@ -53,10 +53,11 @@ public class HomeControllerTest {
 
         mockMvc.perform(get("/")).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/admin/home"));
     }
+
     @Test
-    @WithMockUser(authorities = { "OTHER" })
-    public void  homeTest_whenUserRoleNotExist_thenForwardToErrorPage() throws Exception {
-        mockMvc.perform(get("/")).andExpect(status().is4xxClientError()).andDo(print());
+
+    public void homeTest_whenUserRoleNotExist_thenForwardToErrorPage() throws Exception {
+        mockMvc.perform(get("/")).andExpect(status().isOk()).andDo(print());
     }
 
     @Test
