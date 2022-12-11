@@ -16,7 +16,7 @@ import java.util.Optional;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles(value = "test")
-public class CurvePointTests {
+public class CurvePointIT {
 
 	@Autowired
 	private CurvePointRepository curvePointRepository;

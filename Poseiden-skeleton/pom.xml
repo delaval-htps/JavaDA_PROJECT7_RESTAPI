@@ -19,7 +19,8 @@
 		<!-- properties failsafe to skip IT -->
 		<skip.it>false</skip.it>
 		<!-- properties jacoco -->
-		<jacoco.execution.data.file>${project.build.directory}/jacoco.exec</jacoco.execution.data.file>
+		<jacoco.execution.data.file.ut>${project.build.directory}/jacoco.exec</jacoco.execution.data.file.ut>
+		<jacoco.execution.data.file.it>${project.build.directory}/jacoco-it.exec</jacoco.execution.data.file.it>
 	</properties>
 
 	<profiles>
@@ -141,6 +142,9 @@
 						<goals>
 							<goal>stop</goal>
 						</goals>
+						 <configuration>
+                            <skip>${skip.it}</skip>
+                        </configuration>
 					</execution>
 				</executions>
 			</plugin>
@@ -167,9 +171,21 @@
 							<goal>prepare-agent</goal>
 						</goals>
 						<configuration>
-							<destFile>${jacoco.execution.data.file}</destFile>
+							<destFile>${jacoco.execution.data.file.ut}</destFile>
 						</configuration>
 					</execution>
+						
+					<execution>
+						<id>pre-test-integration</id>
+							<goals>
+								<goal>prepare-agent-integration</goal>
+							</goals>
+							<configuration>
+								<destFile>${jacoco.execution.data.file.it}</destFile>
+							</configuration>
+					</execution>
+							
+					
 					<execution>
 						<id>post-test</id>
 						<phase>test</phase>
@@ -177,10 +193,23 @@
 							<goal>report</goal>
 						</goals>
 						<configuration>
-							<dataFile>${jacoco.execution.data.file}</dataFile>
+							<dataFile>${jacoco.execution.data.file.ut}</dataFile>
 							<outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>
 						</configuration>
 					</execution>
+
+					<execution>
+						<id>post-test-integration</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report-integration</goal>
+						</goals>
+						<configuration>
+							<dataFile>${jacoco.execution.data.file.it}</dataFile>
+							<outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
+						</configuration>
+					</execution>
+
 				</executions>
 			</plugin>
 		</plugins>

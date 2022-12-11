@@ -17,7 +17,7 @@ import com.nnk.springboot.repositories.TradeRepository;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles(value = "test")
-public class TradeTests {
+public class TradeIT {
 
 	@Autowired
 	private TradeRepository tradeRepository;

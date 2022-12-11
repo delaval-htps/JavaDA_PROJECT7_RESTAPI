@@ -44,7 +44,7 @@ spring-boot-skeleton,com.nnk.springboot.domain,User,27,149,0,0,1,27,1,20,1,20
 spring-boot-skeleton,com.nnk.springboot.domain,CurvePoint,67,43,0,0,4,11,6,10,6,10
 spring-boot-skeleton,com.nnk.springboot.domain,Rating,50,54,0,0,2,13,2,12,2,12
 spring-boot-skeleton,com.nnk.springboot.domain,Trade,189,36,0,0,18,10,36,9,36,9
-spring-boot-skeleton,com.nnk.springboot.domain,BidList,222,43,0,0,20,11,38,10,38,10
+spring-boot-skeleton,com.nnk.springboot.domain,BidList,226,39,0,0,20,11,39,9,39,9
 spring-boot-skeleton,com.nnk.springboot.validation,PasswordValidator,0,20,0,4,0,4,0,6,0,4
 spring-boot-skeleton,com.nnk.springboot.exceptions,GlobalExceptionHandler,0,49,0,0,0,14,0,3,0,3
 spring-boot-skeleton,com.nnk.springboot.exceptions,UserNotFoundException,0,4,0,0,0,2,0,1,0,1

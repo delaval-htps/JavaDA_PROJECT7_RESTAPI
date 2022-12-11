@@ -47,11 +47,12 @@ public class AuthenticationSecurityIT {
     @Test
 
     public void formLoginTest_whenOauth2Authentication() throws Exception {
-        mockMvc.perform(get("/app/login").with(oauth2Login())).andExpect(authenticated()).andDo(print());   
+        mockMvc.perform(get("/").with(oauth2Login())).andExpect(authenticated()).andDo(print());
+        
     }
     
     @Test
-    @Sql({"data-test.sql"})
+    @Sql({"classpath:data-test.sql"})
     public void formLoginTest_whenUserNamePasswordCorrect_thenUnauthenticated() throws Exception {
         mockMvc.perform(formLogin("/process-login").user("user").password("Jsuser4all&lp"))
                 .andExpect(authenticated())
@@ -60,7 +61,7 @@ public class AuthenticationSecurityIT {
     }
     
     @Test
-    @Sql({"data-test.sql"})
+    @Sql({"classpath:data-test.sql"})
     public void formLoginTest_whenUserNamePasswordNotCorrect_thenUnauthenticatedAndReturnLoginError() throws Exception {
         mockMvc.perform(formLogin("/process-login").user("user").password("incorrectPassword"))
             .andExpect(unauthenticated())

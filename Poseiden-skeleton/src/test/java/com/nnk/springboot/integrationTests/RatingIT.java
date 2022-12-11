@@ -17,7 +17,7 @@ import com.nnk.springboot.repositories.RatingRepository;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles(value = "test")
-public class RatingTests {
+public class RatingIT {
 
 	@Autowired
 	private RatingRepository ratingRepository;
