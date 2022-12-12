@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.nnk.springboot.services.BidListServiceTest" time="0.275" tests="14" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.nnk.springboot.security.AuthenticationSecurityTest" time="11.061" tests="4" errors="0" skipped="0" failures="0">
   <properties>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
     <property name="java.specification.version" value="11"/>
@@ -56,18 +56,8 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="55.0"/>
   </properties>
-  <testcase name="findByIdBidList_whenBidListExisted_thenReturnBidList" classname="com.nnk.springboot.services.BidListServiceTest" time="0.159"/>
-  <testcase name="deleteBidListTest_whenBidIdZero_thenThrowException" classname="com.nnk.springboot.services.BidListServiceTest" time="0.005"/>
-  <testcase name="deleteBidListTest_whenBidNull_thenThrowException" classname="com.nnk.springboot.services.BidListServiceTest" time="0.011"/>
-  <testcase name="findAll" classname="com.nnk.springboot.services.BidListServiceTest" time="0.005"/>
-  <testcase name="updateBidListTest_whenBidNotExisted_ThenThrowBidListNotFoundException" classname="com.nnk.springboot.services.BidListServiceTest" time="0.006"/>
-  <testcase name="saveBidListTest_whenBidNull_thenThrowException" classname="com.nnk.springboot.services.BidListServiceTest" time="0.01"/>
-  <testcase name="deleteBidListTest_whenBidExist" classname="com.nnk.springboot.services.BidListServiceTest" time="0.011"/>
-  <testcase name="updateBidListTest_whenBidIdZero_thenThrowException" classname="com.nnk.springboot.services.BidListServiceTest" time="0.007"/>
-  <testcase name="findByIdBidList_whenBidListNotExisted_thenThrowBidListNotFoundException" classname="com.nnk.springboot.services.BidListServiceTest" time="0.005"/>
-  <testcase name="deleteBidListTest_whenNotExist" classname="com.nnk.springboot.services.BidListServiceTest" time="0.004"/>
-  <testcase name="updateBidListTest_whenBidExisted" classname="com.nnk.springboot.services.BidListServiceTest" time="0.015"/>
-  <testcase name="updateBidListTest_whenBidExistedWithNotSameId_ThenThrowBidListNotFoundException" classname="com.nnk.springboot.services.BidListServiceTest" time="0.004"/>
-  <testcase name="updateBidListTest_whenBidNull_thenThrowException" classname="com.nnk.springboot.services.BidListServiceTest" time="0.004"/>
-  <testcase name="saveBidListTest_whenBidNullExisted" classname="com.nnk.springboot.services.BidListServiceTest" time="0.009"/>
+  <testcase name="formLoginTest_whenUserNamePasswordCorrect_thenUnauthenticated" classname="com.nnk.springboot.security.AuthenticationSecurityTest" time="0.019"/>
+  <testcase name="formLoginTest_whenUserNamePasswordNotCorrect_thenUnauthenticatedAndReturnLoginError" classname="com.nnk.springboot.security.AuthenticationSecurityTest" time="0.324"/>
+  <testcase name="formLoginTest_whenOauth2Authentication" classname="com.nnk.springboot.security.AuthenticationSecurityTest" time="1.208"/>
+  <testcase name="contextLoads" classname="com.nnk.springboot.security.AuthenticationSecurityTest" time="0.166"/>
 </testsuite>

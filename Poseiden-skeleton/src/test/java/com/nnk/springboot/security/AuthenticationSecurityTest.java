@@ -28,7 +28,8 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest
 @ActiveProfiles(value = "test")
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
-public class AuthenticationSecurityIT {
+public class AuthenticationSecurityTest {
+    
     @Autowired
     private WebApplicationContext context;
 
@@ -47,8 +48,10 @@ public class AuthenticationSecurityIT {
     @Test
 
     public void formLoginTest_whenOauth2Authentication() throws Exception {
+
         mockMvc.perform(get("/").with(oauth2Login())).andExpect(authenticated()).andDo(print());
         
+      
     }
     
     @Test

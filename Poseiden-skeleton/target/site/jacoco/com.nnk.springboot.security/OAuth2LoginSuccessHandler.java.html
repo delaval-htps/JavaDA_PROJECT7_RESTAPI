@@ -40,12 +40,12 @@ import lombok.extern.log4j.Log4j2;
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
 
-<span class="nc" id="L43">        CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();</span>
+<span class="fc" id="L43">        CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();</span>
 
     
-<span class="nc" id="L46">        User existingUser = userService.findByUsername(oAuth2User.getEmail());</span>
+<span class="fc" id="L46">        User existingUser = userService.findByUsername(oAuth2User.getEmail());</span>
 
-<span class="nc bnc" id="L48" title="All 2 branches missed.">        if (existingUser != null) {</span>
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">        if (existingUser != null) {</span>
 
             // update of user with providerId and authenticationProvider if not already done
 <span class="nc" id="L51">            log.info(messageSource.getMessage(&quot;global.existing-user.oauth2-authenticated&quot;,</span>
@@ -64,13 +64,13 @@ import lombok.extern.log4j.Log4j2;
         } else {
 
             // creation of new user
-<span class="nc" id="L67">            log.info(messageSource.getMessage(&quot;global.not-existing-user.oauth2-authenticated&quot;,</span>
-<span class="nc" id="L68">                    new Object[] { &quot;createdUser&quot; }, LocaleContextHolder.getLocale()));</span>
-<span class="nc" id="L69">            userService.saveUserFromOAuth2Authentication(oAuth2User);</span>
+<span class="fc" id="L67">            log.info(messageSource.getMessage(&quot;global.not-existing-user.oauth2-authenticated&quot;,</span>
+<span class="fc" id="L68">                    new Object[] { &quot;createdUser&quot; }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L69">            userService.saveUserFromOAuth2Authentication(oAuth2User);</span>
         }
 
-<span class="nc" id="L72">        super.onAuthenticationSuccess(request, response, authentication);</span>
-<span class="nc" id="L73">    }</span>
+<span class="fc" id="L72">        super.onAuthenticationSuccess(request, response, authentication);</span>
+<span class="fc" id="L73">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
