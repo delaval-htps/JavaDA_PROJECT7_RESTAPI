@@ -12,6 +12,7 @@
 /home/delaval/Documents/git/JavaDA_PROJECT7_RESTAPI/Poseiden-skeleton/src/test/java/com/nnk/springboot/security/OAuht2LoginSucessHandlerTest.java
 /home/delaval/Documents/git/JavaDA_PROJECT7_RESTAPI/Poseiden-skeleton/src/test/java/com/nnk/springboot/integrationTests/RatingIT.java
 /home/delaval/Documents/git/JavaDA_PROJECT7_RESTAPI/Poseiden-skeleton/src/test/java/com/nnk/springboot/services/CurvePointServiceTest.java
+/home/delaval/Documents/git/JavaDA_PROJECT7_RESTAPI/Poseiden-skeleton/src/test/java/com/nnk/springboot/security/CustomUserDetailsServiceTest.java
 /home/delaval/Documents/git/JavaDA_PROJECT7_RESTAPI/Poseiden-skeleton/src/test/java/com/nnk/springboot/integrationTests/BidIT.java
 /home/delaval/Documents/git/JavaDA_PROJECT7_RESTAPI/Poseiden-skeleton/src/test/java/com/nnk/springboot/integrationTests/PasswordEncodeIT.java
 /home/delaval/Documents/git/JavaDA_PROJECT7_RESTAPI/Poseiden-skeleton/src/test/java/com/nnk/springboot/controllers/LoginControllerTest.java

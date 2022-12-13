@@ -20,4 +20,5 @@ com/nnk/springboot/controllers/RatingControllerTest.class
 com/nnk/springboot/integrationTests/CurvePointIT.class
 com/nnk/springboot/services/BidListServiceTest.class
 com/nnk/springboot/controllers/TradeControllerTest.class
+com/nnk/springboot/security/CustomUserDetailsServiceTest.class
 com/nnk/springboot/validation/PasswordValidatorTest.class

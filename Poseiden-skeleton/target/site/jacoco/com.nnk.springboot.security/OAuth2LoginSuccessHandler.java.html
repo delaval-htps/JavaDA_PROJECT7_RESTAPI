@@ -45,20 +45,20 @@ import lombok.extern.log4j.Log4j2;
     
 <span class="fc" id="L46">        User existingUser = userService.findByUsername(oAuth2User.getEmail());</span>
 
-<span class="pc bpc" id="L48" title="1 of 2 branches missed.">        if (existingUser != null) {</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        if (existingUser != null) {</span>
 
             // update of user with providerId and authenticationProvider if not already done
-<span class="nc" id="L51">            log.info(messageSource.getMessage(&quot;global.existing-user.oauth2-authenticated&quot;,</span>
-<span class="nc" id="L52">                    new Object[] { existingUser }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L51">            log.info(messageSource.getMessage(&quot;global.existing-user.oauth2-authenticated&quot;,</span>
+<span class="fc" id="L52">                    new Object[] { existingUser }, LocaleContextHolder.getLocale()));</span>
 
-<span class="nc bnc" id="L54" title="All 2 branches missed.">            if (existingUser.getAuthenticationProvider() == AuthProvider.LOCAL) {</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">            if (existingUser.getAuthenticationProvider() == AuthProvider.LOCAL) {</span>
 
-<span class="nc" id="L56">                userService.updateUserFromOAuth2Authentication(oAuth2User, existingUser);</span>
+<span class="fc" id="L56">                userService.updateUserFromOAuth2Authentication(oAuth2User, existingUser);</span>
 
-<span class="nc bnc" id="L58" title="All 2 branches missed.">            } else if ((!Objects.equals(existingUser.getIdProvider(), oAuth2User.getproviderId())</span>
-<span class="nc bnc" id="L59" title="All 2 branches missed.">                    || existingUser.getAuthenticationProvider() != oAuth2User.getClientProvider())) {</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">            } else if ((!Objects.equals(existingUser.getIdProvider(), oAuth2User.getproviderId())</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">                    || existingUser.getAuthenticationProvider() != oAuth2User.getClientProvider())) {</span>
 
-<span class="nc" id="L61">                throw new OAuth2AuthenticationException(&quot;a problem occured with Oauth2Authentication!&quot;);</span>
+<span class="fc" id="L61">                throw new OAuth2AuthenticationException(&quot;a problem occured with Oauth2Authentication!&quot;);</span>
             }
 
         } else {

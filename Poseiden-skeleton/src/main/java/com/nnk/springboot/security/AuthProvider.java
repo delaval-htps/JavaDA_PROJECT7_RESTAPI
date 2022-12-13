@@ -1,7 +1,7 @@
 package com.nnk.springboot.security;
 
 public enum AuthProvider {
-    LOCAL("LOCAL"), GITHUB("GITHUB");
+    LOCAL("LOCAL"), GITHUB("GITHUB"), TEST("test");
 
     private final String provider;
 
@@ -11,5 +11,5 @@ public enum AuthProvider {
 
     public String getProvider() {
         return this.provider;
-}
+    }
 }

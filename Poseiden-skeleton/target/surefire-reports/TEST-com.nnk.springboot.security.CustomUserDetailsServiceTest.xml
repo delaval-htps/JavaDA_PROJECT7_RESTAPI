@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.nnk.springboot.validation.PasswordValidatorTest" time="0.024" tests="29" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.nnk.springboot.security.CustomUserDetailsServiceTest" time="0.199" tests="2" errors="0" skipped="0" failures="0">
   <properties>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
     <property name="java.specification.version" value="11"/>
@@ -56,33 +56,6 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="55.0"/>
   </properties>
-  <testcase name="test_password_regex_valid[0: &quot;Jsadmi#4&quot; is valid password ? : true]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0"/>
-  <testcase name="test_password_regex_valid[1: &quot;Jsadm&amp;n4&quot; is valid password ? : true]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0.001"/>
-  <testcase name="test_password_regex_valid[2: &quot;Jsad{in4&quot; is valid password ? : true]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0"/>
-  <testcase name="test_password_regex_valid[3: &quot;Jsa}min4&quot; is valid password ? : true]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0"/>
-  <testcase name="test_password_regex_valid[4: &quot;Js-dmin4&quot; is valid password ? : true]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0"/>
-  <testcase name="test_password_regex_valid[5: &quot;Js@dmin4&quot; is valid password ? : true]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0"/>
-  <testcase name="test_password_regex_valid[6: &quot;J[admin4&quot; is valid password ? : true]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0"/>
-  <testcase name="test_password_regex_valid[7: &quot;{Sadmin4&quot; is valid password ? : true]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0"/>
-  <testcase name="test_password_regex_valid[8: &quot;Jsd:min4&quot; is valid password ? : true]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0"/>
-  <testcase name="test_password_regex_valid[9: &quot;J]admin4&quot; is valid password ? : true]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0"/>
-  <testcase name="test_password_regex_valid[10: &quot;{Sadmin4&quot; is valid password ? : true]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0"/>
-  <testcase name="test_password_regex_valid[11: &quot;}5adminT&quot; is valid password ? : true]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0"/>
-  <testcase name="test_password_regex_valid[12: &quot;jsAd/in4&quot; is valid password ? : true]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0"/>
-  <testcase name="test_password_regex_valid[13: &quot;jSad*in4&quot; is valid password ? : true]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0"/>
-  <testcase name="test_password_regex_valid[14: &quot;,5adminT&quot; is valid password ? : true]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0"/>
-  <testcase name="test_password_regex_valid[15: &quot;jsAdm?n4&quot; is valid password ? : true]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0.001"/>
-  <testcase name="test_password_regex_valid[16: &quot;4Sadmin~&quot; is valid password ? : true]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0.001"/>
-  <testcase name="test_password_regex_valid[17: &quot;J5admin$&quot; is valid password ? : true]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0"/>
-  <testcase name="test_password_regex_valid[18: &quot;jsd^mIn4&quot; is valid password ? : true]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0.015"/>
-  <testcase name="test_password_regex_valid[19: &quot;jSad+in4&quot; is valid password ? : true]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0"/>
-  <testcase name="test_password_regex_valid[20: &quot;jsAd&lt;in4&quot; is valid password ? : true]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0"/>
-  <testcase name="test_password_regex_valid[21: &quot;jSad&gt;in4&quot; is valid password ? : true]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0"/>
-  <testcase name="test_password_regex_valid[22: &quot;jSad_i&amp;4&quot; is valid password ? : true]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0"/>
-  <testcase name="test_password_regex_valid[23: &quot;jSad=in4&quot; is valid password ? : true]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0"/>
-  <testcase name="test_password_regex_valid[24: &quot;Jsad/i4&quot; is valid password ? : false]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0"/>
-  <testcase name="test_password_regex_valid[25: &quot;jsad/im4&quot; is valid password ? : false]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0"/>
-  <testcase name="test_password_regex_valid[26: &quot;Jsadmin*&quot; is valid password ? : false]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0"/>
-  <testcase name="test_password_regex_valid[27: &quot;Jsa8mine&quot; is valid password ? : false]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0"/>
-  <testcase name="test_password_regex_valid[28: &quot;Jsa mi&apos;4&quot; is valid password ? : false]" classname="com.nnk.springboot.validation.PasswordValidatorTest" time="0"/>
+  <testcase name="loadByUsername_whenExistingUser_thenReturnNewUser" classname="com.nnk.springboot.security.CustomUserDetailsServiceTest" time="0.191"/>
+  <testcase name="loadByUsername_whenNotExistingUser_thenThrowException" classname="com.nnk.springboot.security.CustomUserDetailsServiceTest" time="0.003"/>
 </testsuite>
