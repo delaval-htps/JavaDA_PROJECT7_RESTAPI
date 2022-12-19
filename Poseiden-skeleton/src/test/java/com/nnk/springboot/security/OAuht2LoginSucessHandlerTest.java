@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.annotation.Resource;
 import javax.servlet.ServletException;
 
 import org.junit.Before;
