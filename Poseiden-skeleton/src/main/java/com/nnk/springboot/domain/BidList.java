@@ -7,8 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 
 import com.nnk.springboot.validation.QuantityConstraint;
@@ -35,8 +33,6 @@ public class BidList {
     @NotBlank(message = "Type is mandatory")
     private String type;
 
-    @DecimalMax(value = "1000", message = "maximum bidQuantity must not exceed 1000")
-    @DecimalMin(value= "0",message = "minimum bidQuantity must not be less than 0")
     @QuantityConstraint()
     private Double bidQuantity;
 

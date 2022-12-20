@@ -6,7 +6,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 public class QuantityValidator implements ConstraintValidator<QuantityConstraint, Double> {
-    private static final String QUANTITY_PATTERN = "^\\d{1,4}(\\.\\d)$";
+    private static final String QUANTITY_PATTERN = "^\\+?\\d{1,4}(\\.\\d)$";
 
     private static final Pattern pattern = Pattern.compile(QUANTITY_PATTERN);
 
@@ -17,6 +17,6 @@ public class QuantityValidator implements ConstraintValidator<QuantityConstraint
 
     @Override
     public boolean isValid(Double value, ConstraintValidatorContext context) {
-       return (pattern.matcher(String.valueOf(value)).matches());
+       return (pattern.matcher(String.valueOf(value)).matches()) && (value<=1000) && (value>0);
     }
 }

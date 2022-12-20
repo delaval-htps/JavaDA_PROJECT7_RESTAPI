@@ -14,7 +14,7 @@ import javax.validation.Payload;
 @Target({ ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface QuantityConstraint {
-    String message() default "Invalid Quantity: must contains a decimal digit with a maximum of 4 digits followed by a digit after the decimal point";
+    String message() default "Invalid Quantity: must be a decimal digit between 0 excluded and 1000 followed by a maximum one digit after the decimal point";
 
     Class<?>[] groups() default {};
 
