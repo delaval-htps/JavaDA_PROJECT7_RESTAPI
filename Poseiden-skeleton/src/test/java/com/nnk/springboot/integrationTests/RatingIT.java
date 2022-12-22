@@ -1,4 +1,4 @@
-package com.nnk.springboot;
+package com.nnk.springboot.integrationTests;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +17,7 @@ import com.nnk.springboot.repositories.RatingRepository;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles(value = "test")
-public class RatingTests {
+public class RatingIT {
 
 	@Autowired
 	private RatingRepository ratingRepository;

@@ -23,10 +23,13 @@ import lombok.extern.log4j.Log4j2;
 @Component
 @Log4j2
 /**
+ * Service to add logique after a succesfull authentication with OAuth2:
+ * if user exist then we update it with client provider and its id provider.
+ * Else with create a new user and save it with infirmations given from
+ * Oauth2authentication
  * Use of SavedRequestAwareAuthenticationSuccessHandler and not
- * SimpleUrlAuthenticationSuccessHandler
- * with this implementation springboot save the first url just before login and
- * redirect to it
+ * SimpleUrlAuthenticationSuccessHandler with this implementation springboot
+ * save the first url just before login and redirect to it
  */
 public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
@@ -42,7 +45,6 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
 
         CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
 
-    
         User existingUser = userService.findByUsername(oAuth2User.getEmail());
 
         if (existingUser != null) {

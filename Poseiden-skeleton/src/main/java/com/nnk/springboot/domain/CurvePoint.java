@@ -12,11 +12,16 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Range;
 
+import com.nnk.springboot.validation.QuantityConstraint;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Class CurvePoint
+ */
 @Entity
 @Setter
 @Getter
@@ -30,15 +35,17 @@ public class CurvePoint {
 
     @NotNull(message = "must not be null")
     @Range(min = 1)
-    @Column(name="curve_id", nullable=false)
+    @Column(name = "curve_id", nullable = false)
     private Integer curveId;
 
     private Timestamp asOfDate;
 
+    @QuantityConstraint
     private Double term;
     
+    @QuantityConstraint
     private Double value;
-    
+
     private Timestamp creationDate;
 
     public CurvePoint(Integer curveId, Double term, Double value) {
@@ -47,13 +54,16 @@ public class CurvePoint {
         this.value = value;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
-    
+
     @Override
     public String toString() {
-        return "CurvePoint [id=" + id + ", curveId=" + curveId + ", term=" + term + ", value=" + value + ", creationDate=" + creationDate + "]";
+        return "CurvePoint [id=" + id + ", curveId=" + curveId + ", term=" + term + ", value=" + value
+                + ", creationDate=" + creationDate + "]";
     }
 
 }

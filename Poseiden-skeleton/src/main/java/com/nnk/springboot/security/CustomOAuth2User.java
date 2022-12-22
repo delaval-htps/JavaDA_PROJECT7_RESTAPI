@@ -9,6 +9,10 @@ import java.util.Set;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
+/**
+ * Custom Oauht2 user redefine a Oauth2user for the specific authentication with
+ * github provider.
+ */
 public class CustomOAuth2User implements OAuth2User {
 
 	private Set<GrantedAuthority> authorities = new LinkedHashSet<>();

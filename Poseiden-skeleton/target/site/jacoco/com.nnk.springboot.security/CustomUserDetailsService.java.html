@@ -28,14 +28,14 @@ import com.nnk.springboot.repositories.UserRepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-<span class="nc" id="L31">        Optional&lt;com.nnk.springboot.domain.User&gt; user = userRepository.findByUsername(username);</span>
+<span class="fc" id="L31">        Optional&lt;com.nnk.springboot.domain.User&gt; user = userRepository.findByUsername(username);</span>
 
-<span class="nc bnc" id="L33" title="All 2 branches missed.">        if (user.isPresent()) {</span>
-<span class="nc" id="L34">            List&lt;SimpleGrantedAuthority&gt; userRoles = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L35">            userRoles.add(new SimpleGrantedAuthority(user.get().getRole()));</span>
-<span class="nc" id="L36">            return new User(user.get().getUsername(), user.get().getPassword(), userRoles);</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">        if (user.isPresent()) {</span>
+<span class="fc" id="L34">            List&lt;SimpleGrantedAuthority&gt; userRoles = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L35">            userRoles.add(new SimpleGrantedAuthority(user.get().getRole()));</span>
+<span class="fc" id="L36">            return new User(user.get().getUsername(), user.get().getPassword(), userRoles);</span>
         } else {
-<span class="nc" id="L38">            throw new UsernameNotFoundException(messageSource.getMessage(&quot;global.user.not-found&quot;, new Object[] { username }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L38">            throw new UsernameNotFoundException(messageSource.getMessage(&quot;global.user.not-found&quot;, new Object[] { username }, LocaleContextHolder.getLocale()));</span>
         }
     }
 

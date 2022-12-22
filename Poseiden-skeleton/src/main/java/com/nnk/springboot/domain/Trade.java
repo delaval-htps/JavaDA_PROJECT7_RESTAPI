@@ -9,11 +9,16 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import com.nnk.springboot.validation.QuantityConstraint;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Class Trade
+ */
 @Entity
 @Setter
 @Getter
@@ -31,6 +36,7 @@ public class Trade {
     @NotBlank
     String type;
 
+    @QuantityConstraint
     Double buyQuantity;
 
     Double sellQuantity;

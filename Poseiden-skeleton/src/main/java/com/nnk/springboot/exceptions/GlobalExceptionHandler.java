@@ -11,12 +11,24 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import lombok.extern.log4j.Log4j2;
 
+/**
+ * Controller advice to handle all thrown exception from application.
+ */
 @ControllerAdvice
 @Log4j2
-public class GlobalExceptionHandler  {
-    
+public class GlobalExceptionHandler {
+
+    /**
+     * handle all type of exception and create a custom response to present throw
+     * errors to user.
+     * 
+     * @param e       the thrown exception
+     * @param request the resquet from which exception was thrown.
+     * @return a response entity with a custom error message that is more readable
+     *         for user
+     */
     @ExceptionHandler
-    public ResponseEntity<GlobaleErrorResponse> handleGlobalPoseidonExecption(Exception e,HttpServletRequest request) {
+    public ResponseEntity<GlobaleErrorResponse> handleGlobalPoseidonExecption(Exception e, HttpServletRequest request) {
         GlobaleErrorResponse errorResponse = new GlobaleErrorResponse();
 
         errorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
@@ -25,13 +37,13 @@ public class GlobalExceptionHandler  {
         errorResponse.setError(HttpStatus.BAD_REQUEST.getReasonPhrase());
 
         log.error("Status:{} {} ; Request: {} {}; CauseBy:{} ",
-        errorResponse.getStatus(),
-        errorResponse.getError(),
-        request.getMethod(),
-        request.getRequestURI(),
-        errorResponse.getErrorMessage());
+                errorResponse.getStatus(),
+                errorResponse.getError(),
+                request.getMethod(),
+                request.getRequestURI(),
+                errorResponse.getErrorMessage());
 
-        return new ResponseEntity<>(errorResponse,HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
 }

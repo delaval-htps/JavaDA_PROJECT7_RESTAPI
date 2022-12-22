@@ -10,24 +10,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 	@RequestMapping(&quot;/&quot;)
 	public String home(Model model, org.springframework.security.core.Authentication authentication) {
-<span class="nc bnc" id="L13" title="All 2 branches missed.">		if (authentication != null) {</span>
-<span class="nc bnc" id="L14" title="All 2 branches missed.">			if (authentication.getAuthorities().contains(new SimpleGrantedAuthority(&quot;ADMIN&quot;))) {</span>
-<span class="nc" id="L15">				return &quot;redirect:/admin/home&quot;;</span>
-<span class="nc bnc" id="L16" title="All 2 branches missed.">			} else if (authentication.getAuthorities().contains(new SimpleGrantedAuthority(&quot;USER&quot;))) {</span>
-<span class="nc" id="L17">				return &quot;redirect:/user/home&quot;;</span>
+<span class="fc bfc" id="L13" title="All 2 branches covered.">		if (authentication != null) {</span>
+<span class="fc bfc" id="L14" title="All 2 branches covered.">			if (authentication.getAuthorities().contains(new SimpleGrantedAuthority(&quot;ADMIN&quot;))) {</span>
+<span class="fc" id="L15">				return &quot;redirect:/admin/home&quot;;</span>
+			}
+<span class="fc bfc" id="L17" title="All 2 branches covered.">			if (authentication.getAuthorities().contains(new SimpleGrantedAuthority(&quot;USER&quot;))) {</span>
+<span class="fc" id="L18">				return &quot;redirect:/user/home&quot;;</span>
 			}
 		}
-<span class="nc" id="L20">		return &quot;home&quot;;</span>
+<span class="fc" id="L21">		return &quot;home&quot;;</span>
 	}
 
 	@RequestMapping(&quot;/user/home&quot;)
 	public String userHome(Model model) {
-<span class="nc" id="L25">		return &quot;redirect:/bidList/list&quot;;</span>
+<span class="fc" id="L26">		return &quot;redirect:/bidList/list&quot;;</span>
 	}
 
 	@RequestMapping(&quot;/admin/home&quot;)
 	public String adminHome(Model model) {
-<span class="nc" id="L30">		return &quot;redirect:/bidList/list&quot;;</span>
+<span class="fc" id="L31">		return &quot;redirect:/bidList/list&quot;;</span>
 	}
 
 }
