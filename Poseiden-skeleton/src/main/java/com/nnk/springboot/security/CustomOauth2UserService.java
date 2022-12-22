@@ -16,6 +16,14 @@ import org.springframework.stereotype.Service;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
 
+/**
+ * Services for authentication with github.
+ * Use to overide loadUser and valid authentication with OAuth2
+ * If authentication is only from github client provider: we accept it and
+ * return a new CustomOauth2user with informations that we need retrieved
+ * from existing user in db if it exists( specially its authority (ADMIN or
+ * USER).Else with informations from gtihub provider and authority USER.
+ */
 @Service
 public class CustomOauth2UserService extends DefaultOAuth2UserService {
 
@@ -47,7 +55,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
                     userRequest.getClientRegistration().getClientName(), existingUser.get().getUsername());
 
         } else {
-             mappedGrantedAuthorities.add(new SimpleGrantedAuthority("USER"));
+            mappedGrantedAuthorities.add(new SimpleGrantedAuthority("USER"));
             return new CustomOAuth2User(loadUser, mappedGrantedAuthorities,
                     userRequest.getClientRegistration().getClientName(), loadUser.getAttribute("username"));
         }

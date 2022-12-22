@@ -16,6 +16,9 @@ import org.springframework.stereotype.Service;
 
 import com.nnk.springboot.repositories.UserRepository;
 
+/**
+ * Service to verify authentication with a username password.
+ */
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 

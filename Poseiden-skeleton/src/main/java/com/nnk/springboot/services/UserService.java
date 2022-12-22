@@ -17,6 +17,9 @@ import com.nnk.springboot.security.CustomOAuth2User;
 
 import lombok.extern.log4j.Log4j2;
 
+/**
+ * Service class for {@link User}
+ */
 @Service
 @Log4j2
 public class UserService {
@@ -27,59 +30,111 @@ public class UserService {
     @Autowired
     private MessageSource messageSource;
 
+    /**
+     * return all user of application.
+     * 
+     * @return list of user
+     */
     public List<User> findAll() {
         return userRepository.findAll();
     }
 
+    /**
+     * retrieve a existing user with given id.
+     * 
+     * @param id the given id of researched user
+     * @return researching user if existing
+     * @throws UserNotFoundException if not existing
+     */
     public User findById(Integer id) {
 
         Optional<User> existingUser = userRepository.findById(id);
         if (existingUser.isPresent()) {
-            log.info(messageSource.getMessage("global.user.find-by-id", new Object[] { existingUser.get() }, LocaleContextHolder.getLocale()));
+            log.info(messageSource.getMessage("global.user.find-by-id", new Object[] { existingUser.get() },
+                    LocaleContextHolder.getLocale()));
             return existingUser.get();
         } else {
-            throw new UserNotFoundException(messageSource.getMessage("global.user.not-found", new Object[] { id }, LocaleContextHolder.getLocale()));
+            throw new UserNotFoundException(messageSource.getMessage("global.user.not-found", new Object[] { id },
+                    LocaleContextHolder.getLocale()));
         }
     }
 
+    /**
+     * retrieve a user with given username. use specially when authentication is
+     * verify : if it is usernamepassword authentication then username is the
+     * username of user .
+     * Else if it is OAuth2 authencation then username is the email of Oauth2user.
+     * 
+     * @param username
+     * @return the existing user
+     * @throws UserNotFoundException if user not exists in db
+     */
     public User findByUsername(String username) {
 
         if (!StringUtils.hasText(username.trim())) {
-            throw new UserNotFoundException(messageSource.getMessage("global.exception.not-found", new Object[] { "user with username:" + username }, LocaleContextHolder.getLocale()));
+            throw new UserNotFoundException(messageSource.getMessage("global.exception.not-found",
+                    new Object[] { "user with username:" + username }, LocaleContextHolder.getLocale()));
         }
         Optional<User> existingUser = userRepository.findByUsername(username);
         if (existingUser.isPresent()) {
-            log.info(messageSource.getMessage("global.user.find-by-username", new Object[] { username, existingUser }, LocaleContextHolder.getLocale()));
+            log.info(messageSource.getMessage("global.user.find-by-username", new Object[] { username, existingUser },
+                    LocaleContextHolder.getLocale()));
             return existingUser.get();
         } else {
-            throw new UserNotFoundException(messageSource.getMessage("global.exception.not-found", new Object[] { "user with username =" + username }, LocaleContextHolder.getLocale()));
+            throw new UserNotFoundException(messageSource.getMessage("global.exception.not-found",
+                    new Object[] { "user with username =" + username }, LocaleContextHolder.getLocale()));
         }
     }
 
+    /**
+     * save a new user
+     * 
+     * @param user user given in param
+     * @return The new saved user
+     * @throws UserNotFoundException if given user is null
+     */
     public User saveUser(User user) {
 
         if (user != null) {
 
             User savedUser = userRepository.save(user);
-            log.info(messageSource.getMessage("global.user.creation", new Object[] { savedUser }, LocaleContextHolder.getLocale()));
+            log.info(messageSource.getMessage("global.user.creation", new Object[] { savedUser },
+                    LocaleContextHolder.getLocale()));
             return savedUser;
 
         } else {
-            throw new UserNotFoundException(messageSource.getMessage("global.exception.not-null", new Object[] { "user" }, LocaleContextHolder.getLocale()));
+            throw new UserNotFoundException(messageSource.getMessage("global.exception.not-null",
+                    new Object[] { "user" }, LocaleContextHolder.getLocale()));
         }
     }
 
+    /**
+     * save a new user from Oauth2Login
+     * 
+     * @param oAuth2User the custom Oauth2user retrieve from Oauth2 authentication
+     * @return a new user with needed informations retrieve from CustomOauth2user
+     * @throws UserNotFoundException if CustomOauth2user is null
+     */
     public User saveUserFromOAuth2Authentication(CustomOAuth2User oAuth2User) {
 
         if (oAuth2User != null) {
 
-            return userRepository.save(new User(oAuth2User.getUsername(), oAuth2User.getEmail(), oAuth2User.getFullname(), "USER", oAuth2User.getClientProvider(), oAuth2User.getproviderId()));
+            return userRepository.save(new User(oAuth2User.getUsername(), oAuth2User.getEmail(),
+                    oAuth2User.getFullname(), "USER", oAuth2User.getClientProvider(), oAuth2User.getproviderId()));
 
         } else {
-            throw new UserNotFoundException(messageSource.getMessage("global.exception.not-null", new Object[] { " new user to save from Oauth2 authentication " }, LocaleContextHolder.getLocale()));
+            throw new UserNotFoundException(messageSource.getMessage("global.exception.not-null",
+                    new Object[] { " new user to save from Oauth2 authentication " }, LocaleContextHolder.getLocale()));
         }
     }
 
+    /**
+     * update a user given in param
+     * 
+     * @param user the user with updated fields to update
+     * @return the updated user
+     * @throws UserNotFoundException if given user is null or id = 0 or not existing
+     */
     public User updateUser(User user) {
 
         if (user != null && user.getId() != 0) {
@@ -90,20 +145,31 @@ public class UserService {
 
                 User updatedUser = userRepository.save(user);
 
-                log.info(messageSource.getMessage("global.user.update", new Object[] { updatedUser }, LocaleContextHolder.getLocale()));
+                log.info(messageSource.getMessage("global.user.update", new Object[] { updatedUser },
+                        LocaleContextHolder.getLocale()));
 
                 return updatedUser;
 
             } else {
-                throw new UserNotFoundException(messageSource.getMessage("global.user.not-found", new Object[] { user.getId() }, LocaleContextHolder.getLocale()));
+                throw new UserNotFoundException(messageSource.getMessage("global.user.not-found",
+                        new Object[] { user.getId() }, LocaleContextHolder.getLocale()));
             }
 
         } else {
-            throw new UserNotFoundException(messageSource.getMessage("global.exception.not-null", new Object[] { "user" }, LocaleContextHolder.getLocale()));
+            throw new UserNotFoundException(messageSource.getMessage("global.exception.not-null",
+                    new Object[] { "user" }, LocaleContextHolder.getLocale()));
         }
 
     }
 
+    /**
+     * update a existing user with informations retrieve from his oauht2login
+     * 
+     * @param oAuth2User   the customOauth2user authenticated from Oauth2Login
+     * @param existingUser the existingUser corresponding to oauth2user
+     * @return updated user with filled fields clientprovider and id provider
+     * @throws UserNotFoundException if existingUser or Oauth2user is null
+     */
     public User updateUserFromOAuth2Authentication(CustomOAuth2User oAuth2User, User existingUser) {
 
         if (existingUser != null && oAuth2User != null) {
@@ -114,10 +180,18 @@ public class UserService {
 
         } else {
             throw new UserNotFoundException(
-                    messageSource.getMessage("global.exception.not-null", new Object[] { " update user to save from Oauth2 authentication " }, LocaleContextHolder.getLocale()));
+                    messageSource.getMessage("global.exception.not-null",
+                            new Object[] { " update user to save from Oauth2 authentication " },
+                            LocaleContextHolder.getLocale()));
         }
     }
 
+    /**
+     * delete the given user in param
+     * 
+     * @param user given user to delete
+     * @throws UserNotFoundException if usr is null or its id = 0
+     */
     public void deleteUser(User user) {
         if (user != null && user.getId() != 0) {
 
@@ -125,16 +199,19 @@ public class UserService {
 
             if (existedUser.isPresent()) {
 
-                log.info(messageSource.getMessage("global.user.delete", new Object[] { existedUser }, LocaleContextHolder.getLocale()));
+                log.info(messageSource.getMessage("global.user.delete", new Object[] { existedUser },
+                        LocaleContextHolder.getLocale()));
 
                 userRepository.delete(existedUser.get());
 
             } else {
-                throw new UserNotFoundException(messageSource.getMessage("global.user.not-found", new Object[] { user.getId() }, LocaleContextHolder.getLocale()));
+                throw new UserNotFoundException(messageSource.getMessage("global.user.not-found",
+                        new Object[] { user.getId() }, LocaleContextHolder.getLocale()));
             }
 
         } else {
-            throw new UserNotFoundException(messageSource.getMessage("global.exception.not-null", new Object[] { "User" }, LocaleContextHolder.getLocale()));
+            throw new UserNotFoundException(messageSource.getMessage("global.exception.not-null",
+                    new Object[] { "User" }, LocaleContextHolder.getLocale()));
         }
     }
 

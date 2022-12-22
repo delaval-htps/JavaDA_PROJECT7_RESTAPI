@@ -16,6 +16,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Class Bidlist
+ */
 @Entity
 @Setter
 @Getter
@@ -33,7 +36,7 @@ public class BidList {
     @NotBlank(message = "Type is mandatory")
     private String type;
 
-    @QuantityConstraint()
+    @QuantityConstraint
     private Double bidQuantity;
 
     private Double askQuantity;

@@ -7,7 +7,12 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.util.StringUtils;
 
+/**
+ * Validation class for password. A password must contains at least one capital
+ * letter, one symbol,one number and must be 8 characters long
+ */
 public class PasswordValidator implements ConstraintValidator<PasswordConstraint, String> {
+
     private static final String PASSWORD_PATTERN = "^(?=.*[A-Z])(?=.*\\d)(?=.*[\\-!@#&()\\[\\{\\}\\]:;',?/*~$^+=<>]).{8,}$";
 
     private static final Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
