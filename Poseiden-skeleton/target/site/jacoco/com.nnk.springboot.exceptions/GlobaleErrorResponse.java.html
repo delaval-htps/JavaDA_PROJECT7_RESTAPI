@@ -6,22 +6,26 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Class that represents a customm error to display to user when exception is
+ * thrown.
+ */
 @Getter
-<span class="fc" id="L10">@Setter</span>
-<span class="fc" id="L11">@NoArgsConstructor</span>
+<span class="fc" id="L14">@Setter</span>
+<span class="fc" id="L15">@NoArgsConstructor</span>
 public class GlobaleErrorResponse {
- 
-<span class="fc" id="L14">    private Timestamp date;</span>
-<span class="fc" id="L15">    private int status;</span>
-<span class="fc" id="L16">    private String error;</span>
-<span class="fc" id="L17">    private String errorMessage;</span>
 
-<span class="nc" id="L19">    public GlobaleErrorResponse(Timestamp date, int status, String error, String errorMessage) {</span>
-<span class="nc" id="L20">        this.date = date;</span>
-<span class="nc" id="L21">        this.status = status;</span>
-<span class="nc" id="L22">        this.error = error;</span>
-<span class="nc" id="L23">        this.errorMessage = errorMessage;</span>
-<span class="nc" id="L24">    }</span>
-    
+<span class="fc" id="L18">    private Timestamp date;</span>
+<span class="fc" id="L19">    private int status;</span>
+<span class="fc" id="L20">    private String error;</span>
+<span class="fc" id="L21">    private String errorMessage;</span>
+
+<span class="nc" id="L23">    public GlobaleErrorResponse(Timestamp date, int status, String error, String errorMessage) {</span>
+<span class="nc" id="L24">        this.date = date;</span>
+<span class="nc" id="L25">        this.status = status;</span>
+<span class="nc" id="L26">        this.error = error;</span>
+<span class="nc" id="L27">        this.errorMessage = errorMessage;</span>
+<span class="nc" id="L28">    }</span>
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

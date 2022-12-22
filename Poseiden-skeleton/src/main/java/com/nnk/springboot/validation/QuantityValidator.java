@@ -24,6 +24,6 @@ public class QuantityValidator implements ConstraintValidator<QuantityConstraint
 
     @Override
     public boolean isValid(Double value, ConstraintValidatorContext context) {
-        return (pattern.matcher(String.valueOf(value)).matches()) && (value <= 1000) && (value > 0);
+        return (value == null)||(pattern.matcher(String.valueOf(value)).matches()) && (value <= 1000) && (value > 0);
     }
 }

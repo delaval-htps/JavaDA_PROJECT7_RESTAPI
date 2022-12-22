@@ -17,60 +17,63 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Class User
+ */
 @Entity
 @Getter
-<span class="fc" id="L22">@Setter</span>
-<span class="fc" id="L23">@NoArgsConstructor</span>
-<span class="nc" id="L24">@AllArgsConstructor</span>
+<span class="fc" id="L25">@Setter</span>
+<span class="fc" id="L26">@NoArgsConstructor</span>
+<span class="nc" id="L27">@AllArgsConstructor</span>
 @Table(name = &quot;users&quot;)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-<span class="fc" id="L29">    private Integer id;</span>
+<span class="fc" id="L32">    private Integer id;</span>
 
     @NotBlank(message = &quot;Username is mandatory&quot;)
-<span class="fc" id="L32">    private String username;</span>
+<span class="fc" id="L35">    private String username;</span>
 
     @NotBlank(message = &quot;Email is mandatory&quot;)
-<span class="fc" id="L35">    private String email;</span>
+<span class="fc" id="L38">    private String email;</span>
 
     @NotBlank(message = &quot;Password is mandatory&quot;)
     @PasswordConstraint
-<span class="fc" id="L39">    private String password;</span>
+<span class="fc" id="L42">    private String password;</span>
 
     @NotBlank(message = &quot;FullName is mandatory&quot;)
-<span class="fc" id="L42">    private String fullname;</span>
+<span class="fc" id="L45">    private String fullname;</span>
 
     @NotBlank(message = &quot;Role is mandatory&quot;)
-<span class="fc" id="L45">    private String role;</span>
+<span class="fc" id="L48">    private String role;</span>
 
     @Enumerated(EnumType.STRING)
-<span class="fc" id="L48">    private AuthProvider authenticationProvider;</span>
+<span class="fc" id="L51">    private AuthProvider authenticationProvider;</span>
 
-<span class="fc" id="L50">    private Integer idProvider;</span>
+<span class="fc" id="L53">    private Integer idProvider;</span>
 
-<span class="fc" id="L52">    public User(int id, String username, String email, String password, String fullname, String userRole) {</span>
-<span class="fc" id="L53">        this.id = id;</span>
-<span class="fc" id="L54">        this.username = username;</span>
-<span class="fc" id="L55">        this.email = email;</span>
-<span class="fc" id="L56">        this.password = password;</span>
-<span class="fc" id="L57">        this.fullname = fullname;</span>
-<span class="fc" id="L58">        this.role = userRole;</span>
-<span class="fc" id="L59">    }</span>
+<span class="fc" id="L55">    public User(int id, String username, String email, String password, String fullname, String userRole) {</span>
+<span class="fc" id="L56">        this.id = id;</span>
+<span class="fc" id="L57">        this.username = username;</span>
+<span class="fc" id="L58">        this.email = email;</span>
+<span class="fc" id="L59">        this.password = password;</span>
+<span class="fc" id="L60">        this.fullname = fullname;</span>
+<span class="fc" id="L61">        this.role = userRole;</span>
+<span class="fc" id="L62">    }</span>
 
     public User(String username, String email, String fullname, String role, AuthProvider provider,
-<span class="fc" id="L62">            Integer idProvider) {</span>
-<span class="fc" id="L63">        this.username = username;</span>
-<span class="fc" id="L64">        this.email = email;</span>
-<span class="fc" id="L65">        this.fullname = fullname;</span>
-<span class="fc" id="L66">        this.role = role;</span>
-<span class="fc" id="L67">        this.authenticationProvider = provider;</span>
-<span class="fc" id="L68">        this.idProvider = idProvider;</span>
-<span class="fc" id="L69">    }</span>
+<span class="fc" id="L65">            Integer idProvider) {</span>
+<span class="fc" id="L66">        this.username = username;</span>
+<span class="fc" id="L67">        this.email = email;</span>
+<span class="fc" id="L68">        this.fullname = fullname;</span>
+<span class="fc" id="L69">        this.role = role;</span>
+<span class="fc" id="L70">        this.authenticationProvider = provider;</span>
+<span class="fc" id="L71">        this.idProvider = idProvider;</span>
+<span class="fc" id="L72">    }</span>
 
     @Override
     public String toString() {
-<span class="fc" id="L73">        return &quot;User [id=&quot; + id + &quot;, username=&quot; + username + &quot;, email=&quot; + email + &quot;, password=&quot; + password</span>
+<span class="fc" id="L76">        return &quot;User [id=&quot; + id + &quot;, username=&quot; + username + &quot;, email=&quot; + email + &quot;, password=&quot; + password</span>
                 + &quot;, fullname=&quot; + fullname + &quot;, role=&quot; + role + &quot;, authenticationProvider=&quot; + authenticationProvider
                 + &quot;, idProvider=&quot; + idProvider + &quot;]&quot;;
     }

@@ -12,48 +12,58 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Range;
 
+import com.nnk.springboot.validation.QuantityConstraint;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Class CurvePoint
+ */
 @Entity
-<span class="pc" id="L21">@Setter</span>
+<span class="pc" id="L26">@Setter</span>
 @Getter
-<span class="fc" id="L23">@NoArgsConstructor</span>
-<span class="nc" id="L24">@AllArgsConstructor</span>
+<span class="fc" id="L28">@NoArgsConstructor</span>
+<span class="nc" id="L29">@AllArgsConstructor</span>
 @Table(name = &quot;curve_point&quot;)
 public class CurvePoint {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-<span class="fc" id="L29">    private Integer id;</span>
+<span class="fc" id="L34">    private Integer id;</span>
 
     @NotNull(message = &quot;must not be null&quot;)
     @Range(min = 1)
-    @Column(name=&quot;curve_id&quot;, nullable=false)
-<span class="fc" id="L34">    private Integer curveId;</span>
+    @Column(name = &quot;curve_id&quot;, nullable = false)
+<span class="fc" id="L39">    private Integer curveId;</span>
 
-<span class="nc" id="L36">    private Timestamp asOfDate;</span>
+<span class="nc" id="L41">    private Timestamp asOfDate;</span>
 
-<span class="fc" id="L38">    private Double term;</span>
+    @QuantityConstraint
+<span class="fc" id="L44">    private Double term;</span>
     
-<span class="fc" id="L40">    private Double value;</span>
-    
-<span class="nc" id="L42">    private Timestamp creationDate;</span>
+    @QuantityConstraint
+<span class="fc" id="L47">    private Double value;</span>
 
-<span class="fc" id="L44">    public CurvePoint(Integer curveId, Double term, Double value) {</span>
-<span class="fc" id="L45">        this.curveId = curveId;</span>
-<span class="fc" id="L46">        this.term = term;</span>
-<span class="fc" id="L47">        this.value = value;</span>
-<span class="fc" id="L48">    }</span>
+<span class="nc" id="L49">    private Timestamp creationDate;</span>
 
-    /* (non-Javadoc)
+<span class="fc" id="L51">    public CurvePoint(Integer curveId, Double term, Double value) {</span>
+<span class="fc" id="L52">        this.curveId = curveId;</span>
+<span class="fc" id="L53">        this.term = term;</span>
+<span class="fc" id="L54">        this.value = value;</span>
+<span class="fc" id="L55">    }</span>
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
-    
+
     @Override
     public String toString() {
-<span class="nc" id="L56">        return &quot;CurvePoint [id=&quot; + id + &quot;, curveId=&quot; + curveId + &quot;, term=&quot; + term + &quot;, value=&quot; + value + &quot;, creationDate=&quot; + creationDate + &quot;]&quot;;</span>
+<span class="nc" id="L65">        return &quot;CurvePoint [id=&quot; + id + &quot;, curveId=&quot; + curveId + &quot;, term=&quot; + term + &quot;, value=&quot; + value</span>
+                + &quot;, creationDate=&quot; + creationDate + &quot;]&quot;;
     }
 
 }

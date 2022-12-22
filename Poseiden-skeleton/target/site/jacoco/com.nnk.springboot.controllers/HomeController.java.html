@@ -5,30 +5,52 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * Controller to manage home page for user in function of his authorities
+ */
 @Controller
-<span class="fc" id="L9">public class HomeController {</span>
-
+<span class="fc" id="L12">public class HomeController {</span>
+	
+	/**
+	 * endpoint to show the home page for user in function of his authorities
+	 * 
+	 * @param model
+	 * @param authentication
+	 * @return view admin/home if his ADMIN or user/home if he is USER
+	 */
 	@RequestMapping(&quot;/&quot;)
 	public String home(Model model, org.springframework.security.core.Authentication authentication) {
-<span class="fc bfc" id="L13" title="All 2 branches covered.">		if (authentication != null) {</span>
-<span class="fc bfc" id="L14" title="All 2 branches covered.">			if (authentication.getAuthorities().contains(new SimpleGrantedAuthority(&quot;ADMIN&quot;))) {</span>
-<span class="fc" id="L15">				return &quot;redirect:/admin/home&quot;;</span>
+<span class="fc bfc" id="L23" title="All 2 branches covered.">		if (authentication != null) {</span>
+<span class="fc bfc" id="L24" title="All 2 branches covered.">			if (authentication.getAuthorities().contains(new SimpleGrantedAuthority(&quot;ADMIN&quot;))) {</span>
+<span class="fc" id="L25">				return &quot;redirect:/admin/home&quot;;</span>
 			}
-<span class="fc bfc" id="L17" title="All 2 branches covered.">			if (authentication.getAuthorities().contains(new SimpleGrantedAuthority(&quot;USER&quot;))) {</span>
-<span class="fc" id="L18">				return &quot;redirect:/user/home&quot;;</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">			if (authentication.getAuthorities().contains(new SimpleGrantedAuthority(&quot;USER&quot;))) {</span>
+<span class="fc" id="L28">				return &quot;redirect:/user/home&quot;;</span>
 			}
 		}
-<span class="fc" id="L21">		return &quot;home&quot;;</span>
+<span class="fc" id="L31">		return &quot;home&quot;;</span>
 	}
 
+	/**
+	 * endpoint to redirect to home page for USER
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(&quot;/user/home&quot;)
 	public String userHome(Model model) {
-<span class="fc" id="L26">		return &quot;redirect:/bidList/list&quot;;</span>
+<span class="fc" id="L42">		return &quot;redirect:/bidList/list&quot;;</span>
 	}
 
+	/**
+	 * endpoint ton redirect to home page for ADMIN
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(&quot;/admin/home&quot;)
 	public String adminHome(Model model) {
-<span class="fc" id="L31">		return &quot;redirect:/bidList/list&quot;;</span>
+<span class="fc" id="L53">		return &quot;redirect:/bidList/list&quot;;</span>
 	}
 
 }

@@ -7,35 +7,49 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * Controller to manage login , error and secure articles view.
+ */
 @Controller
 @RequestMapping(&quot;app&quot;)
-<span class="fc" id="L12">public class LoginController {</span>
+<span class="fc" id="L15">public class LoginController {</span>
 
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * endpoint to show the login page also for traditional credential and for
+     * Oauth2 connexion.
+     * 
+     * @return the login view
+     */
     @GetMapping(&quot;login&quot;)
     public ModelAndView login() {
-<span class="fc" id="L19">        ModelAndView mav = new ModelAndView();</span>
-<span class="fc" id="L20">        mav.setViewName(&quot;login&quot;);</span>
-<span class="fc" id="L21">        return mav;</span>
+<span class="fc" id="L28">        ModelAndView mav = new ModelAndView();</span>
+<span class="fc" id="L29">        mav.setViewName(&quot;login&quot;);</span>
+<span class="fc" id="L30">        return mav;</span>
     }
 
     @GetMapping(&quot;secure/article-details&quot;)
     public ModelAndView getAllUserArticles() {
-<span class="fc" id="L26">        ModelAndView mav = new ModelAndView();</span>
-<span class="fc" id="L27">        mav.addObject(&quot;users&quot;, userRepository.findAll());</span>
-<span class="fc" id="L28">        mav.setViewName(&quot;user/list&quot;);</span>
-<span class="fc" id="L29">        return mav;</span>
+<span class="fc" id="L35">        ModelAndView mav = new ModelAndView();</span>
+<span class="fc" id="L36">        mav.addObject(&quot;users&quot;, userRepository.findAll());</span>
+<span class="fc" id="L37">        mav.setViewName(&quot;user/list&quot;);</span>
+<span class="fc" id="L38">        return mav;</span>
     }
 
+    /**
+     * endpoint to report to user that is not authorized to see the requested data
+     * 
+     * @return the custom error page
+     */
     @GetMapping(&quot;error&quot;)
     public ModelAndView error() {
-<span class="fc" id="L34">        ModelAndView mav = new ModelAndView();</span>
-<span class="fc" id="L35">        String errorMessage= &quot;You are not authorized for the requested data.&quot;;</span>
-<span class="fc" id="L36">        mav.addObject(&quot;errorMsg&quot;, errorMessage);</span>
-<span class="fc" id="L37">        mav.setViewName(&quot;403&quot;);</span>
-<span class="fc" id="L38">        return mav;</span>
+<span class="fc" id="L48">        ModelAndView mav = new ModelAndView();</span>
+<span class="fc" id="L49">        String errorMessage = &quot;You are not authorized for the requested data.&quot;;</span>
+<span class="fc" id="L50">        mav.addObject(&quot;errorMsg&quot;, errorMessage);</span>
+<span class="fc" id="L51">        mav.setViewName(&quot;403&quot;);</span>
+<span class="fc" id="L52">        return mav;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

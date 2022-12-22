@@ -1,0 +1,58 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+spring-boot-skeleton,com.nnk.springboot.controllers,LoginController,41,3,0,0,12,1,3,1,3,1
+spring-boot-skeleton,com.nnk.springboot.controllers,HomeController,28,3,6,0,8,1,6,1,3,1
+spring-boot-skeleton,com.nnk.springboot.controllers,UserController,195,3,12,0,42,1,12,1,6,1
+spring-boot-skeleton,com.nnk.springboot.controllers,CurveController,134,3,10,0,30,1,11,1,6,1
+spring-boot-skeleton,com.nnk.springboot.controllers,BidListController,132,3,10,0,29,1,11,1,6,1
+spring-boot-skeleton,com.nnk.springboot.controllers,RatingController,132,3,10,0,30,1,11,1,6,1
+spring-boot-skeleton,com.nnk.springboot.controllers,RatingController.new Object() {...},6,0,0,0,1,0,1,0,1,0
+spring-boot-skeleton,com.nnk.springboot.controllers,RatingController.new Object() {...},6,0,0,0,1,0,1,0,1,0
+spring-boot-skeleton,com.nnk.springboot.controllers,RatingController.new Object() {...},6,0,0,0,1,0,1,0,1,0
+spring-boot-skeleton,com.nnk.springboot.controllers,TradeController.new Object() {...},6,0,0,0,1,0,1,0,1,0
+spring-boot-skeleton,com.nnk.springboot.controllers,TradeController.new Object() {...},6,0,0,0,1,0,1,0,1,0
+spring-boot-skeleton,com.nnk.springboot.controllers,TradeController.new Object() {...},6,0,0,0,1,0,1,0,1,0
+spring-boot-skeleton,com.nnk.springboot.controllers,BidListController.new Object() {...},6,0,0,0,1,0,1,0,1,0
+spring-boot-skeleton,com.nnk.springboot.controllers,BidListController.new Object() {...},6,0,0,0,1,0,1,0,1,0
+spring-boot-skeleton,com.nnk.springboot.controllers,BidListController.new Object() {...},6,0,0,0,1,0,1,0,1,0
+spring-boot-skeleton,com.nnk.springboot.controllers,UserController.new Object() {...},6,0,0,0,1,0,1,0,1,0
+spring-boot-skeleton,com.nnk.springboot.controllers,RuleNameController.new Object() {...},6,0,0,0,1,0,1,0,1,0
+spring-boot-skeleton,com.nnk.springboot.controllers,UserController.new Object() {...},6,0,0,0,1,0,1,0,1,0
+spring-boot-skeleton,com.nnk.springboot.controllers,UserController.new Object() {...},6,0,0,0,1,0,1,0,1,0
+spring-boot-skeleton,com.nnk.springboot.controllers,CurveController.new Object() {...},6,0,0,0,1,0,1,0,1,0
+spring-boot-skeleton,com.nnk.springboot.controllers,TradeController,132,3,10,0,30,1,11,1,6,1
+spring-boot-skeleton,com.nnk.springboot.controllers,RuleNameController.new Object() {...},6,0,0,0,1,0,1,0,1,0
+spring-boot-skeleton,com.nnk.springboot.controllers,CurveController.new Object() {...},6,0,0,0,1,0,1,0,1,0
+spring-boot-skeleton,com.nnk.springboot.controllers,CurveController.new Object() {...},6,0,0,0,1,0,1,0,1,0
+spring-boot-skeleton,com.nnk.springboot.controllers,RuleNameController.new Object() {...},6,0,0,0,1,0,1,0,1,0
+spring-boot-skeleton,com.nnk.springboot.controllers,RuleNameController,132,3,10,0,30,1,11,1,6,1
+spring-boot-skeleton,com.nnk.springboot.services,UserService,372,7,28,0,60,2,22,2,8,2
+spring-boot-skeleton,com.nnk.springboot.services,CurvePointService,237,7,18,0,38,2,14,2,5,2
+spring-boot-skeleton,com.nnk.springboot.services,TradeService,230,7,18,0,38,2,14,2,5,2
+spring-boot-skeleton,com.nnk.springboot.services,RuleNameService,230,7,18,0,38,2,14,2,5,2
+spring-boot-skeleton,com.nnk.springboot.services,BidListService,229,7,18,0,38,2,14,2,5,2
+spring-boot-skeleton,com.nnk.springboot.services,RatingService,230,7,18,0,38,2,14,2,5,2
+spring-boot-skeleton,com.nnk.springboot.configuration,ConfigApplication,0,15,0,0,0,5,0,2,0,2
+spring-boot-skeleton,com.nnk.springboot.security,OAuth2LoginSuccessHandler,76,7,8,0,15,2,5,2,1,2
+spring-boot-skeleton,com.nnk.springboot.security,SecurityConfig,0,137,0,0,0,33,0,4,0,4
+spring-boot-skeleton,com.nnk.springboot.security,CustomUserDetailsService,50,3,2,0,6,1,2,1,1,1
+spring-boot-skeleton,com.nnk.springboot.security,CustomOauth2UserService,73,3,4,0,12,1,3,1,1,1
+spring-boot-skeleton,com.nnk.springboot.security,AuthProvider,3,45,0,0,1,5,1,2,1,2
+spring-boot-skeleton,com.nnk.springboot.security,CustomOAuth2User,157,0,2,0,28,0,11,0,10,0
+spring-boot-skeleton,com.nnk.springboot,Application,5,3,0,0,2,1,1,1,1,1
+spring-boot-skeleton,com.nnk.springboot.domain,RuleName,105,34,0,0,7,12,13,5,13,5
+spring-boot-skeleton,com.nnk.springboot.domain,User,173,3,0,0,27,1,20,1,20,1
+spring-boot-skeleton,com.nnk.springboot.domain,CurvePoint,85,25,0,0,6,9,11,5,11,5
+spring-boot-skeleton,com.nnk.springboot.domain,Rating,75,29,0,0,5,10,9,5,9,5
+spring-boot-skeleton,com.nnk.springboot.domain,Trade,203,22,0,0,20,8,40,5,40,5
+spring-boot-skeleton,com.nnk.springboot.domain,BidList,240,25,0,0,22,9,43,5,43,5
+spring-boot-skeleton,com.nnk.springboot.validation,QuantityValidator,1,29,3,5,0,4,3,5,0,4
+spring-boot-skeleton,com.nnk.springboot.validation,PasswordValidator,20,0,4,0,4,0,6,0,4,0
+spring-boot-skeleton,com.nnk.springboot.exceptions,GlobalExceptionHandler,42,7,0,0,12,2,1,2,1,2
+spring-boot-skeleton,com.nnk.springboot.exceptions,UserNotFoundException,4,0,0,0,2,0,1,0,1,0
+spring-boot-skeleton,com.nnk.springboot.exceptions,GlobalPoseidonException,4,0,0,0,2,0,1,0,1,0
+spring-boot-skeleton,com.nnk.springboot.exceptions,RatingNotFoundException,4,0,0,0,2,0,1,0,1,0
+spring-boot-skeleton,com.nnk.springboot.exceptions,CurvePointNotFoundException,4,0,0,0,2,0,1,0,1,0
+spring-boot-skeleton,com.nnk.springboot.exceptions,TradeNotFoundException,4,0,0,0,2,0,1,0,1,0
+spring-boot-skeleton,com.nnk.springboot.exceptions,BidListNotFoundException,4,0,0,0,2,0,1,0,1,0
+spring-boot-skeleton,com.nnk.springboot.exceptions,RuleNameNotFoundException,4,0,0,0,2,0,1,0,1,0
+spring-boot-skeleton,com.nnk.springboot.exceptions,GlobaleErrorResponse,46,0,0,0,12,0,10,0,10,0

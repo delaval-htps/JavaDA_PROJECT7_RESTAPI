@@ -15,89 +15,127 @@ import com.nnk.springboot.repositories.RuleNameRepository;
 
 import lombok.extern.log4j.Log4j2;
 
+/**
+ * Service class for {@link RuleName}
+ */
 @Service
-<span class="fc" id="L19">@Log4j2</span>
-<span class="fc" id="L20">public class RuleNameService {</span>
+<span class="fc" id="L22">@Log4j2</span>
+<span class="fc" id="L23">public class RuleNameService {</span>
     @Autowired
     private RuleNameRepository ruleNameRepository;
 
     @Autowired
     private MessageSource messageSource;
-    
-     /**
+
+    /**
      * Retrieve all rulename in db.
      *
      * @return List of all registred RuleName(empty if there were not)
      */
-     public List&lt;RuleName&gt; findAll() {
-<span class="fc" id="L33">         return ruleNameRepository.findAll();</span>
-     }
-    
-     public RuleName findById(Integer id) {
-<span class="fc" id="L37">         Optional&lt;RuleName&gt; existingRuleName = ruleNameRepository.findById(id);</span>
-<span class="fc bfc" id="L38" title="All 2 branches covered.">         if (existingRuleName.isPresent()) {</span>
-<span class="fc" id="L39">             log.info(messageSource.getMessage(&quot;global.rule-name.find-by-id&quot;, new Object[] { id, existingRuleName.get() }, LocaleContextHolder.getLocale()));</span>
-<span class="fc" id="L40">             return existingRuleName.get();</span>
-         } else {
-<span class="fc" id="L42">             throw new RuleNameNotFoundException(messageSource.getMessage(&quot;global.rule-name.not-found&quot;, new Object[] { id }, LocaleContextHolder.getLocale()));</span>
-         }
-     }
+    public List&lt;RuleName&gt; findAll() {
+<span class="fc" id="L36">        return ruleNameRepository.findAll();</span>
+    }
 
-     public RuleName saveRuleName(RuleName ruleName) {
-<span class="fc bfc" id="L47" title="All 2 branches covered.">         if (ruleName != null) {</span>
-<span class="fc" id="L48">             RuleName savedRuleName = ruleNameRepository.save(ruleName);</span>
-<span class="fc" id="L49">             log.info(messageSource.getMessage(&quot;global.rule-name.creation&quot;, new Object[] { savedRuleName }, LocaleContextHolder.getLocale()));</span>
-<span class="fc" id="L50">             return savedRuleName;</span>
+    /**
+     * find a rule name with a given id in db.
+     * 
+     * @param id the given id of researched rule name
+     * @return Existing rule name if it exists.
+     * @throws RuleNameNotFoundException if rulename not existing in db
+     */
+    public RuleName findById(Integer id) {
+<span class="fc" id="L47">        Optional&lt;RuleName&gt; existingRuleName = ruleNameRepository.findById(id);</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        if (existingRuleName.isPresent()) {</span>
+<span class="fc" id="L49">            log.info(messageSource.getMessage(&quot;global.rule-name.find-by-id&quot;,</span>
+<span class="fc" id="L50">                    new Object[] { id, existingRuleName.get() }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L51">            return existingRuleName.get();</span>
+        } else {
+<span class="fc" id="L53">            throw new RuleNameNotFoundException(messageSource.getMessage(&quot;global.rule-name.not-found&quot;,</span>
+<span class="fc" id="L54">                    new Object[] { id }, LocaleContextHolder.getLocale()));</span>
+        }
+    }
 
-         } else {
-<span class="fc" id="L53">             throw new RuleNameNotFoundException(messageSource.getMessage(&quot;global.exception.not-null&quot;, new Object[] { &quot;ruleName&quot; }, LocaleContextHolder.getLocale()));</span>
-         }
-     }
-    
-     public RuleName updateRuleName(RuleName ruleName) {
+    /**
+     * save a new Rulename.
+     * 
+     * @param ruleName the given rulename to save.
+     * @return Saved rulename.
+     * @throws RuleNameNotFoundException if given rulename is null.
+     */
+    public RuleName saveRuleName(RuleName ruleName) {
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        if (ruleName != null) {</span>
+<span class="fc" id="L67">            RuleName savedRuleName = ruleNameRepository.save(ruleName);</span>
+<span class="fc" id="L68">            log.info(messageSource.getMessage(&quot;global.rule-name.creation&quot;, new Object[] { savedRuleName },</span>
+<span class="fc" id="L69">                    LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L70">            return savedRuleName;</span>
 
-<span class="fc bfc" id="L59" title="All 4 branches covered.">         if (ruleName != null &amp;&amp; ruleName.getId() != 0) {</span>
+        } else {
+<span class="fc" id="L73">            throw new RuleNameNotFoundException(messageSource.getMessage(&quot;global.exception.not-null&quot;,</span>
+<span class="fc" id="L74">                    new Object[] { &quot;ruleName&quot; }, LocaleContextHolder.getLocale()));</span>
+        }
+    }
 
-<span class="fc" id="L61">             Optional&lt;RuleName&gt; existingRuleName = ruleNameRepository.findById(ruleName.getId());</span>
+    /**
+     * update rulename.
+     * 
+     * @param ruleName the given rulename to update.
+     * @return updated rulename
+     * @throws RuleNameNotFoundException if given rulename is null or id =0
+     */
+    public RuleName updateRuleName(RuleName ruleName) {
 
-<span class="fc bfc" id="L63" title="All 4 branches covered.">             if (existingRuleName.isPresent() &amp;&amp; Objects.equals(ruleName.getId(), existingRuleName.get().getId())) {</span>
+<span class="fc bfc" id="L87" title="All 4 branches covered.">        if (ruleName != null &amp;&amp; ruleName.getId() != 0) {</span>
 
-<span class="fc" id="L65">                 RuleName updatedRuleName = ruleNameRepository.save(ruleName);</span>
+<span class="fc" id="L89">            Optional&lt;RuleName&gt; existingRuleName = ruleNameRepository.findById(ruleName.getId());</span>
 
-<span class="fc" id="L67">                 log.info(messageSource.getMessage(&quot;global.rule-name.update&quot;, new Object[] { updatedRuleName }, LocaleContextHolder.getLocale()));</span>
+<span class="fc bfc" id="L91" title="All 4 branches covered.">            if (existingRuleName.isPresent() &amp;&amp; Objects.equals(ruleName.getId(), existingRuleName.get().getId())) {</span>
 
-<span class="fc" id="L69">                 return updatedRuleName;</span>
+<span class="fc" id="L93">                RuleName updatedRuleName = ruleNameRepository.save(ruleName);</span>
 
-             } else {
-<span class="fc" id="L72">                 throw new RuleNameNotFoundException(messageSource.getMessage(&quot;global.rule-name.not-found&quot;, new Object[] { ruleName.getId() }, LocaleContextHolder.getLocale()));</span>
-             }
+<span class="fc" id="L95">                log.info(messageSource.getMessage(&quot;global.rule-name.update&quot;, new Object[] { updatedRuleName },</span>
+<span class="fc" id="L96">                        LocaleContextHolder.getLocale()));</span>
 
-         } else {
-<span class="fc" id="L76">             throw new RuleNameNotFoundException(messageSource.getMessage(&quot;global.exception.not-null&quot;, new Object[] { &quot;ruleName&quot; }, LocaleContextHolder.getLocale()));</span>
-         }
-
-     }
-    
-     public void deleteRuleName(RuleName ruleName) {
-<span class="fc bfc" id="L82" title="All 4 branches covered.">        if (ruleName != null &amp;&amp; ruleName.getId() != 0) {</span>
-
-<span class="fc" id="L84">            Optional&lt;RuleName&gt; existedRuleName = ruleNameRepository.findById(ruleName.getId());</span>
-
-<span class="fc bfc" id="L86" title="All 2 branches covered.">            if (existedRuleName.isPresent()) {</span>
-
-<span class="fc" id="L88">                log.info(messageSource.getMessage(&quot;global.rule-name.delete&quot;, new Object[] { existedRuleName }, LocaleContextHolder.getLocale()));</span>
-
-<span class="fc" id="L90">                ruleNameRepository.delete(existedRuleName.get());</span>
+<span class="fc" id="L98">                return updatedRuleName;</span>
 
             } else {
-<span class="fc" id="L93">                throw new RuleNameNotFoundException(messageSource.getMessage(&quot;global.rule-name.not-found&quot;, new Object[] { ruleName.getId() }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L101">                throw new RuleNameNotFoundException(messageSource.getMessage(&quot;global.rule-name.not-found&quot;,</span>
+<span class="fc" id="L102">                        new Object[] { ruleName.getId() }, LocaleContextHolder.getLocale()));</span>
             }
 
-<span class="fc" id="L96">        } else {</span>
-<span class="fc" id="L97">            throw new RuleNameNotFoundException(messageSource.getMessage(&quot;global.exception.not-null&quot;, new Object[] { &quot;RuleName&quot; }, LocaleContextHolder.getLocale()));</span>
+        } else {
+<span class="fc" id="L106">            throw new RuleNameNotFoundException(messageSource.getMessage(&quot;global.exception.not-null&quot;,</span>
+<span class="fc" id="L107">                    new Object[] { &quot;ruleName&quot; }, LocaleContextHolder.getLocale()));</span>
         }
-<span class="fc" id="L99">    }</span>
 
+    }
+
+    /**
+     * delete rulename.
+     * 
+     * @param ruleName the given rulename to delete
+     */
+    public void deleteRuleName(RuleName ruleName) {
+<span class="fc bfc" id="L118" title="All 4 branches covered.">        if (ruleName != null &amp;&amp; ruleName.getId() != 0) {</span>
+
+<span class="fc" id="L120">            Optional&lt;RuleName&gt; existedRuleName = ruleNameRepository.findById(ruleName.getId());</span>
+
+<span class="fc bfc" id="L122" title="All 2 branches covered.">            if (existedRuleName.isPresent()) {</span>
+
+<span class="fc" id="L124">                log.info(messageSource.getMessage(&quot;global.rule-name.delete&quot;, new Object[] { existedRuleName },</span>
+<span class="fc" id="L125">                        LocaleContextHolder.getLocale()));</span>
+
+<span class="fc" id="L127">                ruleNameRepository.delete(existedRuleName.get());</span>
+
+            } else {
+<span class="fc" id="L130">                throw new RuleNameNotFoundException(messageSource.getMessage(&quot;global.rule-name.not-found&quot;,</span>
+<span class="fc" id="L131">                        new Object[] { ruleName.getId() }, LocaleContextHolder.getLocale()));</span>
+            }
+
+<span class="fc" id="L134">        } else {</span>
+<span class="fc" id="L135">            throw new RuleNameNotFoundException(messageSource.getMessage(&quot;global.exception.not-null&quot;,</span>
+<span class="fc" id="L136">                    new Object[] { &quot;RuleName&quot; }, LocaleContextHolder.getLocale()));</span>
+        }
+<span class="fc" id="L138">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

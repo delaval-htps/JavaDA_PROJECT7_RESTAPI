@@ -20,7 +20,7 @@ public class PasswordEncodeIT {
     @Test
     public void testPassword() {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String pw = encoder.encode("123456");
+        String pw = encoder.encode("Jsadmin4all&lp4e");
         System.out.println("[ "+ pw + " ]");
     }
 }
