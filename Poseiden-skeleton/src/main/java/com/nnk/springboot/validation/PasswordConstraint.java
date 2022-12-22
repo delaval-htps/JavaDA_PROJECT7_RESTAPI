@@ -9,6 +9,9 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
+/**
+ * Custom Annotation contraint class for Password.
+ */
 @Documented
 @Constraint(validatedBy = PasswordValidator.class)
 @Target({ ElementType.METHOD, ElementType.FIELD })
@@ -19,5 +22,5 @@ public @interface PasswordConstraint {
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
-    
+
 }

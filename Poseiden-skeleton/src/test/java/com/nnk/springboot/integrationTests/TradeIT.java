@@ -1,4 +1,4 @@
-package com.nnk.springboot;
+package com.nnk.springboot.integrationTests;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +17,7 @@ import com.nnk.springboot.repositories.TradeRepository;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles(value = "test")
-public class TradeTests {
+public class TradeIT {
 
 	@Autowired
 	private TradeRepository tradeRepository;

@@ -10,6 +10,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+/**
+ * class of securoity configuration
+ */
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfig {
@@ -59,7 +62,7 @@ public class SecurityConfig {
                 .hasAuthority("ADMIN")
 
                 .anyRequest().authenticated()
-
+                
                 .and()
                 // using AccesDeniedPage make easy to redirect to error 403 page
                 .exceptionHandling().accessDeniedPage("/app/error");

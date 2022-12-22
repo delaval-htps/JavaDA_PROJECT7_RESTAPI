@@ -1,4 +1,4 @@
-package com.nnk.springboot;
+package com.nnk.springboot.integrationTests;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +17,7 @@ import com.nnk.springboot.repositories.RuleNameRepository;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles(value = "test")
-public class RuleTests {
+public class RuleIT {
 
 	@Autowired
 	private RuleNameRepository ruleNameRepository;

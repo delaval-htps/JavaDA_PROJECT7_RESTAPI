@@ -180,7 +180,7 @@ public class UserServiceTest {
 
         CustomOAuth2User oAuth2User = new CustomOAuth2User(new DefaultOAuth2User(authorities, attributs, "username"), authorities, AuthProvider.GITHUB.toString(), "initialUsername");
 
-        User saveUserFromOAuth2Authentication = cut.saveUserFromOAuth2Authentication(oAuth2User);
+        cut.saveUserFromOAuth2Authentication(oAuth2User);
 
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
         verify(userRepository, times(1)).save(userCaptor.capture());
@@ -194,10 +194,11 @@ public class UserServiceTest {
 
     @Test
     public void saveUserFromOauht2_whenOauth2UserNull_thenThrowException() {
-        assertThrows(UserNotFoundException.class, ()->{
+        assertThrows(UserNotFoundException.class, () -> {
             cut.saveUserFromOAuth2Authentication(null);
         });
     }
+
     @Test
     public void updateUserTest_whenUserIdNotSame_thenThrowUserException() {
 

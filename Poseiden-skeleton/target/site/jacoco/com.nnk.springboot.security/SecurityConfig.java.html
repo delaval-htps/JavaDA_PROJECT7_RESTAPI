@@ -59,7 +59,7 @@ import org.springframework.security.web.SecurityFilterChain;
 <span class="fc" id="L59">                .hasAuthority(&quot;ADMIN&quot;)</span>
 
 <span class="fc" id="L61">                .anyRequest().authenticated()</span>
-
+                
 <span class="fc" id="L63">                .and()</span>
                 // using AccesDeniedPage make easy to redirect to error 403 page
 <span class="fc" id="L65">                .exceptionHandling().accessDeniedPage(&quot;/app/error&quot;);</span>
