@@ -28,12 +28,12 @@
 				</div>
 			</div>
 			<div class="form-group col-4 ml-1">
-				<label for="sandPRating">[[#{rating.label.sand-rating}]]</label>
+				<label for="sandpRating">[[#{rating.label.sand-rating}]]</label>
 				<input type="text" class="form-control form-control-sm" 
-					th:placeholder="#{rating.label.sand-rating}" th:field="*{sandPRating}"
-					th:classappend="${#fields.hasErrors('sandPRating')? 'is-invalid': ''}"/>
+					th:placeholder="#{rating.label.sand-rating}" th:field="*{sandpRating}"
+					th:classappend="${#fields.hasErrors('sandpRating')? 'is-invalid': ''}"/>
 				<div class="invalid-feedback">
-					<p th:each="error:${#fields.errors('sandPRating')}" th:text="${error}"></p>
+					<p th:each="error:${#fields.errors('sandpRating')}" th:text="${error}"></p>
 				</div>
 			</div>
 			<div class="form-group col-4 ml-1">

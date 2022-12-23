@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RatingController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spring-boot-skeleton</a> &gt; <a href="index.source.html" class="el_package">com.nnk.springboot.controllers</a> &gt; <span class="el_source">RatingController.java</span></div><h1>RatingController.java</h1><pre class="source lang-java linenums">package com.nnk.springboot.controllers;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RatingController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spring-boot-skeleton</a> &gt; <a href="index.source.html" class="el_package">com.nnk.springboot.controllers</a> &gt; <span class="el_source">RatingController.java</span></div><h1>RatingController.java</h1><pre class="source lang-java linenums">package com.nnk.springboot.controllers;
 
 import java.util.List;
 
@@ -19,8 +19,11 @@ import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.exceptions.GlobalPoseidonException;
 import com.nnk.springboot.services.RatingService;
 
+/**
+ * Controller for Rating entity
+ */
 @Controller
-<span class="fc" id="L23">public class RatingController {</span>
+<span class="fc" id="L26">public class RatingController {</span>
 
     @Autowired
     private RatingService ratingService;
@@ -28,80 +31,139 @@ import com.nnk.springboot.services.RatingService;
     @Autowired
     private MessageSource messageSource;
 
+    /**
+     * endpoint to show the list of all existing rating
+     * 
+     * @param model
+     * @return the view of list of all rating
+     */
     @RequestMapping(&quot;/rating/list&quot;)
     public String home(Model model) {
-<span class="fc" id="L33">        List&lt;Rating&gt; ratings = ratingService.findAll();</span>
-<span class="fc" id="L34">        model.addAttribute(&quot;listOfRating&quot;, ratings);</span>
-<span class="fc" id="L35">        return &quot;rating/list&quot;;</span>
+<span class="fc" id="L42">        List&lt;Rating&gt; ratings = ratingService.findAll();</span>
+<span class="fc" id="L43">        model.addAttribute(&quot;listOfRating&quot;, ratings);</span>
+<span class="fc" id="L44">        return &quot;rating/list&quot;;</span>
     }
 
+    /**
+     * endpoint to show form to save a nex rating.
+     * 
+     * @param curve the curve to save
+     * @return the view with the form to save a new rating
+     */
     @GetMapping(&quot;/rating/add&quot;)
     public String addRatingForm(Rating rating) {
-<span class="fc" id="L40">        return &quot;rating/add&quot;;</span>
+<span class="fc" id="L55">        return &quot;rating/add&quot;;</span>
     }
+
+    /**
+     * endoint to save a new rating.
+     * 
+     * @param curvePoint the rating retrieved from form
+     * @param result     bindignresult if error in filled fields
+     * @param model
+     * @return the view of updated list of rating or the view of form to save
+     *         rating if there is a error in field
+     */
 
     @PostMapping(&quot;/rating/validate&quot;)
     public String validate(@Valid Rating rating, BindingResult result, Model model) {
-<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (!result.hasErrors()) {</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        if (!result.hasErrors()) {</span>
 
-<span class="fc" id="L47">            ratingService.saveRating(rating);</span>
-<span class="fc" id="L48">            return &quot;redirect:/rating/list&quot;;</span>
+<span class="fc" id="L72">            ratingService.saveRating(rating);</span>
+<span class="fc" id="L73">            return &quot;redirect:/rating/list&quot;;</span>
 
         } else {
 
-<span class="fc" id="L52">            return &quot;rating/add&quot;;</span>
+<span class="fc" id="L77">            return &quot;rating/add&quot;;</span>
         }
 
     }
 
+    /**
+     * endpoint to show the form to update a existing rating selected from the
+     * list
+     * of them.
+     * 
+     * @param id    the id od rating to update
+     * @param model
+     * @return the view of form to update the rating with given id.
+     * @throws GlobalPoseidonException if the given id is not correct ( equal to
+     *                                 zero)
+     */
     @GetMapping(&quot;/rating/update/{id}&quot;)
     public String showUpdateForm(@PathVariable(&quot;id&quot;) Integer id, Model model) {
-        
-<span class="fc bfc" id="L60" title="All 2 branches covered.">        if (id != 0) {</span>
 
-<span class="fc" id="L62">            Rating existingRating = ratingService.findById(id);</span>
-<span class="fc" id="L63">            model.addAttribute(&quot;rating&quot;, existingRating);</span>
-<span class="fc" id="L64">            return &quot;rating/update&quot;;</span>
-
-        } else {
-<span class="fc" id="L67">            throw new GlobalPoseidonException(messageSource.getMessage(&quot;global.exception.incorrect-id&quot;, new Object[] { new Object() {</span>
-<span class="fc" id="L68">            }.getClass().getEnclosingMethod().getName() }, LocaleContextHolder.getLocale()));</span>
-        }
-       
-    }
-
-    @PostMapping(&quot;/rating/update/{id}&quot;)
-    public String updateRating(@PathVariable(&quot;id&quot;) Integer id, @Valid Rating rating, BindingResult result, Model model) {
-
-<span class="fc bfc" id="L76" title="All 2 branches covered.">        if (id != 0) {</span>
-
-<span class="fc bfc" id="L78" title="All 2 branches covered.">            if (!result.hasErrors()) {</span>
-
-<span class="fc" id="L80">                ratingService.updateRating(rating);</span>
-<span class="fc" id="L81">                return &quot;redirect:/rating/list&quot;;</span>
-
-            } else {
-
-<span class="fc" id="L85">                return (&quot;rating/update&quot;);</span>
-            }
-
-        } else {
-<span class="fc" id="L89">            throw new GlobalPoseidonException(messageSource.getMessage(&quot;global.exception.incorrect-id&quot;, new Object[] { new Object() {</span>
-<span class="fc" id="L90">            }.getClass().getEnclosingMethod().getName() }, LocaleContextHolder.getLocale()));</span>
-        }
-    }
-
-    @GetMapping(&quot;/rating/delete/{id}&quot;)
-    public String deleteRating(@PathVariable(&quot;id&quot;) Integer id, Model model) {
 <span class="fc bfc" id="L96" title="All 2 branches covered.">        if (id != 0) {</span>
 
 <span class="fc" id="L98">            Rating existingRating = ratingService.findById(id);</span>
-<span class="fc" id="L99">            ratingService.deleteRating(existingRating);</span>
-<span class="fc" id="L100">            return &quot;redirect:/rating/list&quot;;</span>
+<span class="fc" id="L99">            model.addAttribute(&quot;rating&quot;, existingRating);</span>
+<span class="fc" id="L100">            return &quot;rating/update&quot;;</span>
 
         } else {
-<span class="fc" id="L103">            throw new GlobalPoseidonException(messageSource.getMessage(&quot;global.exception.incorrect-id&quot;, new Object[] { new Object() {</span>
-<span class="fc" id="L104">            }.getClass().getEnclosingMethod().getName() }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L103">            throw new GlobalPoseidonException(</span>
+<span class="fc" id="L104">                    messageSource.getMessage(&quot;global.exception.incorrect-id&quot;, new Object[] { new Object() {</span>
+<span class="fc" id="L105">                    }.getClass().getEnclosingMethod().getName() }, LocaleContextHolder.getLocale()));</span>
+        }
+
+    }
+
+    /**
+     * endpoint to update the rating with given id before .
+     * 
+     * @param id      the given id of rating to update
+     * @param bidList the rating to save with updated fields from the update
+     *                form
+     * @param result  bindingResult if there is a error of validation in fields
+     * @param model
+     * @return the view of updated list of rating if update was done correctly
+     *         or again
+     *         view of update form to show which fields are not valid with error
+     *         message
+     * @Throws {@link GlobalPoseidonException} if given id is not correct (=0)
+     */
+    @PostMapping(&quot;/rating/update/{id}&quot;)
+    public String updateRating(@PathVariable(&quot;id&quot;) Integer id, @Valid Rating rating, BindingResult result,
+            Model model) {
+
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        if (id != 0) {</span>
+
+<span class="fc bfc" id="L130" title="All 2 branches covered.">            if (!result.hasErrors()) {</span>
+
+<span class="fc" id="L132">                ratingService.updateRating(rating);</span>
+<span class="fc" id="L133">                return &quot;redirect:/rating/list&quot;;</span>
+
+            } else {
+
+<span class="fc" id="L137">                return (&quot;rating/update&quot;);</span>
+            }
+
+        } else {
+<span class="fc" id="L141">            throw new GlobalPoseidonException(</span>
+<span class="fc" id="L142">                    messageSource.getMessage(&quot;global.exception.incorrect-id&quot;, new Object[] { new Object() {</span>
+<span class="fc" id="L143">                    }.getClass().getEnclosingMethod().getName() }, LocaleContextHolder.getLocale()));</span>
+        }
+    }
+
+    /**
+     * endpoint to delete rating with given id
+     * 
+     * @param id    the given id of rating to delete
+     * @param model
+     * @return the updated list of rating with deletion done
+     * @throws GlobalPoseidonException if the given id is not correct (=0)
+     */
+    @GetMapping(&quot;/rating/delete/{id}&quot;)
+    public String deleteRating(@PathVariable(&quot;id&quot;) Integer id, Model model) {
+<span class="fc bfc" id="L157" title="All 2 branches covered.">        if (id != 0) {</span>
+
+<span class="fc" id="L159">            Rating existingRating = ratingService.findById(id);</span>
+<span class="fc" id="L160">            ratingService.deleteRating(existingRating);</span>
+<span class="fc" id="L161">            return &quot;redirect:/rating/list&quot;;</span>
+
+        } else {
+<span class="fc" id="L164">            throw new GlobalPoseidonException(</span>
+<span class="fc" id="L165">                    messageSource.getMessage(&quot;global.exception.incorrect-id&quot;, new Object[] { new Object() {</span>
+<span class="fc" id="L166">                    }.getClass().getEnclosingMethod().getName() }, LocaleContextHolder.getLocale()));</span>
         }
     }
 }

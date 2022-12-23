@@ -6,11 +6,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Class that represents a customm error to display to user when exception is
+ * thrown.
+ */
 @Getter
 @Setter
 @NoArgsConstructor
 public class GlobaleErrorResponse {
- 
+
     private Timestamp date;
     private int status;
     private String error;
@@ -22,5 +26,5 @@ public class GlobaleErrorResponse {
         this.error = error;
         this.errorMessage = errorMessage;
     }
-    
+
 }

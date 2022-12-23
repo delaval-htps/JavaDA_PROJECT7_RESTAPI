@@ -54,8 +54,8 @@ public class BidListControllerTest {
     @Before
     public void initialize() {
         listOfBidList = new ArrayList<BidList>();
-        mockBidList1 = new BidList("account1", "type1", 10d);
-        mockBidList2 = new BidList("account2", "type2", 20d);
+        mockBidList1 = new BidList("account1", "type1", 10.0);
+        mockBidList2 = new BidList("account2", "type2", 20.0);
         listOfBidList.add(mockBidList2);
         listOfBidList.add(mockBidList1);
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
@@ -88,7 +88,7 @@ public class BidListControllerTest {
         when(bidListService.saveBidList(Mockito.any(BidList.class))).thenReturn(registredMockBidList1);
 
         // when & then
-        mockMvc.perform(post("/bidList/validate").param("account", "account").param("type", "type").with(csrf())).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/bidList/list"));
+        mockMvc.perform(post("/bidList/validate").param("account", "account").param("type", "type").param("bidQuantity", "10.0").with(csrf())).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/bidList/list"));
 
         verify(bidListService, times(1)).saveBidList(Mockito.any(BidList.class));
 
@@ -148,7 +148,7 @@ public class BidListControllerTest {
         mockBidList1.setBidListId(1);
         when(bidListService.updateBidList(Mockito.any(BidList.class))).thenReturn(mockBidList2);
 
-        mockMvc.perform(post("/bidList/update/{id}", mockBidList1.getBidListId()).param("account", mockBidList1.getAccount()).param("type", mockBidList1.getType()).with(csrf())).andExpect(redirectedUrl("/bidList/list"));
+        mockMvc.perform(post("/bidList/update/{id}", mockBidList1.getBidListId()).param("account", mockBidList1.getAccount()).param("type", mockBidList1.getType()).param("bidQuantity", "10.0").with(csrf())).andExpect(redirectedUrl("/bidList/list"));
 
         verify(bidListService, times(1)).updateBidList(Mockito.any(BidList.class));
 

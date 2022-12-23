@@ -1,0 +1,2 @@
+insert into users(id,fullname, username, password, role) values(1,'Administrator', 'admin', '$2y$10$3sdCwWw76fDVGhCPLBboR.oLJZ/2sygB5ZCuYYsll15fgaKlfc9HO', 'ADMIN')
+insert into users(id,fullname, username, password, role) values(2,'User', 'user', '$2y$10$e89q3oeHa48Gg/5ybpA0v.F45AgEHsBGJf1iQHXj1XTjKKa31WIfe', 'USER')

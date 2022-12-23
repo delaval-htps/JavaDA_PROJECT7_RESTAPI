@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CurvePointService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spring-boot-skeleton</a> &gt; <a href="index.source.html" class="el_package">com.nnk.springboot.services</a> &gt; <span class="el_source">CurvePointService.java</span></div><h1>CurvePointService.java</h1><pre class="source lang-java linenums">package com.nnk.springboot.services;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CurvePointService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spring-boot-skeleton</a> &gt; <a href="index.source.html" class="el_package">com.nnk.springboot.services</a> &gt; <span class="el_source">CurvePointService.java</span></div><h1>CurvePointService.java</h1><pre class="source lang-java linenums">package com.nnk.springboot.services;
 
 import java.util.List;
 import java.util.Objects;
@@ -15,82 +15,127 @@ import com.nnk.springboot.repositories.CurvePointRepository;
 
 import lombok.extern.log4j.Log4j2;
 
+/**
+ * Service class for {@link CurvePoint}
+ */
 @Service
-<span class="fc" id="L19">@Log4j2</span>
-<span class="fc" id="L20">public class CurvePointService {</span>
+<span class="fc" id="L22">@Log4j2</span>
+<span class="fc" id="L23">public class CurvePointService {</span>
     @Autowired
     private CurvePointRepository curvePointRepository;
 
     @Autowired
     private MessageSource messageSource;
 
+    /**
+     * return all existing CurvePoint
+     */
     public List&lt;CurvePoint&gt; findAll() {
-<span class="fc" id="L28">        return curvePointRepository.findAll();</span>
+<span class="fc" id="L34">        return curvePointRepository.findAll();</span>
     }
 
+    /**
+     * return curve point with the given id in param
+     * 
+     * @param id id of the researched curvepoint
+     * @return existing curve point with the given id if it exists
+     * @throws CurvePointNotFoundException if it doesn't exist
+     */
     public CurvePoint findById(int id) {
-<span class="fc" id="L32">        Optional&lt;CurvePoint&gt; existedCurvePoint = curvePointRepository.findById(id);</span>
+<span class="fc" id="L45">        Optional&lt;CurvePoint&gt; existedCurvePoint = curvePointRepository.findById(id);</span>
 
-<span class="fc bfc" id="L34" title="All 2 branches covered.">        if (existedCurvePoint.isPresent()) {</span>
-<span class="fc" id="L35">            log.info(messageSource.getMessage(&quot;global.curve-point.find-by-id&quot;, new Object[] { id, existedCurvePoint.get() }, LocaleContextHolder.getLocale()));</span>
-<span class="fc" id="L36">            return existedCurvePoint.get();</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        if (existedCurvePoint.isPresent()) {</span>
+<span class="fc" id="L48">            log.info(messageSource.getMessage(&quot;global.curve-point.find-by-id&quot;,</span>
+<span class="fc" id="L49">                    new Object[] { id, existedCurvePoint.get() }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L50">            return existedCurvePoint.get();</span>
 
         } else {
 
-<span class="fc" id="L40">            throw new CurvePointNotFoundException(messageSource.getMessage(&quot;global.curve-point.not-found&quot;, new Object[] { id }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L54">            throw new CurvePointNotFoundException(messageSource.getMessage(&quot;global.curve-point.not-found&quot;,</span>
+<span class="fc" id="L55">                    new Object[] { id }, LocaleContextHolder.getLocale()));</span>
         }
     }
 
+    /**
+     * save a curvepoint registred from form (cf controller)
+     * 
+     * @param curvePoint to save
+     * @return CurvePoint saved if given curve point not null
+     * @throws CurvePointNotFoundException if given curved is null
+     */
     public CurvePoint saveCurvePoint(CurvePoint curvePoint) {
-<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (curvePoint != null) {</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        if (curvePoint != null) {</span>
 
-<span class="fc" id="L47">            CurvePoint savedCurvePoint = curvePointRepository.save(curvePoint);</span>
-<span class="fc" id="L48">            log.info(messageSource.getMessage(&quot;global.curve-point.creation&quot;, new Object[] { savedCurvePoint }, LocaleContextHolder.getLocale()));</span>
-<span class="fc" id="L49">            return curvePointRepository.save(curvePoint);</span>
+<span class="fc" id="L69">            CurvePoint savedCurvePoint = curvePointRepository.save(curvePoint);</span>
+<span class="fc" id="L70">            log.info(messageSource.getMessage(&quot;global.curve-point.creation&quot;, new Object[] { savedCurvePoint },</span>
+<span class="fc" id="L71">                    LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L72">            return curvePointRepository.save(curvePoint);</span>
 
         } else {
-<span class="fc" id="L52">            throw new CurvePointNotFoundException(messageSource.getMessage(&quot;global.exception.not-null&quot;, new Object[] { &quot;curvePoint&quot; }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L75">            throw new CurvePointNotFoundException(messageSource.getMessage(&quot;global.exception.not-null&quot;,</span>
+<span class="fc" id="L76">                    new Object[] { &quot;curvePoint&quot; }, LocaleContextHolder.getLocale()));</span>
         }
     }
 
+    /**
+     * Update a existing curve point.
+     * 
+     * @param curvePoint given in param
+     * @return Curve point updated if the given curve point not null
+     * @throws CurvePointNotFoundException if given curvepoint is null or it id =0
+     *                                     or not found in db
+     */
     public CurvePoint updateCurvePoint(CurvePoint curvePoint) {
-<span class="pc bpc" id="L57" title="1 of 4 branches missed.">        if (curvePoint != null &amp;&amp; curvePoint.getId() != 0) {</span>
+<span class="pc bpc" id="L89" title="1 of 4 branches missed.">        if (curvePoint != null &amp;&amp; curvePoint.getId() != 0) {</span>
 
-<span class="fc" id="L59">            Optional&lt;CurvePoint&gt; existedCurvePoint = curvePointRepository.findById(curvePoint.getId());</span>
+<span class="fc" id="L91">            Optional&lt;CurvePoint&gt; existedCurvePoint = curvePointRepository.findById(curvePoint.getId());</span>
 
-<span class="fc bfc" id="L61" title="All 4 branches covered.">            if (existedCurvePoint.isPresent() &amp;&amp; Objects.equals(curvePoint.getId(), existedCurvePoint.get().getId())) {</span>
+<span class="fc bfc" id="L93" title="All 4 branches covered.">            if (existedCurvePoint.isPresent() &amp;&amp; Objects.equals(curvePoint.getId(), existedCurvePoint.get().getId())) {</span>
 
-<span class="fc" id="L63">                CurvePoint savedCurvePoint = curvePointRepository.save(curvePoint);</span>
-<span class="fc" id="L64">                log.info(messageSource.getMessage(&quot;global.curve-point.update&quot;, new Object[] { curvePoint }, LocaleContextHolder.getLocale()));</span>
-<span class="fc" id="L65">                return savedCurvePoint;</span>
+<span class="fc" id="L95">                CurvePoint savedCurvePoint = curvePointRepository.save(curvePoint);</span>
+<span class="fc" id="L96">                log.info(messageSource.getMessage(&quot;global.curve-point.update&quot;, new Object[] { curvePoint },</span>
+<span class="fc" id="L97">                        LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L98">                return savedCurvePoint;</span>
 
             } else {
-<span class="fc" id="L68">                throw new CurvePointNotFoundException(messageSource.getMessage(&quot;global.curve-point.not-found&quot;, new Object[] { curvePoint.getId() }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L101">                throw new CurvePointNotFoundException(messageSource.getMessage(&quot;global.curve-point.not-found&quot;,</span>
+<span class="fc" id="L102">                        new Object[] { curvePoint.getId() }, LocaleContextHolder.getLocale()));</span>
             }
 
         } else {
-<span class="fc" id="L72">            throw new CurvePointNotFoundException(messageSource.getMessage(&quot;global.exception.not-null&quot;, new Object[] { &quot;curvePoint&quot; }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L106">            throw new CurvePointNotFoundException(messageSource.getMessage(&quot;global.exception.not-null&quot;,</span>
+<span class="fc" id="L107">                    new Object[] { &quot;curvePoint&quot; }, LocaleContextHolder.getLocale()));</span>
         }
 
     }
 
+    /**
+     * delete a given CurvePoint.
+     * 
+     * @param curvePoint given curve point
+     * @throws CurvePointNotFoundException if given curve point is not found in db
+     *                                     or null or its id =0
+     */
     public void deleteCurvePoint(CurvePoint curvePoint) {
-<span class="fc bfc" id="L78" title="All 4 branches covered.">        if (curvePoint != null &amp;&amp; curvePoint.getId() != 0) {</span>
+<span class="fc bfc" id="L120" title="All 4 branches covered.">        if (curvePoint != null &amp;&amp; curvePoint.getId() != 0) {</span>
 
-<span class="fc" id="L80">            Optional&lt;CurvePoint&gt; existedCurvePoint = curvePointRepository.findById(curvePoint.getId());</span>
+<span class="fc" id="L122">            Optional&lt;CurvePoint&gt; existedCurvePoint = curvePointRepository.findById(curvePoint.getId());</span>
 
-<span class="fc bfc" id="L82" title="All 2 branches covered.">            if (existedCurvePoint.isPresent()) {</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">            if (existedCurvePoint.isPresent()) {</span>
 
-<span class="fc" id="L84">                log.info(messageSource.getMessage(&quot;global.curve-point.delete&quot;, new Object[] { existedCurvePoint }, LocaleContextHolder.getLocale()));</span>
-<span class="fc" id="L85">                curvePointRepository.delete(existedCurvePoint.get());</span>
-                
-            } else {
-<span class="fc" id="L88">                throw new CurvePointNotFoundException(messageSource.getMessage(&quot;global.curve-point.not-found&quot;, new Object[] { curvePoint.getId() }, LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L126">                log.info(messageSource.getMessage(&quot;global.curve-point.delete&quot;, new Object[] { existedCurvePoint },</span>
+<span class="fc" id="L127">                        LocaleContextHolder.getLocale()));</span>
+<span class="fc" id="L128">                curvePointRepository.delete(existedCurvePoint.get());</span>
+
+<span class="fc" id="L130">            } else {</span>
+<span class="fc" id="L131">                throw new CurvePointNotFoundException(messageSource.getMessage(&quot;global.curve-point.not-found&quot;,</span>
+<span class="fc" id="L132">                        new Object[] { curvePoint.getId() }, LocaleContextHolder.getLocale()));</span>
             }
 
-<span class="fc" id="L91">        } else {</span>
-<span class="fc" id="L92">            throw new CurvePointNotFoundException(messageSource.getMessage(&quot;global.exception.not-null&quot;, new Object[] { &quot;CurvePoint&quot; }, LocaleContextHolder.getLocale()));</span>
+        } else {
+<span class="fc" id="L136">            throw new CurvePointNotFoundException(messageSource.getMessage(&quot;global.exception.not-null&quot;,</span>
+<span class="fc" id="L137">                    new Object[] { &quot;CurvePoint&quot; }, LocaleContextHolder.getLocale()));</span>
         }
-<span class="fc" id="L94">    }</span>
+<span class="fc" id="L139">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -88,7 +88,7 @@ public class TradeControllerTest {
         when(tradeService.saveTrade(Mockito.any(Trade.class))).thenReturn(registredmockTrade1);
 
         // when & then
-        mockMvc.perform(post("/trade/validate").param("account", "account").param("type", "type").with(csrf()))
+        mockMvc.perform(post("/trade/validate").param("account", "account").param("type", "type").param("buyQuantity","10.0").with(csrf()))
 
                 .andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/trade/list"));
 
@@ -144,7 +144,7 @@ public class TradeControllerTest {
         mockTrade2.setTradeId(1);
         when(tradeService.updateTrade(Mockito.any(Trade.class))).thenReturn(mockTrade2);
 
-        mockMvc.perform(post("/trade/update/{id}", mockTrade2.getTradeId()).param("account", mockTrade2.getAccount()).param("type", mockTrade2.getType()).with(csrf()))
+        mockMvc.perform(post("/trade/update/{id}", mockTrade2.getTradeId()).param("account", mockTrade2.getAccount()).param("type", mockTrade2.getType()).param("buyQuantity","10.0").with(csrf()))
                 .andExpect(redirectedUrl("/trade/list"));
 
         verify(tradeService, times(1)).updateTrade(Mockito.any(Trade.class));

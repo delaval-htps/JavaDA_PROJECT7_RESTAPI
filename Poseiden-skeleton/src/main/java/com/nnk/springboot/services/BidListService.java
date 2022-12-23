@@ -33,7 +33,8 @@ public class BidListService {
      * return the BidList with the id given in parameter.
      * 
      * @param bidListId the id of research bidlist
-     * @return
+     * @return bidlist find by given id if it exists
+     * @throws BidListNotFoundException if bidlist not exist
      */
     public BidList findById(int bidListId) {
 
@@ -41,25 +42,27 @@ public class BidListService {
 
         if (existedBidList.isPresent()) {
 
-            log.info(messageSource.getMessage("global.bidlist.find-by-id", new Object[] { bidListId, existedBidList }, LocaleContextHolder.getLocale()));
+            log.info(messageSource.getMessage("global.bidlist.find-by-id", new Object[] { bidListId, existedBidList },
+                    LocaleContextHolder.getLocale()));
             return existedBidList.get();
 
         } else {
 
-            throw new BidListNotFoundException(messageSource.getMessage("global.exception.not-found", new Object[] { "bid" }, Locale.FRANCE));
+            throw new BidListNotFoundException(
+                    messageSource.getMessage("global.exception.not-found", new Object[] { "bid" }, Locale.FRANCE));
         }
 
     }
 
-     /**
+    /**
      * Retrieve all bidlist in db.
      *
      * @return List of all registred BidList(empty if there were not)
      */
-     public List<BidList> findBidLists() {
-         return bidListRepository.findAll();
-     }
-    
+    public List<BidList> findBidLists() {
+        return bidListRepository.findAll();
+    }
+
     /**
      * save a {@link BidList} in db.
      *
@@ -72,12 +75,14 @@ public class BidListService {
         if (bid != null) {
 
             BidList savedBidList = bidListRepository.save(bid);
-            log.info(messageSource.getMessage("global.bidlist.creation", new Object[] { savedBidList }, LocaleContextHolder.getLocale()));
+            log.info(messageSource.getMessage("global.bidlist.creation", new Object[] { savedBidList },
+                    LocaleContextHolder.getLocale()));
             return savedBidList;
 
         } else {
 
-            throw new BidListNotFoundException(messageSource.getMessage("global.exception.not-found", new Object[] { "bid" }, LocaleContextHolder.getLocale()));
+            throw new BidListNotFoundException(messageSource.getMessage("global.exception.not-found",
+                    new Object[] { "bid" }, LocaleContextHolder.getLocale()));
         }
     }
 
@@ -97,20 +102,21 @@ public class BidListService {
             if (existedBidList.isPresent() && Objects.equals(existedBidList.get().getBidListId(), bid.getBidListId())) {
 
                 BidList savedUpdatedBidList = bidListRepository.save(bid);
-                log.info(messageSource.getMessage("global.bidlist.update", new Object[] { savedUpdatedBidList }, LocaleContextHolder.getLocale()));
+                log.info(messageSource.getMessage("global.bidlist.update", new Object[] { savedUpdatedBidList },
+                        LocaleContextHolder.getLocale()));
                 return savedUpdatedBidList;
 
             } else {
 
-                throw new BidListNotFoundException(messageSource.getMessage("global.exception.not-found", new Object[] { "bid" }, Locale.FRANCE));
+                throw new BidListNotFoundException(
+                        messageSource.getMessage("global.exception.not-found", new Object[] { "bid" }, Locale.FRANCE));
             }
         } else {
 
-            throw new BidListNotFoundException(messageSource.getMessage("global.exception.not-null", new Object[] { "bid" }, Locale.FRANCE));
+            throw new BidListNotFoundException(
+                    messageSource.getMessage("global.exception.not-null", new Object[] { "bid" }, Locale.FRANCE));
         }
     }
-
-   
 
     /**
      * Delete a BidList given in parameter.
@@ -125,16 +131,19 @@ public class BidListService {
 
             if (existedBisList.isPresent()) {
 
-                log.info(messageSource.getMessage("global.bidlist.delete", new Object[] { existedBisList }, LocaleContextHolder.getLocale()));
+                log.info(messageSource.getMessage("global.bidlist.delete", new Object[] { existedBisList },
+                        LocaleContextHolder.getLocale()));
                 bidListRepository.delete(existedBisList.get());
 
             } else {
 
-                throw new BidListNotFoundException(messageSource.getMessage("global.exception.not-found", new Object[] { "bid" }, Locale.FRANCE));
+                throw new BidListNotFoundException(
+                        messageSource.getMessage("global.exception.not-found", new Object[] { "bid" }, Locale.FRANCE));
             }
         } else {
 
-            throw new BidListNotFoundException(messageSource.getMessage("global.exception.not-null", new Object[] { "bid" }, Locale.FRANCE));
+            throw new BidListNotFoundException(
+                    messageSource.getMessage("global.exception.not-null", new Object[] { "bid" }, Locale.FRANCE));
         }
     }
 

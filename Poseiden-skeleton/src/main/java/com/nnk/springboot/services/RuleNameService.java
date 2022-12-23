@@ -15,6 +15,9 @@ import com.nnk.springboot.repositories.RuleNameRepository;
 
 import lombok.extern.log4j.Log4j2;
 
+/**
+ * Service class for {@link RuleName}
+ */
 @Service
 @Log4j2
 public class RuleNameService {
@@ -23,80 +26,115 @@ public class RuleNameService {
 
     @Autowired
     private MessageSource messageSource;
-    
-     /**
+
+    /**
      * Retrieve all rulename in db.
      *
      * @return List of all registred RuleName(empty if there were not)
      */
-     public List<RuleName> findAll() {
-         return ruleNameRepository.findAll();
-     }
-    
-     public RuleName findById(Integer id) {
-         Optional<RuleName> existingRuleName = ruleNameRepository.findById(id);
-         if (existingRuleName.isPresent()) {
-             log.info(messageSource.getMessage("global.rule-name.find-by-id", new Object[] { id, existingRuleName.get() }, LocaleContextHolder.getLocale()));
-             return existingRuleName.get();
-         } else {
-             throw new RuleNameNotFoundException(messageSource.getMessage("global.rule-name.not-found", new Object[] { id }, LocaleContextHolder.getLocale()));
-         }
-     }
+    public List<RuleName> findAll() {
+        return ruleNameRepository.findAll();
+    }
 
-     public RuleName saveRuleName(RuleName ruleName) {
-         if (ruleName != null) {
-             RuleName savedRuleName = ruleNameRepository.save(ruleName);
-             log.info(messageSource.getMessage("global.rule-name.creation", new Object[] { savedRuleName }, LocaleContextHolder.getLocale()));
-             return savedRuleName;
+    /**
+     * find a rule name with a given id in db.
+     * 
+     * @param id the given id of researched rule name
+     * @return Existing rule name if it exists.
+     * @throws RuleNameNotFoundException if rulename not existing in db
+     */
+    public RuleName findById(Integer id) {
+        Optional<RuleName> existingRuleName = ruleNameRepository.findById(id);
+        if (existingRuleName.isPresent()) {
+            log.info(messageSource.getMessage("global.rule-name.find-by-id",
+                    new Object[] { id, existingRuleName.get() }, LocaleContextHolder.getLocale()));
+            return existingRuleName.get();
+        } else {
+            throw new RuleNameNotFoundException(messageSource.getMessage("global.rule-name.not-found",
+                    new Object[] { id }, LocaleContextHolder.getLocale()));
+        }
+    }
 
-         } else {
-             throw new RuleNameNotFoundException(messageSource.getMessage("global.exception.not-null", new Object[] { "ruleName" }, LocaleContextHolder.getLocale()));
-         }
-     }
-    
-     public RuleName updateRuleName(RuleName ruleName) {
+    /**
+     * save a new Rulename.
+     * 
+     * @param ruleName the given rulename to save.
+     * @return Saved rulename.
+     * @throws RuleNameNotFoundException if given rulename is null.
+     */
+    public RuleName saveRuleName(RuleName ruleName) {
+        if (ruleName != null) {
+            RuleName savedRuleName = ruleNameRepository.save(ruleName);
+            log.info(messageSource.getMessage("global.rule-name.creation", new Object[] { savedRuleName },
+                    LocaleContextHolder.getLocale()));
+            return savedRuleName;
 
-         if (ruleName != null && ruleName.getId() != 0) {
+        } else {
+            throw new RuleNameNotFoundException(messageSource.getMessage("global.exception.not-null",
+                    new Object[] { "ruleName" }, LocaleContextHolder.getLocale()));
+        }
+    }
 
-             Optional<RuleName> existingRuleName = ruleNameRepository.findById(ruleName.getId());
+    /**
+     * update rulename.
+     * 
+     * @param ruleName the given rulename to update.
+     * @return updated rulename
+     * @throws RuleNameNotFoundException if given rulename is null or id =0
+     */
+    public RuleName updateRuleName(RuleName ruleName) {
 
-             if (existingRuleName.isPresent() && Objects.equals(ruleName.getId(), existingRuleName.get().getId())) {
+        if (ruleName != null && ruleName.getId() != 0) {
 
-                 RuleName updatedRuleName = ruleNameRepository.save(ruleName);
+            Optional<RuleName> existingRuleName = ruleNameRepository.findById(ruleName.getId());
 
-                 log.info(messageSource.getMessage("global.rule-name.update", new Object[] { updatedRuleName }, LocaleContextHolder.getLocale()));
+            if (existingRuleName.isPresent() && Objects.equals(ruleName.getId(), existingRuleName.get().getId())) {
 
-                 return updatedRuleName;
+                RuleName updatedRuleName = ruleNameRepository.save(ruleName);
 
-             } else {
-                 throw new RuleNameNotFoundException(messageSource.getMessage("global.rule-name.not-found", new Object[] { ruleName.getId() }, LocaleContextHolder.getLocale()));
-             }
+                log.info(messageSource.getMessage("global.rule-name.update", new Object[] { updatedRuleName },
+                        LocaleContextHolder.getLocale()));
 
-         } else {
-             throw new RuleNameNotFoundException(messageSource.getMessage("global.exception.not-null", new Object[] { "ruleName" }, LocaleContextHolder.getLocale()));
-         }
+                return updatedRuleName;
 
-     }
-    
-     public void deleteRuleName(RuleName ruleName) {
+            } else {
+                throw new RuleNameNotFoundException(messageSource.getMessage("global.rule-name.not-found",
+                        new Object[] { ruleName.getId() }, LocaleContextHolder.getLocale()));
+            }
+
+        } else {
+            throw new RuleNameNotFoundException(messageSource.getMessage("global.exception.not-null",
+                    new Object[] { "ruleName" }, LocaleContextHolder.getLocale()));
+        }
+
+    }
+
+    /**
+     * delete rulename.
+     * 
+     * @param ruleName the given rulename to delete
+     */
+    public void deleteRuleName(RuleName ruleName) {
         if (ruleName != null && ruleName.getId() != 0) {
 
             Optional<RuleName> existedRuleName = ruleNameRepository.findById(ruleName.getId());
 
             if (existedRuleName.isPresent()) {
 
-                log.info(messageSource.getMessage("global.rule-name.delete", new Object[] { existedRuleName }, LocaleContextHolder.getLocale()));
+                log.info(messageSource.getMessage("global.rule-name.delete", new Object[] { existedRuleName },
+                        LocaleContextHolder.getLocale()));
 
                 ruleNameRepository.delete(existedRuleName.get());
 
             } else {
-                throw new RuleNameNotFoundException(messageSource.getMessage("global.rule-name.not-found", new Object[] { ruleName.getId() }, LocaleContextHolder.getLocale()));
+                throw new RuleNameNotFoundException(messageSource.getMessage("global.rule-name.not-found",
+                        new Object[] { ruleName.getId() }, LocaleContextHolder.getLocale()));
             }
 
         } else {
-            throw new RuleNameNotFoundException(messageSource.getMessage("global.exception.not-null", new Object[] { "RuleName" }, LocaleContextHolder.getLocale()));
+            throw new RuleNameNotFoundException(messageSource.getMessage("global.exception.not-null",
+                    new Object[] { "RuleName" }, LocaleContextHolder.getLocale()));
         }
     }
-
 
 }
