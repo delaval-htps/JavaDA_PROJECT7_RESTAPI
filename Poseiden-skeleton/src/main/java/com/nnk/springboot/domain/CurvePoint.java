@@ -44,6 +44,7 @@ public class CurvePoint {
     private Double term;
     
     @QuantityConstraint
+    @Column(name = "`value`")
     private Double value;
 
     private Timestamp creationDate;

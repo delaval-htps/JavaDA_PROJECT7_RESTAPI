@@ -80,7 +80,7 @@ public class RatingService {
      * Update existing Rating.
      * 
      * @param rating the given rating to update
-     * @return updated rating if given rating is not null & id !=0
+     * @return updated rating if given rating is not null and id !=0
      * @throws RatingNotFoundException if given rating is null or id =0
      */
     public Rating updateRating(Rating rating) {

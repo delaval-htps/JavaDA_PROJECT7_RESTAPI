@@ -46,8 +46,8 @@ public class RatingServiceTest {
     @Before
     public void intialize() {
         ratings = new ArrayList<>();
-        mockRating1 = new Rating("moodysRating", "sandPrating", "fitchRating", 1);
-        mockRating2 = new Rating("moodysRating", "sandPrating", "fitchRating", 2);
+        mockRating1 = new Rating("moodysRating", "sandpRating", "fitchRating", 1);
+        mockRating2 = new Rating("moodysRating", "sandpRating", "fitchRating", 2);
         ratings.add(mockRating1);
         ratings.add(mockRating2);
     }
@@ -79,7 +79,7 @@ public class RatingServiceTest {
     @Test
     public void findByIdRating_whenRatingExisted_thenReturnRating() {
         // when
-        Rating mockRating = new Rating("moodysRating", "sandPrating", "fitchRating", 1);
+        Rating mockRating = new Rating("moodysRating", "sandpRating", "fitchRating", 1);
         mockRating.setId(1);
         when(ratingRepository.findById(Mockito.anyInt())).thenReturn(Optional.of(mockRating));
 
@@ -103,7 +103,7 @@ public class RatingServiceTest {
     @Test
     public void saveRatingTest_whenRatingNotNull_thenSaveIt() {
         // when
-        Rating mockRating = new Rating("moodysRating", "sandPrating", "fitchRating", 1);
+        Rating mockRating = new Rating("moodysRating", "sandpRating", "fitchRating", 1);
         Rating mockSavedRating = mockRating;
         when(ratingRepository.save(Mockito.any(Rating.class))).thenReturn(mockSavedRating);
 
@@ -131,8 +131,8 @@ public class RatingServiceTest {
     public void updateRatingTest_whenRatingIdNotSame_thenThrowRatingException() {
 
         // when
-        Rating mockExistedRating = new Rating("moodysRating", "sandPrating", "fitchRating", 1);
-        Rating mockRatingToUpdate = new Rating("moodysRating2", "sandPrating2", "fitchRating2", 2);
+        Rating mockExistedRating = new Rating("moodysRating", "sandpRating", "fitchRating", 1);
+        Rating mockRatingToUpdate = new Rating("moodysRating2", "sandpRating2", "fitchRating2", 2);
         mockExistedRating.setId(1);
         mockRatingToUpdate.setId(2);
 
@@ -150,8 +150,8 @@ public class RatingServiceTest {
     @Test
     public void updateRatingTest_whenRatingExisted_thenUpdateRating() {
         // when
-        Rating mockExistedRating = new Rating("moodysRating", "sandPrating", "fitchRating", 1);
-        Rating mockRatingToUpdate = new Rating("moodysRating2", "sandPrating2", "fitchRating2", 2);
+        Rating mockExistedRating = new Rating("moodysRating", "sandpRating", "fitchRating", 1);
+        Rating mockRatingToUpdate = new Rating("moodysRating2", "sandpRating2", "fitchRating2", 2);
         mockExistedRating.setId(1);
         mockRatingToUpdate.setId(1);
 
@@ -175,8 +175,8 @@ public class RatingServiceTest {
     @Test
     public void updateRatingTest_whenRatingNoExisted_thenUpdateRating() {
         // when
-        Rating mockNotExistedRating = new Rating("moodysRating", "sandPrating", "fitchRating", 1);
-        Rating mockRatingToUpdate = new Rating("moodysRating2", "sandPrating2", "fitchRating2", 2);
+        Rating mockNotExistedRating = new Rating("moodysRating", "sandpRating", "fitchRating", 1);
+        Rating mockRatingToUpdate = new Rating("moodysRating2", "sandpRating2", "fitchRating2", 2);
         mockNotExistedRating.setId(1);
         mockRatingToUpdate.setId(1);
 
@@ -207,7 +207,7 @@ public class RatingServiceTest {
     public void deleteRatingTest_whenRatingIdZero_thenThrowRatingException() {
 
         // when
-        Rating mockNotExistedRating = new Rating("moodysRating", "sandPrating", "fitchRating", 1);
+        Rating mockNotExistedRating = new Rating("moodysRating", "sandpRating", "fitchRating", 1);
         mockNotExistedRating.setId(0);
 
         // then
@@ -223,7 +223,7 @@ public class RatingServiceTest {
     @Test
     public void deleteRatingTest_whenRatingExisted_thenDeleteRating() {
         // when
-        Rating mockExistedRating = new Rating("moodysRating", "sandPrating", "fitchRating", 1);
+        Rating mockExistedRating = new Rating("moodysRating", "sandpRating", "fitchRating", 1);
         mockExistedRating.setId(1);
 
         when(ratingRepository.findById(anyInt())).thenReturn(Optional.of(mockExistedRating));
@@ -236,7 +236,7 @@ public class RatingServiceTest {
     @Test
     public void deleteRatingTest_whenRatingNotExisted_thenDeleteRating() {
         // when
-        Rating mockNotExistedRating = new Rating("moodysRating", "sandPrating", "fitchRating", 1);
+        Rating mockNotExistedRating = new Rating("moodysRating", "sandpRating", "fitchRating", 1);
         mockNotExistedRating.setId(1);
 
         when(ratingRepository.findById(anyInt())).thenReturn(Optional.empty());

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spring-boot-skeleton</a> &gt; <a href="index.source.html" class="el_package">com.nnk.springboot.services</a> &gt; <span class="el_source">UserService.java</span></div><h1>UserService.java</h1><pre class="source lang-java linenums">package com.nnk.springboot.services;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spring-boot-skeleton</a> &gt; <a href="index.source.html" class="el_package">com.nnk.springboot.services</a> &gt; <span class="el_source">UserService.java</span></div><h1>UserService.java</h1><pre class="source lang-java linenums">package com.nnk.springboot.services;
 
 import java.util.List;
 import java.util.Objects;
@@ -181,7 +181,7 @@ import lombok.extern.log4j.Log4j2;
         } else {
 <span class="fc" id="L182">            throw new UserNotFoundException(</span>
 <span class="fc" id="L183">                    messageSource.getMessage(&quot;global.exception.not-null&quot;,</span>
-                            new Object[] { &quot; update user to save from Oauth2 authentication &quot; },
+<span class="fc" id="L184">                            new Object[] { &quot; update user to save from Oauth2 authentication &quot; },</span>
 <span class="fc" id="L185">                            LocaleContextHolder.getLocale()));</span>
         }
     }
@@ -204,12 +204,12 @@ import lombok.extern.log4j.Log4j2;
 
 <span class="fc" id="L205">                userRepository.delete(existedUser.get());</span>
 
-            } else {
+<span class="fc" id="L207">            } else {</span>
 <span class="fc" id="L208">                throw new UserNotFoundException(messageSource.getMessage(&quot;global.user.not-found&quot;,</span>
 <span class="fc" id="L209">                        new Object[] { user.getId() }, LocaleContextHolder.getLocale()));</span>
             }
 
-<span class="fc" id="L212">        } else {</span>
+        } else {
 <span class="fc" id="L213">            throw new UserNotFoundException(messageSource.getMessage(&quot;global.exception.not-null&quot;,</span>
 <span class="fc" id="L214">                    new Object[] { &quot;User&quot; }, LocaleContextHolder.getLocale()));</span>
         }

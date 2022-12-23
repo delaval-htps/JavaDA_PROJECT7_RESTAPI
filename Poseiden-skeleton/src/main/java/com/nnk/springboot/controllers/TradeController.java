@@ -46,18 +46,18 @@ public class TradeController {
     /**
      * endpoint to show form to save a new trade.
      * 
-     * @param curve the curve to save
+     * @param trade the trade to save
      * @return the view with the form to save a new trade
      */
     @GetMapping("/trade/add")
-    public String addUser(Trade bid) {
+    public String addUser(Trade trade) {
         return "trade/add";
     }
 
     /**
      * endoint to save a new trade.
      * 
-     * @param curvePoint the trade retrieved from form
+     * @param trade the trade retrieved from form
      * @param result     bindignresult if error in filled fields
      * @param model
      * @return the view of updated list of trade or the view of form to save
@@ -103,7 +103,7 @@ public class TradeController {
      * endpoint to update the trade with given id before .
      * 
      * @param id      the given id of trade to update
-     * @param bidList the trade to save with updated fields from the update
+     * @param trade the trade to save with updated fields from the update
      *                form
      * @param result  bindingResult if there is a error of validation in fields
      * @param model

@@ -111,7 +111,7 @@ public class CurveController {
      * endpoint to update the curve point with given id before .
      * 
      * @param id      the given id of curve point to update
-     * @param bidList the curve point to save with updated fields from the update
+     * @param curvepoint the curve point to save with updated fields from the update
      *                form
      * @param result  bindingResult if there is a error of validation in fields
      * @param model

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BidList.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spring-boot-skeleton</a> &gt; <a href="index.source.html" class="el_package">com.nnk.springboot.domain</a> &gt; <span class="el_source">BidList.java</span></div><h1>BidList.java</h1><pre class="source lang-java linenums">package com.nnk.springboot.domain;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BidList.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spring-boot-skeleton</a> &gt; <a href="index.source.html" class="el_package">com.nnk.springboot.domain</a> &gt; <span class="el_source">BidList.java</span></div><h1>BidList.java</h1><pre class="source lang-java linenums">package com.nnk.springboot.domain;
 
 import java.sql.Timestamp;
 
@@ -21,59 +21,59 @@ import lombok.Setter;
  */
 @Entity
 <span class="pc" id="L23">@Setter</span>
-@Getter
+<span class="pc" id="L24">@Getter</span>
 <span class="fc" id="L25">@NoArgsConstructor</span>
 <span class="nc" id="L26">@AllArgsConstructor</span>
 @Table(name = &quot;bid_list&quot;)
 public class BidList {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-<span class="fc" id="L31">    private Integer bidListId;</span>
+    private Integer bidListId;
 
     @NotBlank(message = &quot;Account is mandatory&quot;)
-<span class="fc" id="L34">    private String account;</span>
+    private String account;
 
     @NotBlank(message = &quot;Type is mandatory&quot;)
-<span class="fc" id="L37">    private String type;</span>
+    private String type;
 
     @QuantityConstraint
-<span class="fc" id="L40">    private Double bidQuantity;</span>
+    private Double bidQuantity;
 
-<span class="nc" id="L42">    private Double askQuantity;</span>
+    private Double askQuantity;
 
-<span class="nc" id="L44">    private Double bid;</span>
+    private Double bid;
 
-<span class="nc" id="L46">    private Double ask;</span>
+    private Double ask;
 
-<span class="nc" id="L48">    private String benchmark;</span>
+    private String benchmark;
 
-<span class="nc" id="L50">    private Timestamp bidListDate;</span>
+    private Timestamp bidListDate;
 
-<span class="nc" id="L52">    private String commentary;</span>
+    private String commentary;
 
-<span class="nc" id="L54">    private String security;</span>
+    private String security;
 
-<span class="nc" id="L56">    private String status;</span>
+    private String status;
 
-<span class="nc" id="L58">    private String trader;</span>
+    private String trader;
 
-<span class="nc" id="L60">    private String book;</span>
+    private String book;
 
-<span class="nc" id="L62">    private String creationName;</span>
+    private String creationName;
 
-<span class="nc" id="L64">    private Timestamp creationDate;</span>
+    private Timestamp creationDate;
 
-<span class="nc" id="L66">    private String revisionName;</span>
+    private String revisionName;
 
-<span class="nc" id="L68">    private Timestamp revisionDate;</span>
+    private Timestamp revisionDate;
 
-<span class="nc" id="L70">    private String dealName;</span>
+    private String dealName;
 
-<span class="nc" id="L72">    private String dealType;</span>
+    private String dealType;
 
-<span class="nc" id="L74">    private String sourceListId;</span>
+    private String sourceListId;
 
-<span class="nc" id="L76">    private String side;</span>
+    private String side;
 
 <span class="fc" id="L78">    public BidList(String account, String type, Double bidQuantity) {</span>
 <span class="fc" id="L79">        this.account = account;</span>
@@ -90,7 +90,7 @@ public class BidList {
     @Override
     public String toString() {
 <span class="nc" id="L92">        return &quot;BidList [bidListId=&quot; + bidListId + &quot;, account=&quot; + account + &quot;, type=&quot; + type + &quot;, creationDate=&quot;</span>
-                + creationDate + &quot;]&quot;;
+<span class="nc" id="L93">                + creationDate + &quot;]&quot;;</span>
     }
 
 }
