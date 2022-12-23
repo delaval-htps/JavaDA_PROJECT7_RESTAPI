@@ -12,7 +12,6 @@ import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -168,7 +167,7 @@ public class UserControllerTest {
 
         // then
         mockMvc.perform(post("/user/update/{id}", 1).param("username", user2.getUsername()).param("fullname", user2.getFullname()).param("email", user2.getEmail()).param("role", user2.getRole())
-                .param("password", user2.getPassword()).with(csrf())).andDo(print()).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/user/list"));
+                .param("password", user2.getPassword()).with(csrf())).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/user/list"));
 
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
 
@@ -187,7 +186,7 @@ public class UserControllerTest {
         user2.setPassword("Jadmin4all&lp4e");
         // then
         mockMvc.perform(post("/user/update/{id}", 1).param("username", "").param("fullname", user2.getFullname()).param("email", user2.getEmail()).param("role", user2.getRole())
-                .param("password", user2.getPassword()).with(csrf())).andDo(print()).andExpect(status().isOk()).andExpect(view().name("user/update"));
+                .param("password", user2.getPassword()).with(csrf())).andExpect(status().isOk()).andExpect(view().name("user/update"));
 
         verify(userService, never()).saveUser(any(User.class));
 

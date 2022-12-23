@@ -45,18 +45,18 @@ public class UserController {
     /**
      * endpoint to show form to save a new user.
      * 
-     * @param curve the curve to save
+     * @param user the user to save
      * @return the view with the form to save a new user
      */
     @GetMapping("/user/add")
-    public String addUser(User bid) {
+    public String addUser(User user) {
         return "user/add";
     }
 
     /**
      * endoint to save a new user.
      * 
-     * @param curvePoint the user retrieved from form
+     * @param user the user retrieved from form
      * @param result     bindignresult if error in filled fields
      * @param model
      * @return the view of updated list of user or the view of form to save
@@ -111,7 +111,7 @@ public class UserController {
      * endpoint to update the user with given id before .
      * 
      * @param id      the given id of user to update
-     * @param bidList the user to save with updated fields from the update
+     * @param user the user to save with updated fields from the update
      *                form
      * @param result  bindingResult if there is a error of validation in fields
      * @param model

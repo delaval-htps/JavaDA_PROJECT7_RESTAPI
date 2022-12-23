@@ -7,6 +7,7 @@ com/nnk/springboot/controllers/RuleNameController$1.class
 com/nnk/springboot/controllers/UserController$2.class
 com/nnk/springboot/security/AuthProvider.class
 com/nnk/springboot/exceptions/CurvePointNotFoundException.class
+com/nnk/springboot/validation/QuantityConstraint.class
 com/nnk/springboot/controllers/BidListController$1.class
 com/nnk/springboot/controllers/CurveController$2.class
 com/nnk/springboot/controllers/TradeController$2.class
@@ -20,6 +21,7 @@ com/nnk/springboot/services/TradeService.class
 com/nnk/springboot/domain/Rating.class
 com/nnk/springboot/controllers/RatingController$3.class
 com/nnk/springboot/controllers/RatingController.class
+com/nnk/springboot/validation/QuantityValidator.class
 com/nnk/springboot/repositories/UserRepository.class
 com/nnk/springboot/services/BidListService.class
 com/nnk/springboot/security/OAuth2LoginSuccessHandler.class

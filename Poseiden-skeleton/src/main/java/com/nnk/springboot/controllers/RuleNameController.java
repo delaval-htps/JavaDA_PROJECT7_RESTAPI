@@ -46,18 +46,18 @@ public class RuleNameController {
     /**
      * endpoint to show form to save a new rule name.
      * 
-     * @param curve the curve to save
+     * @param rulename the rulename to save
      * @return the view with the form to save a new rule name
      */
     @GetMapping("/ruleName/add")
-    public String addRuleForm(RuleName bid) {
+    public String addRuleForm(RuleName rulename) {
         return "ruleName/add";
     }
 
     /**
      * endoint to save a new rule name.
      * 
-     * @param curvePoint the rule name retrieved from form
+     * @param ruleName the rule name retrieved from form
      * @param result     bindignresult if error in filled fields
      * @param model
      * @return the view of updated list of rule name or the view of form to save
@@ -103,7 +103,7 @@ public class RuleNameController {
      * endpoint to update the rule name with given id before .
      * 
      * @param id      the given id of rule name to update
-     * @param bidList the rule name to save with updated fields from the update
+     * @param ruleName the rule name to save with updated fields from the update
      *                form
      * @param result  bindingResult if there is a error of validation in fields
      * @param model

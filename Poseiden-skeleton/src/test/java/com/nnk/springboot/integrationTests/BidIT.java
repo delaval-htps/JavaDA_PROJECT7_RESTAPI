@@ -26,17 +26,17 @@ public class BidIT {
 	@Test
 	
 	public void bidListTest() {
-		BidList bid = new BidList("Account Test", "Type Test", 10d);
+		BidList bid = new BidList("Account Test", "Type Test", 10.0);
 
 		// Save
 		bid = bidListRepository.save(bid);
 		Assert.assertNotNull(bid.getBidListId());
-		Assert.assertEquals(10d, bid.getBidQuantity(), 10d);
+		Assert.assertEquals(10.0, bid.getBidQuantity(), 10.0);
 
 		// Update
-		bid.setBidQuantity(20d);
+		bid.setBidQuantity(10.0);
 		bid = bidListRepository.save(bid);
-		Assert.assertEquals(20d, bid.getBidQuantity(), 20d);
+		Assert.assertEquals(10.0, bid.getBidQuantity(), 10.0);
 
 		// Find
 		List<BidList> listResult = bidListRepository.findAll();

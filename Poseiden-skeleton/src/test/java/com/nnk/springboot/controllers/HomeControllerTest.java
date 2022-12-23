@@ -2,7 +2,6 @@ package com.nnk.springboot.controllers;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -57,24 +56,24 @@ public class HomeControllerTest {
     @Test
 
     public void homeTest_whenUserRoleNotExist_thenForwardToErrorPage() throws Exception {
-        mockMvc.perform(get("/")).andExpect(status().isOk()).andDo(print());
+        mockMvc.perform(get("/")).andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser(authorities = { "USER", "ADMIN" })
     public void userHomeTest() throws Exception {
-        mockMvc.perform(get("/user/home")).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/bidList/list")).andDo(print());
+        mockMvc.perform(get("/user/home")).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/bidList/list"));
     }
 
     @Test
     @WithMockUser(authorities = { "ADMIN" })
     public void adminHomeTest_whenRoleAdmin_thenRedirectAdminHome() throws Exception {
-        mockMvc.perform(get("/admin/home")).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/bidList/list")).andDo(print());
+        mockMvc.perform(get("/admin/home")).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/bidList/list"));
     }
 
     @Test
     @WithMockUser(authorities = { "USER" })
     public void adminHomeTest_WhenRoleUser_thenForwardToErrorPage() throws Exception {
-        mockMvc.perform(get("/admin/home")).andExpect(status().is4xxClientError()).andExpect(forwardedUrl("/app/error")).andDo(print());
+        mockMvc.perform(get("/admin/home")).andExpect(status().is4xxClientError()).andExpect(forwardedUrl("/app/error"));
     }
 }

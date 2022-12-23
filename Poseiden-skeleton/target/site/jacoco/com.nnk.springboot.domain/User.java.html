@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>User.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spring-boot-skeleton</a> &gt; <a href="index.source.html" class="el_package">com.nnk.springboot.domain</a> &gt; <span class="el_source">User.java</span></div><h1>User.java</h1><pre class="source lang-java linenums">package com.nnk.springboot.domain;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>User.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spring-boot-skeleton</a> &gt; <a href="index.source.html" class="el_package">com.nnk.springboot.domain</a> &gt; <span class="el_source">User.java</span></div><h1>User.java</h1><pre class="source lang-java linenums">package com.nnk.springboot.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -17,62 +17,65 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Class User
+ */
 @Entity
-@Getter
-<span class="fc" id="L22">@Setter</span>
-<span class="fc" id="L23">@NoArgsConstructor</span>
-<span class="nc" id="L24">@AllArgsConstructor</span>
+<span class="fc" id="L24">@Getter</span>
+<span class="fc" id="L25">@Setter</span>
+<span class="fc" id="L26">@NoArgsConstructor</span>
+<span class="nc" id="L27">@AllArgsConstructor</span>
 @Table(name = &quot;users&quot;)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-<span class="fc" id="L29">    private Integer id;</span>
+    private Integer id;
 
     @NotBlank(message = &quot;Username is mandatory&quot;)
-<span class="fc" id="L32">    private String username;</span>
+    private String username;
 
     @NotBlank(message = &quot;Email is mandatory&quot;)
-<span class="fc" id="L35">    private String email;</span>
+    private String email;
 
     @NotBlank(message = &quot;Password is mandatory&quot;)
     @PasswordConstraint
-<span class="fc" id="L39">    private String password;</span>
+    private String password;
 
     @NotBlank(message = &quot;FullName is mandatory&quot;)
-<span class="fc" id="L42">    private String fullname;</span>
+    private String fullname;
 
     @NotBlank(message = &quot;Role is mandatory&quot;)
-<span class="fc" id="L45">    private String role;</span>
+    private String role;
 
     @Enumerated(EnumType.STRING)
-<span class="fc" id="L48">    private AuthProvider authenticationProvider;</span>
+    private AuthProvider authenticationProvider;
 
-<span class="fc" id="L50">    private Integer idProvider;</span>
+    private Integer idProvider;
 
-<span class="fc" id="L52">    public User(int id, String username, String email, String password, String fullname, String userRole) {</span>
-<span class="fc" id="L53">        this.id = id;</span>
-<span class="fc" id="L54">        this.username = username;</span>
-<span class="fc" id="L55">        this.email = email;</span>
-<span class="fc" id="L56">        this.password = password;</span>
-<span class="fc" id="L57">        this.fullname = fullname;</span>
-<span class="fc" id="L58">        this.role = userRole;</span>
-<span class="fc" id="L59">    }</span>
+<span class="fc" id="L55">    public User(int id, String username, String email, String password, String fullname, String userRole) {</span>
+<span class="fc" id="L56">        this.id = id;</span>
+<span class="fc" id="L57">        this.username = username;</span>
+<span class="fc" id="L58">        this.email = email;</span>
+<span class="fc" id="L59">        this.password = password;</span>
+<span class="fc" id="L60">        this.fullname = fullname;</span>
+<span class="fc" id="L61">        this.role = userRole;</span>
+<span class="fc" id="L62">    }</span>
 
-    public User(String username, String email, String fullname, String role, AuthProvider provider,
-<span class="fc" id="L62">            Integer idProvider) {</span>
-<span class="fc" id="L63">        this.username = username;</span>
-<span class="fc" id="L64">        this.email = email;</span>
-<span class="fc" id="L65">        this.fullname = fullname;</span>
-<span class="fc" id="L66">        this.role = role;</span>
-<span class="fc" id="L67">        this.authenticationProvider = provider;</span>
-<span class="fc" id="L68">        this.idProvider = idProvider;</span>
-<span class="fc" id="L69">    }</span>
+<span class="fc" id="L64">    public User(String username, String email, String fullname, String role, AuthProvider provider,</span>
+            Integer idProvider) {
+<span class="fc" id="L66">        this.username = username;</span>
+<span class="fc" id="L67">        this.email = email;</span>
+<span class="fc" id="L68">        this.fullname = fullname;</span>
+<span class="fc" id="L69">        this.role = role;</span>
+<span class="fc" id="L70">        this.authenticationProvider = provider;</span>
+<span class="fc" id="L71">        this.idProvider = idProvider;</span>
+<span class="fc" id="L72">    }</span>
 
     @Override
     public String toString() {
-<span class="fc" id="L73">        return &quot;User [id=&quot; + id + &quot;, username=&quot; + username + &quot;, email=&quot; + email + &quot;, password=&quot; + password</span>
-                + &quot;, fullname=&quot; + fullname + &quot;, role=&quot; + role + &quot;, authenticationProvider=&quot; + authenticationProvider
-                + &quot;, idProvider=&quot; + idProvider + &quot;]&quot;;
+<span class="nc" id="L76">        return &quot;User [id=&quot; + id + &quot;, username=&quot; + username + &quot;, email=&quot; + email + &quot;, password=&quot; + password</span>
+<span class="nc" id="L77">                + &quot;, fullname=&quot; + fullname + &quot;, role=&quot; + role + &quot;, authenticationProvider=&quot; + authenticationProvider</span>
+<span class="nc" id="L78">                + &quot;, idProvider=&quot; + idProvider + &quot;]&quot;;</span>
     }
 
 }

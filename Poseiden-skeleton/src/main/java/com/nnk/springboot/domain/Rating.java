@@ -34,7 +34,7 @@ public class Rating {
     String moodysRating;
 
     @NotBlank
-    String sandPRating;
+    String sandpRating;
 
     @NotBlank
     String fitchRating;
@@ -47,7 +47,7 @@ public class Rating {
     public Rating(String moodysRating, String sandPRating, String fitchRating, int orderNumber) {
         this.orderNumber = orderNumber;
         this.moodysRating = moodysRating;
-        this.sandPRating = sandPRating;
+        this.sandpRating = sandPRating;
         this.fitchRating = fitchRating;
     }
 
@@ -59,7 +59,7 @@ public class Rating {
 
     @Override
     public String toString() {
-        return "Rating [id=" + id + ", moodysRating=" + moodysRating + ", sandPRating=" + sandPRating + ", fitchRating="
+        return "Rating [id=" + id + ", moodysRating=" + moodysRating + ", sandPRating=" + sandpRating + ", fitchRating="
                 + fitchRating + ", orderNumber=" + orderNumber + "]";
     }
 

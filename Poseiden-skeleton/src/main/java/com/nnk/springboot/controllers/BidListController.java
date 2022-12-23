@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nnk.springboot.domain.BidList;
-import com.nnk.springboot.exceptions.GlobalExceptionHandler;
 import com.nnk.springboot.exceptions.GlobalPoseidonException;
 import com.nnk.springboot.services.BidListService;
 

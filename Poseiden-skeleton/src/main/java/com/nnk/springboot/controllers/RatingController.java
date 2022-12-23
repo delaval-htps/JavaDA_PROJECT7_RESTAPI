@@ -47,7 +47,7 @@ public class RatingController {
     /**
      * endpoint to show form to save a nex rating.
      * 
-     * @param curve the curve to save
+     * @param rating the rating to save
      * @return the view with the form to save a new rating
      */
     @GetMapping("/rating/add")
@@ -58,7 +58,7 @@ public class RatingController {
     /**
      * endoint to save a new rating.
      * 
-     * @param curvePoint the rating retrieved from form
+     * @param rating the rating retrieved from form
      * @param result     bindignresult if error in filled fields
      * @param model
      * @return the view of updated list of rating or the view of form to save
@@ -111,7 +111,7 @@ public class RatingController {
      * endpoint to update the rating with given id before .
      * 
      * @param id      the given id of rating to update
-     * @param bidList the rating to save with updated fields from the update
+     * @param rating the rating to save with updated fields from the update
      *                form
      * @param result  bindingResult if there is a error of validation in fields
      * @param model
