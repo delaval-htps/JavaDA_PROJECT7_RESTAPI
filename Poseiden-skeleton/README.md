@@ -31,7 +31,7 @@ Since application is running, from the HOME PAGE , you can log in with credentia
 
 The Login page is shown, and you can log in with:
 * username: `admin`
-* passwd: `Admin4&ver`
+* passwd: `Admin4&verPoseidon`
 
 Thus, your are admin and can add other user !
 
@@ -47,12 +47,14 @@ From login page ,if you have a github account, you can also log in with OAuth2 b
 ---
 This application was upgraded 'cause of some jars for examle for hibernate's validation not compatibles. Now this application uses:
 1. Framework: Spring Boot v2.7.6
-2. Framework: SpringSecurity 5
+2. Framework: SpringSecurity
 3. Java 8
 4. Thymeleaf
 5. Bootstrap v.4.3.1
-6. Junit v.5.9.1
-7. Jacoco v.0.8.7
+6. Log4j2 v2.17.1
+7. Junit4 v.5.9.1
+8. Jacoco v.0.8.7
+9. Mysql & H2 db
 
 ---
 ## Run test
