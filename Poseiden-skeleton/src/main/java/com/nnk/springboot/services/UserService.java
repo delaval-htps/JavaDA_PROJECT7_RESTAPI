@@ -66,24 +66,16 @@ public class UserService {
      * Else if it is OAuth2 authencation then username is the email of Oauth2user.
      * 
      * @param username
-     * @return the existing user
-     * @throws UserNotFoundException if user not exists in db
+     * @return the Optional of existing user 
      */
-    public User findByUsername(String username) {
+    public Optional<User> findByUsername(String username) {
 
         if (!StringUtils.hasText(username.trim())) {
+            //internal error
             throw new UserNotFoundException(messageSource.getMessage("global.exception.not-found",
                     new Object[] { "user with username:" + username }, LocaleContextHolder.getLocale()));
         }
-        Optional<User> existingUser = userRepository.findByUsername(username);
-        if (existingUser.isPresent()) {
-            log.info(messageSource.getMessage("global.user.find-by-username", new Object[] { username, existingUser },
-                    LocaleContextHolder.getLocale()));
-            return existingUser.get();
-        } else {
-            throw new UserNotFoundException(messageSource.getMessage("global.exception.not-found",
-                    new Object[] { "user with username =" + username }, LocaleContextHolder.getLocale()));
-        }
+        return  userRepository.findByUsername(username);
     }
 
     /**

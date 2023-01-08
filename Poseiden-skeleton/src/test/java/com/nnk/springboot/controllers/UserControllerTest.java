@@ -19,6 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -128,7 +129,7 @@ public class UserControllerTest {
     @Test
     public void validateTest_whenUserValidAndExisting_thenAddUser() throws Exception {
         // when
-            when(userService.findByUsername(anyString())).thenReturn(user1);
+            when(userService.findByUsername(anyString())).thenReturn(Optional.of(user1));
             user1.setPassword("Jadmin4all&lp4e");
           
         // then

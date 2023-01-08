@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import com.nnk.springboot.security.AuthProvider;
 import com.nnk.springboot.validation.PasswordConstraint;
 
@@ -28,7 +30,8 @@ import lombok.Setter;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name="native",strategy = "native")
     private Integer id;
 
     @NotBlank(message = "Username is mandatory")

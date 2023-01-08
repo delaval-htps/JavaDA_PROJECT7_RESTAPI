@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -97,7 +98,7 @@ public class OAuht2LoginSucessHandlerTest {
         com.nnk.springboot.domain.User existingUser = new com.nnk.springboot.domain.User("user", "email@gmail.com",
                 "fullnameTest", "USER", AuthProvider.LOCAL, 123);
 
-        when(userService.findByUsername(Mockito.anyString())).thenReturn(existingUser);
+        when(userService.findByUsername(Mockito.anyString())).thenReturn(Optional.of(existingUser));
 
         cut.onAuthenticationSuccess(mockRequest, mockResponse, mockAuthentication);
         
@@ -117,7 +118,7 @@ public class OAuht2LoginSucessHandlerTest {
         com.nnk.springboot.domain.User existingUser = new com.nnk.springboot.domain.User("user", "email@gmail.com",
                 "fullnameTest", "USER", AuthProvider.GITHUB, 123);
 
-        when(userService.findByUsername(Mockito.anyString())).thenReturn(existingUser);
+        when(userService.findByUsername(Mockito.anyString())).thenReturn(Optional.of(existingUser));
 
         cut.onAuthenticationSuccess(mockRequest, mockResponse, mockAuthentication);
         
@@ -132,7 +133,7 @@ public class OAuht2LoginSucessHandlerTest {
         com.nnk.springboot.domain.User existingUser = new com.nnk.springboot.domain.User("user", "email@gmail.com",
                 "fullnameTest", "USER", AuthProvider.TEST, 123);
 
-        when(userService.findByUsername(Mockito.anyString())).thenReturn(existingUser);
+        when(userService.findByUsername(Mockito.anyString())).thenReturn(Optional.of(existingUser));
 
         assertThrows(OAuth2AuthenticationException.class,()->{cut.onAuthenticationSuccess(mockRequest, mockResponse, mockAuthentication);});
     }
@@ -144,7 +145,7 @@ public class OAuht2LoginSucessHandlerTest {
         com.nnk.springboot.domain.User existingUser = new com.nnk.springboot.domain.User("user", "email@gmail.com",
                 "fullnameTest", "USER", AuthProvider.GITHUB, 4);
 
-        when(userService.findByUsername(Mockito.anyString())).thenReturn(existingUser);
+        when(userService.findByUsername(Mockito.anyString())).thenReturn(Optional.of(existingUser));
 
         assertThrows(OAuth2AuthenticationException.class,()->{cut.onAuthenticationSuccess(mockRequest, mockResponse, mockAuthentication);} );
     }

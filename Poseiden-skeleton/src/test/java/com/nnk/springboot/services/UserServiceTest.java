@@ -122,9 +122,9 @@ public class UserServiceTest {
         when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(mockExistedUser));
 
         // when & then
-        User findExistedUser = cut.findByUsername("username");
+        Optional<User> findExistedUser = cut.findByUsername("username");
 
-        assertEquals(findExistedUser, mockExistedUser);
+        assertEquals(findExistedUser.get(), mockExistedUser);
     }
 
     @Test
