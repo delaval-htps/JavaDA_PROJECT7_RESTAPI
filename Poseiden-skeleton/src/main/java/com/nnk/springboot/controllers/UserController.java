@@ -78,6 +78,7 @@ public class UserController {
             }
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             user.setPassword(encoder.encode(user.getPassword()));
+            // add AuthProvider to Local because save from form
             user.setAuthenticationProvider(AuthProvider.LOCAL);
             userService.saveUser(user);
             model.addAttribute("users", userService.findAll());
