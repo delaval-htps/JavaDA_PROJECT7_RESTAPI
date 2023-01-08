@@ -29,6 +29,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "users")
 public class User {
+    // with hibernate 5 , we need to fix Generationtype.AUTO with this
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name="native",strategy = "native")
