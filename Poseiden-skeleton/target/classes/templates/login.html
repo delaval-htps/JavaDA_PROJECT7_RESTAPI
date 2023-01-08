@@ -16,10 +16,11 @@
 
 			<h2 class="mb-3">Login with Username and Password</h2>
 			
-			<div class="error-message">
-				<p th:if="${param.error != null}" class="error">Wrong user or password</p>
-				<p th:if="${param.logout != null}" class="logout">You have been correctly logged out!</p>
-			</div>
+			<div th:if="${param.error} and ${session}" th:with="errorMsg=${session['SPRING_SECURITY_LAST_EXCEPTION'].message}">
+				<p class="error-message">
+					 Error: <span th:text="${errorMsg}"></span>
+				</p>
+		   </div>
 
 			<form action="#" th:action="@{/process-login}" method="post">
 				<div class="form-group row">
