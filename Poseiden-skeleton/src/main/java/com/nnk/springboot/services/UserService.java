@@ -101,26 +101,6 @@ public class UserService {
     }
 
     /**
-     * save a new user from Oauth2Login
-     * 
-     * @param oAuth2User the custom Oauth2user retrieve from Oauth2 authentication
-     * @return a new user with needed informations retrieve from CustomOauth2user
-     * @throws UserNotFoundException if CustomOauth2user is null
-     */
-    public User saveUserFromOAuth2Authentication(CustomOAuth2User oAuth2User) {
-
-        if (oAuth2User != null) {
-
-            return userRepository.save(new User(oAuth2User.getUsername(), oAuth2User.getEmail(),
-                    oAuth2User.getFullname(), "USER", oAuth2User.getClientProvider(), oAuth2User.getproviderId()));
-
-        } else {
-            throw new UserNotFoundException(messageSource.getMessage("global.exception.not-null",
-                    new Object[] { " new user to save from Oauth2 authentication " }, LocaleContextHolder.getLocale()));
-        }
-    }
-
-    /**
      * update a user given in param
      * 
      * @param user the user with updated fields to update
