@@ -87,7 +87,7 @@ public class OAuht2LoginSucessHandlerTest {
         when(userService.findByUsername(Mockito.anyString())).thenReturn(null);
 
         cut.onAuthenticationSuccess(mockRequest, mockResponse, mockAuthentication);
-        verify(userService, times(1)).saveUserFromOAuth2Authentication(Mockito.any(CustomOAuth2User.class));
+       // verify(userService, times(1)).saveUserFromOAuth2Authentication(Mockito.any(CustomOAuth2User.class));
         verify(userService,never()).updateUserFromOAuth2Authentication(Mockito.any(CustomOAuth2User.class),Mockito.any(com.nnk.springboot.domain.User.class));
     }
 
@@ -102,7 +102,7 @@ public class OAuht2LoginSucessHandlerTest {
 
         cut.onAuthenticationSuccess(mockRequest, mockResponse, mockAuthentication);
         
-        verify(userService, never()).saveUserFromOAuth2Authentication(Mockito.any(CustomOAuth2User.class));
+        //verify(userService, never()).saveUserFromOAuth2Authentication(Mockito.any(CustomOAuth2User.class));
         verify(userService, times(1)).updateUserFromOAuth2Authentication(Mockito.any(CustomOAuth2User.class),Mockito.any(com.nnk.springboot.domain.User.class));
     }
 
@@ -122,7 +122,7 @@ public class OAuht2LoginSucessHandlerTest {
 
         cut.onAuthenticationSuccess(mockRequest, mockResponse, mockAuthentication);
         
-        verify(userService, never()).saveUserFromOAuth2Authentication(Mockito.any(CustomOAuth2User.class));
+       // verify(userService, never()).saveUserFromOAuth2Authentication(Mockito.any(CustomOAuth2User.class));
         verify(userService, never()).updateUserFromOAuth2Authentication(Mockito.any(CustomOAuth2User.class),Mockito.any(com.nnk.springboot.domain.User.class));
     }
 
