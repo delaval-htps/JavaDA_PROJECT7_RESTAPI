@@ -1,5 +1,7 @@
 package com.nnk.springboot.controllers;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.exceptions.GlobalPoseidonException;
+import com.nnk.springboot.security.AuthProvider;
 import com.nnk.springboot.services.UserService;
 
 /**
@@ -57,7 +60,7 @@ public class UserController {
      * endoint to save a new user.
      * 
      * @param user the user retrieved from form
-     * @param result     bindignresult if error in filled fields
+     * @param result     bindingresult if error in filled fields
      * @param model
      * @return the view of updated list of user or the view of form to save
      *         user if there is a error in field
@@ -67,14 +70,16 @@ public class UserController {
 
         if (!result.hasErrors()) {
 
-            User existingUser = userService.findByUsername(user.getEmail());
-            if (existingUser != null) {
+            Optional<User> existingUser = userService.findByUsername(user.getEmail());
+            if (existingUser.isPresent()) {
                 result.addError(new FieldError("user", "fullname",
                         "This user already existed in application, please add another one!"));
                 return "user/add";
             }
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             user.setPassword(encoder.encode(user.getPassword()));
+            // add AuthProvider to Local because save from form
+            user.setAuthenticationProvider(AuthProvider.LOCAL);
             userService.saveUser(user);
             model.addAttribute("users", userService.findAll());
             return "redirect:/user/list";

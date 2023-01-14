@@ -57,7 +57,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
         } else {
             mappedGrantedAuthorities.add(new SimpleGrantedAuthority("USER"));
             return new CustomOAuth2User(loadUser, mappedGrantedAuthorities,
-                    userRequest.getClientRegistration().getClientName(), loadUser.getAttribute("username"));
+                    userRequest.getClientRegistration().getClientName(), loadUser.getAttribute("name"));
         }
     }
 

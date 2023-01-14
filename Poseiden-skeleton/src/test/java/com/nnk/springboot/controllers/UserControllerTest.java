@@ -19,6 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -94,7 +95,8 @@ public class UserControllerTest {
     @Test
     public void validateTest_whenUserNotValide_thenRedirectAddUser() throws Exception {
         // when & then
-        mockMvc.perform(post("/user/validate").param("username", "").param("fullname", "").param("email", "").param("password", "").with(csrf())).andExpect(view().name("user/add"));
+        mockMvc.perform(post("/user/validate").param("username", "").param("fullname", "").param("email", "")
+                .param("password", "").with(csrf())).andExpect(view().name("user/add"));
 
         verify(userService, never()).saveUser(Mockito.any(User.class));
     }
@@ -102,7 +104,7 @@ public class UserControllerTest {
     @Test
     public void validateTest_whenUserValidAndNotExisting_thenSaveNewUser() throws Exception {
         // when
-            when(userService.findByUsername(anyString())).thenReturn(null);
+            when(userService.findByUsername(anyString())).thenReturn(Optional.empty());
             user1.setPassword("Jadmin4all&lp4e");
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         // then
@@ -126,9 +128,9 @@ public class UserControllerTest {
     }
 
     @Test
-    public void validateTest_whenUserValidAndExisting_thenAddUser() throws Exception {
+    public void validateTest_whenUserValidAndExisting_thenReturnToFormwithMessage() throws Exception {
         // when
-            when(userService.findByUsername(anyString())).thenReturn(user1);
+            when(userService.findByUsername(anyString())).thenReturn(Optional.of(user1));
             user1.setPassword("Jadmin4all&lp4e");
           
         // then
@@ -141,6 +143,7 @@ public class UserControllerTest {
             .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("user/add"));
+        verify(userService, never()).saveUser(Mockito.any(User.class));
     }
 
     @Test
@@ -149,13 +152,16 @@ public class UserControllerTest {
         user1.setId(1);
         when(userService.findById(anyInt())).thenReturn(user1);
         // then
-        mockMvc.perform(get("/user/update/{id}", 1)).andExpect(status().isOk()).andExpect(view().name("user/update")).andExpect(model().attribute("user", user1));
+        mockMvc.perform(get("/user/update/{id}", 1))
+                .andExpect(status().isOk()).andExpect(view().name("user/update"))
+                .andExpect(model().attribute("user", user1));
     }
 
     @Test
     public void showUpdateFormTest_whenIdIsZero_thenThrowGlobalPoseidonException() throws Exception {
 
-        mockMvc.perform(get("/user/update/{id}", 0)).andExpect(status().is4xxClientError()).andExpect(result -> assertTrue(result.getResolvedException() instanceof GlobalPoseidonException));
+        mockMvc.perform(get("/user/update/{id}", 0)).andExpect(status().is4xxClientError())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof GlobalPoseidonException));
 
     }
 
@@ -166,8 +172,11 @@ public class UserControllerTest {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
         // then
-        mockMvc.perform(post("/user/update/{id}", 1).param("username", user2.getUsername()).param("fullname", user2.getFullname()).param("email", user2.getEmail()).param("role", user2.getRole())
-                .param("password", user2.getPassword()).with(csrf())).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/user/list"));
+        mockMvc.perform(post("/user/update/{id}", 1)
+                .param("username", user2.getUsername())
+                .param("fullname", user2.getFullname()).param("email", user2.getEmail()).param("role", user2.getRole())
+                .param("password", user2.getPassword()).with(csrf())).andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/user/list"));
 
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
 
@@ -185,8 +194,11 @@ public class UserControllerTest {
         // when
         user2.setPassword("Jadmin4all&lp4e");
         // then
-        mockMvc.perform(post("/user/update/{id}", 1).param("username", "").param("fullname", user2.getFullname()).param("email", user2.getEmail()).param("role", user2.getRole())
-                .param("password", user2.getPassword()).with(csrf())).andExpect(status().isOk()).andExpect(view().name("user/update"));
+        mockMvc.perform(post("/user/update/{id}", 1).param("username", "")
+                .param("fullname", user2.getFullname())
+                .param("email", user2.getEmail()).param("role", user2.getRole())
+                .param("password", user2.getPassword()).with(csrf())).andExpect(status().isOk())
+                .andExpect(view().name("user/update"));
 
         verify(userService, never()).saveUser(any(User.class));
 
@@ -197,7 +209,8 @@ public class UserControllerTest {
         // Given
         user2.setPassword("Jadmin4all&lp4e");
         // when &then
-        mockMvc.perform(post("/user/update/{id}", 0).param("username", user2.getUsername()).param("fullname", user2.getFullname()).param("email", user2.getEmail()).param("role", user2.getRole())
+        mockMvc.perform(post("/user/update/{id}", 0).param("username", user2.getUsername())
+                .param("fullname", user2.getFullname()).param("email", user2.getEmail()).param("role", user2.getRole())
                 .param("password", user2.getPassword()).with(csrf())).andExpect(status().is4xxClientError())
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof GlobalPoseidonException));
 
@@ -205,27 +218,38 @@ public class UserControllerTest {
 
     @Test
     public void deleteUser_whenUserExisting() throws Exception {
-        //when
+        //Given
         when(userService.findById(anyInt())).thenReturn(user1);
-        //then
-        mockMvc.perform(get("/user/delete/{id}",1)).andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/user/list"));
+        
+        //When
+        mockMvc.perform(get("/user/delete/{id}",1))
+        .andExpect(status().is3xxRedirection())
+        .andExpect(redirectedUrl("/user/list"));
+        
+        //Then
         verify(userService,times(1)).deleteUser(any(User.class));
     }
 
     @Test
     public void deleteUser_whenUserNotExisting() throws Exception {
-        //when ( the service throws exception if user is not found with id by default )
+        //Given ( the service throws exception if user is not found with id by default )
         when(userService.findById(anyInt())).thenThrow(new UserNotFoundException("id is not found"));
-       //then
-       mockMvc.perform(get("/user/delete/{id}",1)).andExpect(status().is4xxClientError()).andExpect(result -> assertTrue(result.getResolvedException() instanceof UserNotFoundException));
+       
+        //When
+       mockMvc.perform(get("/user/delete/{id}",1))
+            .andExpect(status().is4xxClientError())
+            .andExpect(result -> assertTrue(result.getResolvedException() instanceof UserNotFoundException));
 
+       //Then
        verify(userService, never()).deleteUser(Mockito.any(User.class));
     }
 
     @Test
     public void deleteUser_whenIdIsZero_thenThrowGlobalPoseidonException() throws Exception {
 
-        mockMvc.perform(get("/user/delete/{id}", 0)).andExpect(status().is4xxClientError()).andExpect(result -> assertTrue(result.getResolvedException() instanceof GlobalPoseidonException));
+        mockMvc.perform(get("/user/delete/{id}", 0))
+                .andExpect(status().is4xxClientError())
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof GlobalPoseidonException));
 
     }
 

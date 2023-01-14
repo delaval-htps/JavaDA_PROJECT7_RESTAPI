@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import com.nnk.springboot.security.AuthProvider;
 import com.nnk.springboot.validation.PasswordConstraint;
 
@@ -27,8 +29,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "users")
 public class User {
+    // with hibernate 5 , we need to fix Generationtype.AUTO with this
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name="native",strategy = "native")
     private Integer id;
 
     @NotBlank(message = "Username is mandatory")

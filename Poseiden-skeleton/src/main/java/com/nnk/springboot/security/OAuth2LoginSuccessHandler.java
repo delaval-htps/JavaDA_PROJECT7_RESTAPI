@@ -2,6 +2,7 @@ package com.nnk.springboot.security;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
@@ -45,30 +47,28 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
 
         CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
 
-        User existingUser = userService.findByUsername(oAuth2User.getEmail());
+        Optional<User> existingUser = userService.findByUsername(oAuth2User.getEmail());
 
-        if (existingUser != null) {
-
+        if (existingUser.isPresent()) {
+            User existedUser = existingUser.get();
             // update of user with providerId and authenticationProvider if not already done
             log.info(messageSource.getMessage("global.existing-user.oauth2-authenticated",
                     new Object[] { existingUser }, LocaleContextHolder.getLocale()));
 
-            if (existingUser.getAuthenticationProvider() == AuthProvider.LOCAL) {
+            if (existedUser.getAuthenticationProvider() == AuthProvider.LOCAL) {
 
-                userService.updateUserFromOAuth2Authentication(oAuth2User, existingUser);
+                userService.updateUserFromOAuth2Authentication(oAuth2User, existedUser);
 
-            } else if ((!Objects.equals(existingUser.getIdProvider(), oAuth2User.getproviderId())
-                    || existingUser.getAuthenticationProvider() != oAuth2User.getClientProvider())) {
+            } else if ((!Objects.equals(existedUser.getIdProvider(), oAuth2User.getproviderId())
+                    || existedUser.getAuthenticationProvider() != oAuth2User.getClientProvider())) {
 
-                throw new OAuth2AuthenticationException("a problem occured with Oauth2Authentication!");
+                throw new OAuth2AuthenticationException(new OAuth2Error("unauthorized-client-provider"),
+                        "A problem occured with loging with github, please contact administrator!");
             }
 
         } else {
-
-            // creation of new user
-            log.info(messageSource.getMessage("global.not-existing-user.oauth2-authenticated",
-                    new Object[] { "createdUser" }, LocaleContextHolder.getLocale()));
-            userService.saveUserFromOAuth2Authentication(oAuth2User);
+            throw new OAuth2AuthenticationException(new OAuth2Error("unregistred-user"),
+                    "You are not yet registred in application, please contact a administrator to create an account before loging with Github !");
         }
 
         super.onAuthenticationSuccess(request, response, authentication);
