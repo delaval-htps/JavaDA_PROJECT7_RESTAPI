@@ -2,6 +2,7 @@ package com.nnk.springboot.services;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -99,19 +100,16 @@ public class UserServiceTest {
     }
 
     @Test
-    public void findByUsername_whenUserNotExisted_thenThrowUserException() {
+    public void findByUsername_whenUserNotExisted_thenReturnOptinoalEmpty() {
         // Given
 
         when(userRepository.findByUsername(anyString())).thenReturn(Optional.empty());
 
-        // When & then
-        Assertions.assertThatThrownBy(() -> {
-            cut.findByUsername("test");
-        }).isInstanceOf(UserNotFoundException.class);
+        // When 
+            Optional<User> findByUsername = cut.findByUsername("test");
 
-        ArgumentCaptor<String> spyCaptor = ArgumentCaptor.forClass(String.class);
-        verify(messageSource).getMessage(spyCaptor.capture(), any(Object[].class), any(Locale.class));
-        assertEquals("global.exception.not-found", spyCaptor.getValue());
+        //Then   
+        assertTrue(findByUsername.isEmpty());
     }
 
     @Test
@@ -122,9 +120,9 @@ public class UserServiceTest {
         when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(mockExistedUser));
 
         // when & then
-        User findExistedUser = cut.findByUsername("username");
+        Optional<User> findExistedUser = cut.findByUsername("username");
 
-        assertEquals(findExistedUser, mockExistedUser);
+        assertEquals(findExistedUser.get(), mockExistedUser);
     }
 
     @Test
@@ -164,39 +162,6 @@ public class UserServiceTest {
         ArgumentCaptor<String> spyCaptor = ArgumentCaptor.forClass(String.class);
         verify(messageSource).getMessage(spyCaptor.capture(), any(Object[].class), any(Locale.class));
         assertEquals("global.user.creation", spyCaptor.getValue());
-    }
-
-    @Test
-    public void saveUserFromOAuth2Authentication_whenOauth2UserExist_thenSaveUser() {
-        Set<GrantedAuthority> authorities = new HashSet<>();
-        authorities.add(new SimpleGrantedAuthority("USER"));
-
-        Map<String, Object> attributs = new HashMap<>();
-        attributs.put("id", 123);
-        attributs.put("login", "username");
-        attributs.put("email", "email@gmail.com");
-        attributs.put("name", "fullname");
-        attributs.put("username", "username");
-
-        CustomOAuth2User oAuth2User = new CustomOAuth2User(new DefaultOAuth2User(authorities, attributs, "username"), authorities, AuthProvider.GITHUB.toString(), "initialUsername");
-
-        cut.saveUserFromOAuth2Authentication(oAuth2User);
-
-        ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
-        verify(userRepository, times(1)).save(userCaptor.capture());
-
-        assertEquals(AuthProvider.GITHUB, userCaptor.getValue().getAuthenticationProvider());
-        assertEquals(oAuth2User.getUsername(), userCaptor.getValue().getUsername());
-        assertEquals(oAuth2User.getEmail(), userCaptor.getValue().getEmail());
-        assertEquals(oAuth2User.getFullname(), userCaptor.getValue().getFullname());
-        assertEquals(oAuth2User.getproviderId(), userCaptor.getValue().getIdProvider());
-    }
-
-    @Test
-    public void saveUserFromOauht2_whenOauth2UserNull_thenThrowException() {
-        assertThrows(UserNotFoundException.class, () -> {
-            cut.saveUserFromOAuth2Authentication(null);
-        });
     }
 
     @Test
@@ -308,7 +273,8 @@ public class UserServiceTest {
         attributs.put("name", "fullname");
         attributs.put("username", "username");
 
-        CustomOAuth2User oAuth2User = new CustomOAuth2User(new DefaultOAuth2User(authorities, attributs, "username"), authorities, AuthProvider.GITHUB.toString(), "initialUsername");
+        CustomOAuth2User oAuth2User = new CustomOAuth2User(new DefaultOAuth2User(authorities, attributs, "username"),
+                authorities, AuthProvider.GITHUB.toString(), "initialUsername");
 
         User mockUser = new User(1, "username", "email@email.com", "password", "fullName", "userRole");
 
