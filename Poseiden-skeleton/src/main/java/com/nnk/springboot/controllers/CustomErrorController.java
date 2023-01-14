@@ -18,7 +18,8 @@ import lombok.extern.log4j.Log4j2;
 
 @Controller
 @Log4j2
-public class CustomErrorController implements ErrorController{
+public class CustomErrorController implements ErrorController {
+    
     private static final String LOG_MESSAGE = "ErrorStatusCode: {} , errormessage: {} & errormessageURI: {}";
 
     @Autowired
@@ -34,7 +35,9 @@ public class CustomErrorController implements ErrorController{
      */
     @RequestMapping("/app/internal-error")
     public String handleError(HttpServletRequest request, Model model) {
+        
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+        
         ServletWebRequest webRequest = new ServletWebRequest(request);
 
         Map<String, Object> eAttributes = this.errorAttributes

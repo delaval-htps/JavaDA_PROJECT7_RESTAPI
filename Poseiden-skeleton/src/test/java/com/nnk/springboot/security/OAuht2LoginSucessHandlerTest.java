@@ -78,16 +78,16 @@ public class OAuht2LoginSucessHandlerTest {
     }
 
     @Test
-    public void onAuthenticationSuccess_whenUserNotExisting_SaveUser() throws IOException, ServletException {
+    public void onAuthenticationSuccess_whenUserNotExisting_ThenThrowOauth2AuthenticationException() throws IOException, ServletException {
 
       
         when(mockAuthentication.getPrincipal()).thenReturn(
             customOAuth2User);
 
-        when(userService.findByUsername(Mockito.anyString())).thenReturn(null);
+        when(userService.findByUsername(Mockito.anyString())).thenReturn(Optional.empty());
 
-        cut.onAuthenticationSuccess(mockRequest, mockResponse, mockAuthentication);
-       // verify(userService, times(1)).saveUserFromOAuth2Authentication(Mockito.any(CustomOAuth2User.class));
+        assertThrows(OAuth2AuthenticationException.class,()->{cut.onAuthenticationSuccess(mockRequest, mockResponse, mockAuthentication);} );
+        
         verify(userService,never()).updateUserFromOAuth2Authentication(Mockito.any(CustomOAuth2User.class),Mockito.any(com.nnk.springboot.domain.User.class));
     }
 
